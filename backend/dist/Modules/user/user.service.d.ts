@@ -1,4 +1,3 @@
-import { Logger } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { User, UserDocument, UserLeanDocument } from '../../Databases/user.schema';
 import { CreateUserDto } from './DTO/CreateUser.dto';
@@ -8,7 +7,7 @@ export interface LocalUser {
 }
 export declare class UserService {
     protected readonly UserModel: Model<User>;
-    protected readonly logger: Logger;
+    protected readonly logger: any;
     constructor(UserModel: Model<User>);
     getAllUsers(): Promise<UserLeanDocument[]>;
     getUserById(id: string): Promise<UserDocument>;
