@@ -1,6 +1,20 @@
+import { Exclude, Expose } from 'class-transformer';
+import { IsNotEmpty, IsString } from 'class-validator';
+
+@Exclude()
 export class CreateUserDto {
-  id: string;
-  name: string;
-  email: string;
-  createdAt: Date;
+  @Expose()
+  @IsNotEmpty()
+  @IsString()
+  name: string
+  
+  @Expose()
+  @IsNotEmpty()
+  @IsString()
+  email: string
+
+  @Expose()
+  @IsNotEmpty()
+  @IsString()
+  createdAt: Date
 }
