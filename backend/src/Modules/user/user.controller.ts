@@ -1,7 +1,9 @@
-import { Body, Controller, Get, Logger, NotFoundException, Param, Post } from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpCode, HttpException, Logger, NotFoundException, Param, Patch, Post } from '@nestjs/common'
 import { UserService } from './user.service'
 import { UserDocument, UserLeanDocument } from '../../Databases/user.schema'
 import { CreateUserDto } from './DTO/CreateUser.dto'
+import { ErrorException } from '../../Global/Error.exception'
+import { UpdateUserDto } from './DTO/UpdateUser.dto'
 
 @Controller('users')
 export class UserController {
@@ -32,5 +34,44 @@ export class UserController {
     @Body() body: CreateUserDto
     ): Promise<UserDocument> {
     return await this.userService.createUser(body)
+  }
+
+  @Patch(':id')
+  async updateUser(
+    @Param('id') id: string,
+    @Body() body: UpdateUserDto
+  ): Promise<UserDocument | null> {    
+      const user = await this.userService.getUserById(id)
+      if (!user) {
+        throw new NotFoundException(`User with id ${id} not found`)
+      }      
+    try {
+      return await this.userService.updateUser(id, body)
+
+    } catch (error) {
+      if (error instanceof ErrorException) {
+        throw new HttpException(error.message, error.code)
+      }
+      throw error
+    }
+  }
+
+  @HttpCode(204)
+  @Delete(':id')
+  async deleteUser(
+    @Param('id') id: string
+  ): Promise<void> {
+    try {
+      const user = await this.userService.getUserById(id)
+      if (!user) {
+        throw new NotFoundException(`User with id ${id} not found`)
+      }
+      await this.userService.deleteUser(id)
+    } catch (error) {
+            if (error instanceof ErrorException) {
+                throw new HttpException(error.message, error.code)
+            }
+            throw error
+        }
   }
 }
