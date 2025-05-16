@@ -12,14 +12,12 @@ export class User {
     })
     name: string
 
-    // @Prop({
-    //     type: SchemaTypes.String,
-    //     required: true,
-    //     index: {
-    //         unique: true
-    //     },
-    // })
-    // username: string
+    @Prop({
+        type: SchemaTypes.String,
+        required: true,
+        unique: true
+    })
+    username: string
 
     @Prop({
         type: SchemaTypes.String,
@@ -32,6 +30,12 @@ export class User {
         default: () => new Date()
     })
     createdAt: Date
+
+    @Prop({
+        type: SchemaTypes.Date,
+        default: null
+    })
+    updatedAt: Date | null
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

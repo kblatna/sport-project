@@ -21,7 +21,7 @@ export class UserController {
   @Get('/:id')
   async getUserById(
     @Param('id') id: string
-  ): Promise<UserDocument> {    
+  ): Promise<UserDocument> {
     const user = await this.userService.getUserById(id)
     if (!user) {
       throw new NotFoundException(`User with id ${id} not found`)
@@ -29,22 +29,33 @@ export class UserController {
     return user
   }
 
-  @Post()
+@Post()
   async createUser(
     @Body() body: CreateUserDto
-    ): Promise<UserDocument> {
-    return await this.userService.createUser(body)
-  }
+  ): Promise<UserDocument> {
+      try {
+        const existingUser = await this.userService.getUserByUsername(body.username)
+        if (existingUser) {
+            throw new ErrorException('User already exists', 422)
+        }
+        return await this.userService.createUser(body)
+      } catch (error) {
+            if (error instanceof ErrorException) {
+                throw new HttpException(error.message, error.code)
+            }
+        throw error
+    }
+}
 
   @Patch(':id')
   async updateUser(
     @Param('id') id: string,
     @Body() body: UpdateUserDto
-  ): Promise<UserDocument | null> {    
+  ): Promise<UserDocument | null> {
       const user = await this.userService.getUserById(id)
       if (!user) {
         throw new NotFoundException(`User with id ${id} not found`)
-      }      
+      }
     try {
       return await this.userService.updateUser(id, body)
 

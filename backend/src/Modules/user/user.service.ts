@@ -25,20 +25,36 @@ export class UserService {
   }
 
   async getUserById(id: string): Promise<UserDocument | null> {
-    return await this.UserModel.findById(id)    
+    return await this.UserModel.findById(id)
   }
 
-  async createUser(data: CreateUser): Promise<UserDocument> {    
+    async getUserByUsername(username: string): Promise<UserDocument | null> {
+        return await this.UserModel.findOne({ username })
+    }
+
+    async createUser(data: CreateUser): Promise<UserDocument> {
+
+        const existingUser = await this.UserModel.findOne({
+            email: data.email,
+            username: data.username,
+        })
+
+        if (existingUser) {
+            throw new ErrorException('User already exists', 422)
+        }
+
     const {
-      name,
-      email,
-      createdAt = new Date(),
+        username,
+        name,
+        email,
+        createdAt = new Date(),
     } = data
 
     return await this.UserModel.create({
-      name,
-      email,
-      createdAt,
+        username,
+        name,
+        email,
+        createdAt,
     })
   }
 
@@ -51,8 +67,12 @@ export class UserService {
       existingUser.name = data.name
     }
 
+    if (data.email !== undefined) {
+      existingUser.email = data.email
+    }
+
     if (existingUser.isModified()) {
-      // existingUser.updatedAt = new Date()
+      existingUser.updatedAt = new Date()
       await existingUser.save()
     }
     return existingUser
