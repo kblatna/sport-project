@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common'
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
 import { MongooseModule } from '@nestjs/mongoose'
 import { UserModule } from './Modules/user/user.module'
 
@@ -9,7 +7,7 @@ import { UserModule } from './Modules/user/user.module'
     MongooseModule.forRoot('mongodb://localhost:27017'), // nebo MongoDB Atlas URL
     UserModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
