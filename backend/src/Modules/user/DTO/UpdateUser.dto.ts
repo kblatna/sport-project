@@ -7,4 +7,9 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString()
   name?: string
+
+  @Expose()
+  @IsOptional()
+  @IsString()
+  email?: string
 }

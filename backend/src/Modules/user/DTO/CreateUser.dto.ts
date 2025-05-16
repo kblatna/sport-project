@@ -6,8 +6,13 @@ export class CreateUserDto {
   @Expose()
   @IsNotEmpty()
   @IsString()
+  username: string
+
+  @Expose()
+  @IsNotEmpty()
+  @IsString()
   name: string
-  
+
   @Expose()
   @IsNotEmpty()
   @IsString()
