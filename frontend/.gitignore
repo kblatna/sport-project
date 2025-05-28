@@ -29,3 +29,6 @@ coverage
 
 *.tsbuildinfo
 .history
+
+# Env files
+.env
