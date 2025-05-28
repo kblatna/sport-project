@@ -11,11 +11,13 @@
   "dependencies": {
     "@stylistic/eslint-plugin": "^4.2.0",
     "@vue/eslint-config-typescript": "^14.5.0",
+    "axios": "^1.9.0",
     "eslint-plugin-oxlint": "^0.16.10",
     "eslint-plugin-vue": "^10.1.0",
     "vue": "^3.5.13"
   },
   "devDependencies": {
+    "@types/node": "^22.15.23",
     "@vitejs/plugin-vue": "^5.2.3",
     "vite": "^6.2.4",
     "vite-plugin-vue-devtools": "^7.7.2"

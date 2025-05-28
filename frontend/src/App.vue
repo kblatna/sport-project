@@ -1,6 +1,12 @@
-<script setup>
+<script setup lang="ts">
+import { onMounted } from 'vue'
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
+import { users } from './api/services'
+
+onMounted(async () => {
+  console.log(await users.getAll())
+})
 </script>
 
 <template>
