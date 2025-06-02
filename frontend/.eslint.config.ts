@@ -9,7 +9,6 @@ import stylistic from '@stylistic/eslint-plugin'
 // More info at https://github.com/vuejs/eslint-config-typescript/#advanced-setup
 
 const stylisticConfig = stylistic.configs.customize({
-    flat: true,
     pluginName: 'recommended',
     indent: 4,
     jsx: false,
@@ -21,12 +20,13 @@ const stylisticConfig = stylistic.configs.customize({
 export default defineConfigWithVueTs(
     {
         name: 'app/files-to-lint',
-        files: ['**/*.{ts,mts,tsx,vue}']
+        files: ['**/*.{ts,mts,tsx,vue}'],
+        ignores: ['**/public/**']
     },
 
     {
         name: 'app/files-to-ignore',
-        ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '.history/**']
+        ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '**/.history/**', '**/public/**']
     },
     pluginVue.configs['flat/strongly-recommended'],
     vueTsConfigs.recommended,

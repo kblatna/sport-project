@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "@stylistic/eslint-plugin": "^4.2.0",
+    "@tvaliasek/vue-form-inputs": "^5.0.6",
     "@vue/eslint-config-typescript": "^14.5.0",
+    "@vuelidate/core": "^2.0.3",
+    "@vuelidate/validators": "^2.0.4",
     "axios": "^1.9.0",
     "bootstrap": "^5.3.6",
     "eslint-plugin-oxlint": "^0.16.10",

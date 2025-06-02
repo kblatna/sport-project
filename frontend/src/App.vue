@@ -65,6 +65,7 @@
     </header>
 
     <div class="container">
+        <ContactForm />
 
     </div>
 
@@ -77,6 +78,7 @@
 import FooterInfo from './components/FooterInfo.vue'
 import { onMounted } from 'vue'
 import { users } from './api/services'
+import ContactForm from './components/ContactForm.vue'
 
 onMounted(async () => {
     console.log(await users.getAll())
