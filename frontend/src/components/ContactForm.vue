@@ -1,5 +1,8 @@
 <template>
-    <form @submit.prevent="onSubmit" :data-is-loading="isLoading">
+    <form
+        @submit.prevent="onSubmit"
+        :data-is-loading="isLoading"
+    >
         <div class="row">
             <div class="col-12 col-lg-6 mb-3">
                 <FormInput
@@ -30,22 +33,32 @@
         </div>
 
         <div class="d-none">
-            <input type="text" aria-hidden="true" v-model="honeypot" />
+            <input
+                type="text"
+                aria-hidden="true"
+                v-model="honeypot"
+            />
         </div>
 
         <div
             ref="turnstileEl"
-            class="cf-turnstile">
-        </div>
+            class="cf-turnstile"
+        ></div>
 
         <div class="text-center mt-5">
-            <button type="submit" class="btn btn-primary px-5 text-uppercase">
+            <button
+                type="submit"
+                class="btn btn-primary px-5 text-uppercase"
+            >
                 Odeslat
             </button>
         </div>
     </form>
 
-    <div v-if="isLoading" class="text-center mt-3">
+    <div
+        v-if="isLoading"
+        class="text-center mt-3"
+    >
         <span
             class="spinner-border spinner-border-sm"
             role="status"
@@ -53,96 +66,96 @@
         ></span>
         Odesílání...
     </div>
-    <div v-if="error" class="alert alert-danger mt-3">
+
+    <div
+        v-if="error"
+        class="alert alert-danger mt-3"
+    >
         {{ error }}
     </div>
-    <div v-if="success" class="alert alert-success mt-3">
+
+    <div
+        v-if="success"
+        class="alert alert-success mt-3"
+    >
         {{ success }}
-    </div>
-    <div class="alert alert-info mt-3">
-        Turnstile response: {{ cfResponse }}
     </div>
 </template>
 
 <script setup lang="ts">
-import { FormInput, FormInputTextarea } from "@tvaliasek/vue-form-inputs";
-import { onMounted, ref } from "vue";
-import { useVuelidate } from "@vuelidate/core";
-import { required, email as emailValidator } from "@vuelidate/validators";
+import { FormInput, FormInputTextarea } from '@tvaliasek/vue-form-inputs'
+import { onMounted, ref } from 'vue'
+import { useVuelidate } from '@vuelidate/core'
+import { required, email as emailValidator } from '@vuelidate/validators'
 
-const name = ref("");
-const email = ref("");
-const message = ref("");
-const honeypot = ref("");
+const name = ref('')
+const email = ref('')
+const message = ref('')
+const honeypot = ref('')
 
-const isLoading = ref(false);
-const error = ref<string | null>(null);
-const success = ref<string | null>(null);
-const cfResponse = ref<string>("");
-const turnstileToken = ref<string>("");
-const turnstileEl = ref<HTMLElement | null>(null);
+const isLoading = ref(false)
+const error = ref<string | null>(null)
+const success = ref<string | null>(null)
+const cfResponse = ref<string>('')
+const turnstileToken = ref<string>('')
+const turnstileEl = ref<HTMLElement | null>(null)
 
-const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
+const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY
 
 const validation = useVuelidate(
     {
         name: {
-            required,
+            required
         },
         email: {
             required,
-            email: emailValidator,
+            email: emailValidator
         },
         message: {
-            required,
-        },
+            required
+        }
     },
     {
         name,
         email,
-        message,
+        message
     }
-);
+)
 
 onMounted(() => {
     if ((window as any).turnstile && turnstileSiteKey) {
         try {
-            (window as any).turnstile.render(
-                turnstileEl.value,
-                {
-                    sitekey: turnstileSiteKey,
-                    callback: (token: string) => {
-                        turnstileToken.value = token;
-                    },
+            (window as any).turnstile.render(turnstileEl.value, {
+                sitekey: turnstileSiteKey,
+                callback: (token: string) => {
+                    turnstileToken.value = token
                 }
-            );
-
+            })
         } catch (err) {
-            console.error("Error rendering Turnstile:", err);
+            console.error('Error rendering Turnstile:', err)
         }
     }
-});
-
+})
 
 async function onSubmit() {
-    console.log("Submitting contact form...", {
+    console.log('Submitting contact form...', {
         name: name.value,
         email: email.value,
         message: message.value,
         honeypot: honeypot.value,
         token: turnstileToken.value,
-        cfResponse: cfResponse.value,
-    });
+        cfResponse: cfResponse.value
+    })
 
     await validation.value.$validate()
     if (validation.value.$invalid) {
-        console.error("Validation failed", validation.value);
+        console.error('Validation failed', validation.value)
         return
     }
 
-    isLoading.value = true;
-    error.value = null;
-    success.value = null;
+    isLoading.value = true
+    error.value = null
+    success.value = null
 
     try {
         if (!turnstileToken.value) {
@@ -151,42 +164,42 @@ async function onSubmit() {
             return
         }
 
-        cfResponse.value = turnstileToken.value;
+        cfResponse.value = turnstileToken.value
 
         const payload = {
             name: name.value.trim(),
             email: email.value,
             message: message.value,
             honeypot: honeypot.value,
-            token: cfResponse.value,
-        };
+            token: cfResponse.value
+        }
 
-        await fetch("api/contact", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-        });
+        await fetch('api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
 
-        success.value = "Zpráva byla úspěšně odeslána.";
-        resetForm();
+        success.value = 'Zpráva byla úspěšně odeslána.'
+        resetForm()
     } catch (fetchError) {
         if (fetchError instanceof Error) {
-            error.value = "CSRF token is invalid or missing. Please try again.";
-            return;
+            error.value = 'CSRF token is invalid or missing. Please try again.'
+            return
         }
-        error.value =
-            "Došlo k chybě při odesílání zprávy. Zkuste to prosím znovu později.";
+        error.value
+            = 'Došlo k chybě při odesílání zprávy. Zkuste to prosím znovu později.'
     } finally {
-        isLoading.value = false;
+        isLoading.value = false
     }
 }
 
 function resetForm(): void {
-    name.value = "";
-    email.value = "";
-    message.value = "";
-    cfResponse.value = "";
+    name.value = ''
+    email.value = ''
+    message.value = ''
+    cfResponse.value = ''
 
-    validation.value.$reset();
+    validation.value.$reset()
 }
 </script>
