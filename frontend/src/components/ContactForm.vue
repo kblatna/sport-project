@@ -137,6 +137,7 @@ onMounted(() => {
     }
 })
 
+// TODO: doladit tuto funkci - hlášky, validace, odesílání
 async function onSubmit() {
     console.log('Submitting contact form...', {
         name: name.value,
@@ -199,7 +200,6 @@ function resetForm(): void {
     email.value = ''
     message.value = ''
     cfResponse.value = ''
-
     validation.value.$reset()
 }
 </script>
