@@ -5,13 +5,13 @@ import { UserModule } from './Modules/user/user.module'
 import { ContactModule } from './Modules/contact/contact.module'
 
 @Module({
-  imports: [
-    ConfigModule.forRoot(),
-    MongooseModule.forRoot('mongodb://localhost:27017'),
-    UserModule,
-    ContactModule
-  ],
-  controllers: [],
-  providers: [],
+    imports: [
+        ConfigModule.forRoot(),
+        MongooseModule.forRoot('mongodb://localhost:27017'),
+        UserModule,
+        ContactModule
+    ],
+    controllers: [],
+    providers: []
 })
-export class AppModule {}
+export class AppModule { }

@@ -8,25 +8,25 @@ import { UpdateUser } from './Interface/UpdateUser.interface'
 
 // TODO: udělat interface pro User
 export interface LocalUser {
-  name: string
-  email: string
+    name: string
+    email: string
 }
 
 @Injectable()
 export class UserService {
-  protected readonly logger = new Logger(UserService.name)
-  constructor(
-    @InjectModel(User.name)
-    protected readonly UserModel: Model<User>
-  ) {}
+    protected readonly logger = new Logger(UserService.name)
+    constructor(
+        @InjectModel(User.name)
+        protected readonly UserModel: Model<User>
+    ) { }
 
-  async getAllUsers(): Promise<UserLeanDocument[]> {
-    return await this.UserModel.find().lean()
-  }
+    async getAllUsers(): Promise<UserLeanDocument[]> {
+        return await this.UserModel.find().lean()
+    }
 
-  async getUserById(id: string): Promise<UserDocument | null> {
-    return await this.UserModel.findById(id)
-  }
+    async getUserById(id: string): Promise<UserDocument | null> {
+        return await this.UserModel.findById(id)
+    }
 
     async getUserByUsername(username: string): Promise<UserDocument | null> {
         return await this.UserModel.findOne({ username })
@@ -34,6 +34,7 @@ export class UserService {
 
     async createUser(data: CreateUser): Promise<UserDocument> {
 
+        // TODO: zkontrolovat, jestli je to správně
         const existingUser = await this.UserModel.findOne({
             email: data.email,
             username: data.username,
@@ -43,45 +44,45 @@ export class UserService {
             throw new ErrorException('User already exists', 422)
         }
 
-    const {
-        username,
-        name,
-        email,
-        createdAt = new Date(),
-    } = data
+        const {
+            username,
+            name,
+            email,
+            createdAt = new Date(),
+        } = data
 
-    return await this.UserModel.create({
-        username,
-        name,
-        email,
-        createdAt,
-    })
-  }
-
-  async updateUser(id: string, data: UpdateUser): Promise<UserDocument | null> {
-    const existingUser = await this.UserModel.findById(id)
-    if (!existingUser) {
-      throw new ErrorException('User not found', 404)
-    }
-    if (data.name !== undefined) {
-      existingUser.name = data.name
+        return await this.UserModel.create({
+            username,
+            name,
+            email,
+            createdAt,
+        })
     }
 
-    if (data.email !== undefined) {
-      existingUser.email = data.email
-    }
-
-    if (existingUser.isModified()) {
-      existingUser.updatedAt = new Date()
-      await existingUser.save()
-    }
-    return existingUser
-  }
-
-  async deleteUser(id: string): Promise<void> {
-    const existingUser = await this.UserModel.findByIdAndDelete(id)
-    if (!existingUser) {
+    async updateUser(id: string, data: UpdateUser): Promise<UserDocument | null> {
+        const existingUser = await this.UserModel.findById(id)
+        if (!existingUser) {
             throw new ErrorException('User not found', 404)
         }
-  }
+        if (data.name !== undefined) {
+            existingUser.name = data.name
+        }
+
+        if (data.email !== undefined) {
+            existingUser.email = data.email
+        }
+
+        if (existingUser.isModified()) {
+            existingUser.updatedAt = new Date()
+            await existingUser.save()
+        }
+        return existingUser
+    }
+
+    async deleteUser(id: string): Promise<void> {
+        const existingUser = await this.UserModel.findByIdAndDelete(id)
+        if (!existingUser) {
+            throw new ErrorException('User not found', 404)
+        }
+    }
 }

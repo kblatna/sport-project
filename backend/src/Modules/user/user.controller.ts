@@ -7,82 +7,82 @@ import { UpdateUserDto } from './DTO/UpdateUser.dto'
 
 @Controller('users')
 export class UserController {
-  protected readonly logger = new Logger(UserController.name)
+    protected readonly logger = new Logger(UserController.name)
 
-  constructor(
-    protected readonly userService: UserService
-  ) { }
+    constructor(
+        protected readonly userService: UserService
+    ) { }
 
-  @Get()
-  async getAllUsers(): Promise<UserLeanDocument[]> {
-    return await this.userService.getAllUsers()
-  }
-
-  @Get('/:id')
-  async getUserById(
-    @Param('id') id: string
-  ): Promise<UserDocument> {
-    const user = await this.userService.getUserById(id)
-    if (!user) {
-      throw new NotFoundException(`User with id ${id} not found`)
+    @Get()
+    async getAllUsers(): Promise<UserLeanDocument[]> {
+        return await this.userService.getAllUsers()
     }
-    return user
-  }
 
-@Post()
-  async createUser(
-    @Body() body: CreateUserDto
-  ): Promise<UserDocument> {
-      try {
-        const existingUser = await this.userService.getUserByUsername(body.username)
-        if (existingUser) {
-            throw new ErrorException('User already exists', 422)
+    @Get('/:id')
+    async getUserById(
+        @Param('id') id: string
+    ): Promise<UserDocument> {
+        const user = await this.userService.getUserById(id)
+        if (!user) {
+            throw new NotFoundException(`User with id ${id} not found`)
         }
-        return await this.userService.createUser(body)
-      } catch (error) {
-            if (error instanceof ErrorException) {
-                throw new HttpException(error.message, error.code)
+        return user
+    }
+
+    @Post()
+    async createUser(
+        @Body() body: CreateUserDto
+    ): Promise<UserDocument> {
+        try {
+            const existingUser = await this.userService.getUserByUsername(body.username)
+            if (existingUser) {
+                throw new ErrorException('User already exists', 422)
             }
-        throw error
-    }
-}
-
-  @Patch(':id')
-  async updateUser(
-    @Param('id') id: string,
-    @Body() body: UpdateUserDto
-  ): Promise<UserDocument | null> {
-      const user = await this.userService.getUserById(id)
-      if (!user) {
-        throw new NotFoundException(`User with id ${id} not found`)
-      }
-    try {
-      return await this.userService.updateUser(id, body)
-
-    } catch (error) {
-      if (error instanceof ErrorException) {
-        throw new HttpException(error.message, error.code)
-      }
-      throw error
-    }
-  }
-
-  @HttpCode(204)
-  @Delete(':id')
-  async deleteUser(
-    @Param('id') id: string
-  ): Promise<void> {
-    try {
-      const user = await this.userService.getUserById(id)
-      if (!user) {
-        throw new NotFoundException(`User with id ${id} not found`)
-      }
-      await this.userService.deleteUser(id)
-    } catch (error) {
+            return await this.userService.createUser(body)
+        } catch (error) {
             if (error instanceof ErrorException) {
                 throw new HttpException(error.message, error.code)
             }
             throw error
         }
-  }
+    }
+
+    @Patch(':id')
+    async updateUser(
+        @Param('id') id: string,
+        @Body() body: UpdateUserDto
+    ): Promise<UserDocument | null> {
+        const user = await this.userService.getUserById(id)
+        if (!user) {
+            throw new NotFoundException(`User with id ${id} not found`)
+        }
+        try {
+            return await this.userService.updateUser(id, body)
+
+        } catch (error) {
+            if (error instanceof ErrorException) {
+                throw new HttpException(error.message, error.code)
+            }
+            throw error
+        }
+    }
+
+    @HttpCode(204)
+    @Delete(':id')
+    async deleteUser(
+        @Param('id') id: string
+    ): Promise<void> {
+        try {
+            const user = await this.userService.getUserById(id)
+            if (!user) {
+                throw new NotFoundException(`User with id ${id} not found`)
+            }
+            await this.userService.deleteUser(id)
+        } catch (error) {
+            if (error instanceof ErrorException) {
+                throw new HttpException(error.message, error.code)
+            }
+            throw error
+        }
+    }
 }

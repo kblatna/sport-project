@@ -9,11 +9,11 @@ export class ContactController {
         private readonly contactService: ContactService
     ) { }
 
-  @Post()
-  @HttpCode(HttpStatus.CREATED)
-  async createContact(
-    @Body() createContactDto: CreateContactDto
-  ): Promise<ContactDocument> {
-    return this.contactService.createContact(createContactDto)
-  }
+    @Post()
+    @HttpCode(HttpStatus.CREATED)
+    async createContact(
+        @Body() createContactDto: CreateContactDto
+    ): Promise<ContactDocument> {
+        return this.contactService.createContact(createContactDto)
+    }
 }

@@ -12,12 +12,12 @@ import { CreateContact } from './Interface/CreateContact.interface'
 
 @Injectable()
 export class ContactService {
-  protected readonly logger = new Logger(ContactService.name)
+    protected readonly logger = new Logger(ContactService.name)
 
-  constructor(
-    @InjectModel(Contact.name)
-    private readonly contactModel: Model<ContactDocument>
-  ) {}
+    constructor(
+        @InjectModel(Contact.name)
+        private readonly contactModel: Model<ContactDocument>
+    ) { }
 
     async createContact(data: CreateContact): Promise<ContactDocument> {
         if (!data.name || !data.email || !data.message || !data.token) {
@@ -59,8 +59,8 @@ export class ContactService {
             }
 
             const params = new URLSearchParams()
-                params.append('secret', secret)
-                params.append('response', token)
+            params.append('secret', secret)
+            params.append('response', token)
 
             const { data } = await axios.post(
                 'https://challenges.cloudflare.com/turnstile/v0/siteverify',
@@ -77,9 +77,9 @@ export class ContactService {
             }
 
             return data.success === true
-            } catch (error) {
-                this.logger.error('Turnstile validation error', error)
-                return false
-            }
+        } catch (error) {
+            this.logger.error('Turnstile validation error', error)
+            return false
         }
+    }
 }
