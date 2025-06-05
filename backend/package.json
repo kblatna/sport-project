@@ -24,6 +24,9 @@
         "axios": "^1.9.0",
         "class-transformer": "^0.5.1",
         "class-validator": "^0.14.2",
+        "form-data": "^4.0.2",
+        "mailgun.js": "^12.0.2",
+        "mjml": "^4.15.3",
         "mongoose": "^8.14.3",
         "reflect-metadata": "^0.2.2",
         "rxjs": "^7.8.1"
