@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-12 col-lg-6 mb-3">
                 <FormInput
-                    label="t('contactForm.firstName')"
+                    label="Jméno"
                     :id="'formInputFirstName'"
                     v-model="firstName"
                     :validation="validation.firstName"
@@ -15,7 +15,7 @@
 
             <div class="col-12 col-lg-6 mb-3">
                 <FormInput
-                    label="t('contactForm.lastName')"
+                    label="Příjmení"
                     :id="'formInputLastName'"
                     v-model="lastName"
                     :validation="validation.lastName"
@@ -24,40 +24,41 @@
 
             <div class="col-12 mb-3">
                 <FormInput
-                    label="t('contactForm.email')"
+                    label="E-mail"
                     :id="'formInputEmail'"
                     v-model="email"
                     :validation="validation.email"
                 />
             </div>
 
-            <div class="col-12 mb-3">
+            <div class="col-12 col-lg-6 mb-3">
                 <FormInputDatePicker
                     label="Datum narození"
                     v-model="dateOfBirth"
                     :validation="validation?.dateOfBirth"
+                    :min-date="minBirthDate"
+                    :max-date="maxBirthDate"
                 />
-                <!-- :max-date="minBirthDate" -->
             </div>
 
             <!--TODO: Přihlášení týmu musím ještě domyslet-->
-            <div class="col-12 mb-3">
+            <div
+                class="col-12 col-lg-6 mb-3"
+                v-if="age !== null"
+            >
                 <FormInputSelect
-                    label="Pohlaví"
+                    label="Zvolte kategorii"
                     v-model="type"
                     :validation="validation.type"
-                    :options="[
-                        { text: 'Žena', value: 'female' },
-                        { text: 'Muž', value: 'male' },
-                        { text: 'Dívka', value: 'girl' },
-                        { text: 'Chlapec', value: 'boy' },
-                        { text: 'Tým', value: 'team' }
-                    ]"
+                    :options="typeOptions"
                 />
             </div>
 
-            <p v-if="type !== null || type === 'team' || type !== 'male'">
-                Kategorie závodu: {{ raceOptions }}
+            <p
+                v-if="type && type !== 'male'"
+                class="mt-2"
+            >
+                <strong>Délka závodu:</strong> {{ raceOptions.length > 0 ? raceOptions[0].text : 'Není vybrána' }}
             </p>
 
             <div
@@ -65,10 +66,11 @@
                 v-if="type === 'male'"
             >
                 <FormInputSelect
-                    label="Kategorie závodu"
-                    v-model="raceOptions"
-                    :validation="validation.type"
+                    label="Délka závodu"
+                    v-model="race"
+                    :validation="validation.race"
                     :options="raceOptions"
+                    :placeholder="'Vyberte vzdálenost'"
                 />
             </div>
         </div>
@@ -83,7 +85,7 @@
 
         <div
             ref="turnstileEl"
-            class="cf-turnstile"
+            class="cf-turnstile mt-3"
         ></div>
 
         <div class="text-center mt-5">
@@ -134,6 +136,7 @@ const lastName = ref('')
 const email = ref('')
 const dateOfBirth = ref<Date | null>(null)
 const type = ref<string | null>(null)
+const race = ref<string | null>(null)
 const honeypot = ref('')
 
 const isLoading = ref(false)
@@ -162,6 +165,9 @@ const validation = useVuelidate(
         },
         type: {
             required
+        },
+        race: {
+            required // only if men
         }
     },
     {
@@ -169,7 +175,8 @@ const validation = useVuelidate(
         lastName,
         email,
         dateOfBirth,
-        type
+        type,
+        race
     }
 )
 
@@ -181,100 +188,42 @@ const age = computed(() => {
     return today.getFullYear() - dateOfBirth.value.getFullYear()
 })
 
-// const raceOptions = computed(() => {
-//     if (type.value === 'female') {
-//         if (age.value && age.value >= 18 && age.value <= 39) {
-//             return [
-//                 { text: 'Z15', value: 'Z15' }
-//             ]
-//         } else if (age.value && age.value >= 40 && age.value <= 49) {
-//             return [
-//                 { text: 'ZV15', value: 'ZV15' }
-//             ]
-//         } else if (age.value && age.value >= 50) {
-//             return [
-//                 { text: 'ZW15', value: 'ZW15' }
-//             ]
-//         }
-//         return []
-//     } else if (type.value === 'male') {
-//         if (age.value && age.value >= 18 && age.value <= 39) {
-//             return [
-//                 { text: 'M15', value: 'M15' },
-//                 { text: 'M30', value: 'M30' }
-//             ]
-//         } else if (age.value && age.value >= 40 && age.value <= 49) {
-//             return [
-//                 { text: 'V15', value: 'V15' },
-//                 { text: 'V30', value: 'V30' }
-//             ]
-//         } else if (age.value && age.value >= 50 && age.value <= 59) {
-//             return [
-//                 { text: 'W15', value: 'W15' },
-//                 { text: 'W30', value: 'W30' }
-//             ]
-//         } else if (age.value && age.value >= 60) {
-//             return [
-//                 { text: 'WV15', value: 'WV15' },
-//                 { text: 'WV30', value: 'WV30' }
-//             ]
-//         }
-//         return []
-//     } else if (type.value === 'girl') {
-//         if (age.value && age.value >= 10 && age.value <= 12) {
-//             return [
-//                 { text: 'Z5', value: 'Z5' }
-//             ]
-//         } else if (age.value && age.value >= 13 && age.value <= 14) {
-//             return [
-//                 { text: 'Z7', value: 'Z7' }
-//             ]
-//         } else if (age.value && age.value >= 15 && age.value <= 17) {
-//             return [
-//                 { text: 'Z10', value: 'Z10' }
-//             ]
-//         }
-//         return []
-//     } else if (type.value === 'boy') {
-//         if (age.value && age.value >= 10 && age.value <= 12) {
-//             return [
-//                 { text: 'M5', value: 'M5' }
-//             ]
-//         } else if (age.value && age.value >= 13 && age.value <= 14) {
-//             return [
-//                 { text: 'M7', value: 'M7' }
-//             ]
-//         } else if (age.value && age.value >= 15 && age.value <= 17) {
-//             return [
-//                 { text: 'M10', value: 'M10' }
-//             ]
-//         }
-//         return []
-//     }
-//     return []
-// })
+const typeOptions = computed(() => {
+    if (dateOfBirth.value && age.value <= 17) {
+        return [
+            { text: 'Dívka', value: 'girl' },
+            { text: 'Chlapec', value: 'boy' }
+        ]
+    } else if (dateOfBirth.value && age.value >= 18) {
+        return [
+            { text: 'Žena', value: 'female' },
+            { text: 'Muž', value: 'male' }
+        ]
+    }
+    return []
+})
 
 const raceRules = {
     female: [
-        { min: 18, max: 39, options: [{ text: 'Z15', value: 'Z15' }] },
-        { min: 40, max: 49, options: [{ text: 'ZV15', value: 'ZV15' }] },
-        { min: 50, max: Infinity, options: [{ text: 'ZW15', value: 'ZW15' }] }
+        { min: 18, max: 39, options: [{ text: '15 km (3 kola) - Z15', value: 'Z15' }] },
+        { min: 40, max: 49, options: [{ text: '15 km (3 kola) - ZV15', value: 'ZV15' }] },
+        { min: 50, max: Infinity, options: [{ text: '15 km (3 kola) - ZW15', value: 'ZW15' }] }
     ],
     male: [
-        { min: 18, max: 39, options: [{ text: 'M15', value: 'M15' }, { text: 'M30', value: 'M30' }] },
-        { min: 40, max: 49, options: [{ text: 'V15', value: 'V15' }, { text: 'V30', value: 'V30' }] },
-        { min: 50, max: 59, options: [{ text: 'W15', value: 'W15' }, { text: 'W30', value: 'W30' }] },
-        { min: 60, max: Infinity, options: [{ text: 'WV15', value: 'WV15' }, { text: 'WV30', value: 'WV30' }] }
+        { min: 18, max: 39, options: [{ text: '15 km (3 kola) - M15', value: 'M15' }, { text: '30 km (6 kol) - M30', value: 'M30' }] },
+        { min: 40, max: 49, options: [{ text: '15 km (3 kola) - V15', value: 'V15' }, { text: '30 km (6 kol) - V30', value: 'V30' }] },
+        { min: 50, max: 59, options: [{ text: '15 km (3 kola) - W15', value: 'W15' }, { text: '30 km (6 kol) - W30', value: 'W30' }] },
+        { min: 60, max: Infinity, options: [{ text: '15 km (3 kola) - WV15', value: 'WV15' }, { text: '30 km - WV30', value: 'WV30' }] }
     ],
     girl: [
-        { min: 10, max: 12, options: [{ text: 'Z5', value: 'Z5' }] },
-        { min: 13, max: 14, options: [{ text: 'Z7', value: 'Z7' }] },
-        { min: 15, max: 17, options: [{ text: 'Z10', value: 'Z10' }] }
+        { min: 10, max: 12, options: [{ text: '5 km (2 kola) - Z5', value: 'Z5' }] },
+        { min: 13, max: 14, options: [{ text: '7,5 km (3 kola) - Z7', value: 'Z7' }] },
+        { min: 15, max: 17, options: [{ text: '10 km (4 kola) - Z10', value: 'Z10' }] }
     ],
     boy: [
-        { min: 10, max: 12, options: [{ text: 'M5', value: 'M5' }] },
-        { min: 13, max: 14, options: [{ text: 'M7', value: 'M7' }] },
-        { min: 15, max: 17, options: [{ text: 'M10', value: 'M10' }] }
+        { min: 10, max: 12, options: [{ text: '5 km (2 kola) - M5', value: 'M5' }] },
+        { min: 13, max: 14, options: [{ text: '7,5 km (3 kola) - M7', value: 'M7' }] },
+        { min: 15, max: 17, options: [{ text: '10 km (4 kola) - M10', value: 'M10' }] }
     ]
 }
 
@@ -305,12 +254,16 @@ onMounted(() => {
     }
 })
 
-// const minBirthDate = computed(() => {
-//     const maxDate = new Date()
-//     maxDate.setHours(12, 0, 0, 0)
-//     maxDate.setFullYear(maxDate.getFullYear() - 1)
-//     return maxDate
-// })
+const minBirthDate = computed(() => {
+    return new Date('1920-01-01T00:00:00')
+})
+
+const maxBirthDate = computed(() => {
+    const maxDate = new Date()
+    maxDate.setHours(12, 0, 0, 0)
+    maxDate.setFullYear(maxDate.getFullYear() - 1)
+    return maxDate
+})
 
 // TODO: doladit tuto funkci - hlášky, validace, odesílání
 async function onSubmit() {
@@ -320,6 +273,7 @@ async function onSubmit() {
         email: email.value,
         dateOfBirth: dateOfBirth.value,
         type: type.value,
+        race: race.value,
         honeypot: honeypot.value,
         token: turnstileToken.value,
         cfResponse: cfResponse.value
@@ -350,6 +304,7 @@ async function onSubmit() {
             email: email.value,
             dateOfBirth: dateOfBirth.value ? dateOfBirth.value.toISOString() : null,
             type: type.value,
+            race: race.value,
             honeypot: honeypot.value,
             token: cfResponse.value
         }
@@ -380,6 +335,7 @@ function resetForm(): void {
     email.value = ''
     dateOfBirth.value = null
     type.value = ''
+    race.value = ''
     cfResponse.value = ''
     validation.value.$reset()
 }
