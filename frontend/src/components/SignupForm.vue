@@ -48,14 +48,14 @@
             >
                 <FormInputSelect
                     label="Zvolte kategorii"
-                    v-model="type"
-                    :validation="validation.type"
-                    :options="typeOptions"
+                    v-model="category"
+                    :validation="validation.category"
+                    :options="categoryOptions"
                 />
             </div>
 
             <p
-                v-if="type && type !== 'male'"
+                v-if="category && category !== 'male'"
                 class="mt-2"
             >
                 <strong>Délka závodu:</strong> {{ raceOptions.length > 0 ? raceOptions[0].text : 'Není vybrána' }}
@@ -63,7 +63,7 @@
 
             <div
                 class="col-12 mb-3"
-                v-if="type === 'male'"
+                v-if="category === 'male'"
             >
                 <FormInputSelect
                     label="Délka závodu"
@@ -135,7 +135,7 @@ const firstName = ref('')
 const lastName = ref('')
 const email = ref('')
 const dateOfBirth = ref<Date | null>(null)
-const type = ref<string | null>(null)
+const category = ref<string | null>(null)
 const race = ref<string | null>(null)
 const honeypot = ref('')
 
@@ -163,7 +163,7 @@ const validation = useVuelidate(
         dateOfBirth: {
             required
         },
-        type: {
+        category: {
             required
         },
         race: {
@@ -175,7 +175,7 @@ const validation = useVuelidate(
         lastName,
         email,
         dateOfBirth,
-        type,
+        category,
         race
     }
 )
@@ -188,7 +188,7 @@ const age = computed(() => {
     return today.getFullYear() - dateOfBirth.value.getFullYear()
 })
 
-const typeOptions = computed(() => {
+const categoryOptions = computed(() => {
     if (dateOfBirth.value && age.value <= 17) {
         return [
             { text: 'Dívka', value: 'girl' },
@@ -228,14 +228,14 @@ const raceRules = {
 }
 
 const raceOptions = computed(() => {
-    const t = type.value
+    const c = category.value
     const a = age.value
 
-    if (!t || !a || !raceRules[t]) {
+    if (!c || !a || !raceRules[c]) {
         return []
     }
 
-    const rule = raceRules[t].find(({ min, max }) => a >= min && a <= max)
+    const rule = raceRules[c].find(({ min, max }) => a >= min && a <= max)
     return rule ? rule.options : []
 })
 
@@ -272,7 +272,7 @@ async function onSubmit() {
         lastName: lastName.value,
         email: email.value,
         dateOfBirth: dateOfBirth.value,
-        type: type.value,
+        category: category.value,
         race: race.value,
         honeypot: honeypot.value,
         token: turnstileToken.value,
@@ -303,7 +303,7 @@ async function onSubmit() {
             lastName: lastName.value.trim(),
             email: email.value,
             dateOfBirth: dateOfBirth.value ? dateOfBirth.value.toISOString() : null,
-            type: type.value,
+            category: category.value,
             race: race.value,
             honeypot: honeypot.value,
             token: cfResponse.value
@@ -334,7 +334,7 @@ function resetForm(): void {
     lastName.value = ''
     email.value = ''
     dateOfBirth.value = null
-    type.value = ''
+    category.value = ''
     race.value = ''
     cfResponse.value = ''
     validation.value.$reset()

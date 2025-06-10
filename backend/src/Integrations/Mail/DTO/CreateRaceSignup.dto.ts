@@ -1,6 +1,6 @@
 import { IsDate, IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator'
 
-export class RaceSignupDto {
+export class CreateRaceSignupDto {
     @IsNotEmpty()
     @IsString()
     firstName: string
@@ -19,7 +19,11 @@ export class RaceSignupDto {
 
     @IsNotEmpty()
     @IsString()
-    type: string
+    category: string
+
+    @IsNotEmpty()
+    @IsString()
+    race: string
 
     @IsNotEmpty()
     @IsString()

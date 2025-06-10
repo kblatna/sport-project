@@ -1,34 +1,33 @@
-// src/mail/mail.service.ts
-import { Injectable } from '@nestjs/common';
-import * as mjml2html from 'mjml';
-import formData from 'form-data';
-import Mailgun from 'mailgun.js';
-import { RaceSignupDto } from '../Mail/DTO/raceSignup.dto';
+import { Injectable } from '@nestjs/common'
+import * as mjml2html from 'mjml'
+import formData from 'form-data'
+import Mailgun from 'mailgun.js'
+import { CreateRaceSignupDto } from './DTO/CreateRaceSignup.dto'
 
 @Injectable()
 export class MailService {
-  private mg;
+  private mg
 
   constructor() {
-    const mailgun = new Mailgun(formData);
+    const mailgun = new Mailgun(formData)
     this.mg = mailgun.client({
       username: 'api',
       key: process.env.MAILGUN_API_KEY!,
-    });
+    })
   }
 
-  async sendRaceConfirmationEmail(dto: RaceSignupDto) {
-    const html = this.generateMjml(dto);
+  async sendRaceConfirmationEmail(dto: CreateRaceSignupDto) {
+    const html = this.generateMjml(dto)
 
     await this.mg.messages.create(process.env.MAILGUN_DOMAIN!, {
       from: process.env.MAILGUN_FROM!,
       to: [dto.email],
       subject: 'Potvrzení přihlášky na závod',
       html,
-    });
+    })
   }
 
-  private generateMjml(dto: RaceSignupDto): string {
+  private generateMjml(dto: CreateRaceSignupDto): string {
     const mjml = `
       <mjml>
         <mj-body background-color="#f4f4f4" font-family="Helvetica, Arial, sans-serif">
@@ -53,7 +52,7 @@ export class MailService {
           </mj-section>
         </mj-body>
       </mjml>
-    `;
-    return mjml2html(mjml).html;
+    `
+    return mjml2html(mjml).html
   }
 }
