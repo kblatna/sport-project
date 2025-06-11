@@ -2,25 +2,25 @@ import {
     HttpException,
     HttpStatus,
     Injectable,
-    Logger,
+    Logger
 } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import axios from 'axios'
 import { Model } from 'mongoose'
-import { RaceConfirmation, RaceConfirmationDocument } from '../../Databases/raceConfirmation.schema'
-import { CreateRaceConfirmation } from './Interface/CreateContact.interface'
+import { RaceApplication, RaceApplicationDocument } from '../../Databases/raceApplication.schema'
+import { CreateRaceApplication } from './Interface/CreateRaceApplication.interface'
 
 @Injectable()
-export class RaceConfirmationService {
-    protected readonly logger = new Logger(RaceConfirmationService.name)
+export class RaceApplicationService {
+    protected readonly logger = new Logger(RaceApplicationService.name)
 
     constructor(
-        @InjectModel(RaceConfirmation.name)
-        private readonly raceConfirmationModel: Model<RaceConfirmationDocument>
+        @InjectModel(RaceApplication.name)
+        private readonly raceApplicationModel: Model<RaceApplicationDocument>
     ) { }
 
-    async createRaceConfirmation(data: CreateRaceConfirmation): Promise<RaceConfirmationDocument> {
-        if (!data.name || !data.email || !data.message || !data.token) { // TODO: upravit
+    async createRaceApplication(data: CreateRaceApplication): Promise<RaceApplicationDocument> {
+        if (!data.firstName || !data.email || !data.category || !data.token) { // TODO: doplnit
             throw new HttpException(
                 'Missing required fields',
                 HttpStatus.BAD_REQUEST
@@ -37,20 +37,18 @@ export class RaceConfirmationService {
             throw new HttpException('Spam detected', HttpStatus.BAD_REQUEST)
         }
 
-        const raceConfirmation = new this.raceConfirmationModel({ // TODO: upravit
-            name: data.name,
+        const raceApplication = new this.raceApplicationModel({ // TODO: doplnit
+            name: data.firstName,
             email: data.email,
-            message: data.message,
+            message: data.category,
             honeypot: data.honeypot || '',
             token: data.token
         })
 
-        return await raceConfirmation.save()
+        return await raceApplication.save()
     }
 
-
     private async validateTurnstileToken(token: string): Promise<boolean> {
-
         try {
             const secret = process.env.TURNSTILE_SECRET || ''
             if (!secret) {

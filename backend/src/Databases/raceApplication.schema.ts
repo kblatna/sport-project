@@ -5,7 +5,7 @@ import { SchemaTypes, type HydratedDocument } from 'mongoose'
     minimize: false,
     versionKey: false
 })
-export class RaceConfirmation {
+export class RaceApplication {
     @Prop({
         type: SchemaTypes.String,
         required: true,
@@ -64,6 +64,6 @@ export class RaceConfirmation {
     createdAt: Date
 }
 
-export const RaceConfirmationSchema = SchemaFactory.createForClass(RaceConfirmation)
-export type RaceConfirmationDocument = HydratedDocument<RaceConfirmation>
-export type RaceConfirmationLeanDocument = LeanDocument<RaceConfirmationDocument>
+export const RaceApplicationSchema = SchemaFactory.createForClass(RaceApplication)
+export type RaceApplicationDocument = HydratedDocument<RaceApplication>
+export type RaceApplicationLeanDocument = LeanDocument<RaceApplicationDocument>
