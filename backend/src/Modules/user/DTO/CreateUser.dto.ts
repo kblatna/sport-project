@@ -3,23 +3,23 @@ import { IsNotEmpty, IsString } from 'class-validator'
 
 @Exclude()
 export class CreateUserDto {
-    @Expose()
     @IsNotEmpty()
     @IsString()
+    @Expose()
     username: string
 
-    @Expose()
     @IsNotEmpty()
     @IsString()
+    @Expose()
     name: string
 
-    @Expose()
     @IsNotEmpty()
     @IsString()
+    @Expose()
     email: string
 
-    @Expose()
     @IsNotEmpty()
     @IsString()
+    @Expose()
     createdAt: Date
 }

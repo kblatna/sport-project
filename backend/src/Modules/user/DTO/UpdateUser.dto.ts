@@ -3,13 +3,13 @@ import { IsOptional, IsString } from 'class-validator'
 
 @Exclude()
 export class UpdateUserDto {
-    @Expose()
     @IsOptional()
     @IsString()
+    @Expose()
     name?: string
 
-    @Expose()
     @IsOptional()
     @IsString()
+    @Expose()
     email?: string
 }
