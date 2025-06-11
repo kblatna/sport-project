@@ -1,4 +1,4 @@
-import { Exclude, Expose } from 'class-transformer'
+import { Exclude, Expose, Type } from 'class-transformer'
 import { IsDate, IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator'
 
 @Exclude()
@@ -20,6 +20,7 @@ export class CreateRaceApplicationDto {
 
     @IsNotEmpty()
     @IsDate()
+    @Type(() => Date)
     @Expose()
     dateOfBirth: Date
 

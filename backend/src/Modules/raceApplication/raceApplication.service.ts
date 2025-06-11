@@ -37,10 +37,13 @@ export class RaceApplicationService {
             throw new HttpException('Spam detected', HttpStatus.BAD_REQUEST)
         }
 
-        const raceApplication = new this.raceApplicationModel({ // TODO: doplnit
-            name: data.firstName,
+        const raceApplication = new this.raceApplicationModel({
+            firstName: data.firstName,
+            lastName: data.lastName,
             email: data.email,
-            message: data.category,
+            dateOfBirth: new Date(data.dateOfBirth),
+            category: data.category,
+            race: data.race,
             honeypot: data.honeypot || '',
             token: data.token
         })

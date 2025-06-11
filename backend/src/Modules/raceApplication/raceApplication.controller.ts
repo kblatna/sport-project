@@ -3,7 +3,7 @@ import { RaceApplicationDocument } from '../../Databases/raceApplication.schema'
 import { CreateRaceApplicationDto } from './DTO/CreateRaceApplication.dto'
 import { RaceApplicationService } from './raceApplication.service'
 
-@Controller('race-Application')
+@Controller('race-application')
 export class RaceApplicationController {
     constructor(
         private readonly raceApplicationService: RaceApplicationService
