@@ -139,15 +139,6 @@ onMounted(() => {
 
 // TODO: doladit tuto funkci - hlášky, validace, odesílání
 async function onSubmit() {
-    console.log('Submitting contact form...', {
-        name: name.value,
-        email: email.value,
-        message: message.value,
-        honeypot: honeypot.value,
-        token: turnstileToken.value,
-        cfResponse: cfResponse.value
-    })
-
     await validation.value.$validate()
     if (validation.value.$invalid) {
         console.error('Validation failed', validation.value)

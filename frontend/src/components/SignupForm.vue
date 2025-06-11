@@ -61,6 +61,7 @@
                 <strong>Délka závodu:</strong> {{ raceOptions.length > 0 ? raceOptions[0].text : 'Není vybrána' }}
             </p>
 
+            <!--TODO: Teoreticky multiselect???-->
             <div
                 class="col-12 mb-3"
                 v-if="category === 'male'"
@@ -127,7 +128,7 @@
 
 <script setup lang="ts">
 import { FormInput, FormInputDatePicker, FormInputSelect } from '@tvaliasek/vue-form-inputs'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email as emailValidator } from '@vuelidate/validators'
 
@@ -167,7 +168,7 @@ const validation = useVuelidate(
             required
         },
         race: {
-            required // only if men
+            required
         }
     },
     {
@@ -239,6 +240,12 @@ const raceOptions = computed(() => {
     return rule ? rule.options : []
 })
 
+watch([category, raceOptions], ([newCategory, newRaceOptions]) => {
+    if (newCategory !== 'male' && newRaceOptions.length > 0) {
+        race.value = newRaceOptions[0].value
+    }
+})
+
 onMounted(() => {
     if ((window as any).turnstile && turnstileSiteKey) {
         try {
@@ -267,18 +274,6 @@ const maxBirthDate = computed(() => {
 
 // TODO: doladit tuto funkci - hlášky, validace, odesílání
 async function onSubmit() {
-    console.log('Submitting contact form...', {
-        firstName: firstName.value,
-        lastName: lastName.value,
-        email: email.value,
-        dateOfBirth: dateOfBirth.value,
-        category: category.value,
-        race: race.value,
-        honeypot: honeypot.value,
-        token: turnstileToken.value,
-        cfResponse: cfResponse.value
-    })
-
     await validation.value.$validate()
     if (validation.value.$invalid) {
         console.error('Validation failed', validation.value)
@@ -309,13 +304,13 @@ async function onSubmit() {
             token: cfResponse.value
         }
 
-        await fetch('api/contact', {
+        await fetch('api/race-application', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         })
 
-        success.value = 'Zpráva byla úspěšně odeslána.'
+        success.value = 'Přihláška byla úspěšně odeslána.'
         resetForm()
     } catch (fetchError) {
         if (fetchError instanceof Error) {
@@ -323,7 +318,7 @@ async function onSubmit() {
             return
         }
         error.value
-            = 'Došlo k chybě při odesílání zprávy. Zkuste to prosím znovu později.'
+            = 'Došlo k chybě při odesílání přihlášky. Zkuste to prosím znovu později.'
     } finally {
         isLoading.value = false
     }
