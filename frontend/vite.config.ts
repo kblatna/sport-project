@@ -3,9 +3,19 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
+const customElements: string[] = [
+    'iconify-icon'
+]
+
 export default defineConfig({
     plugins: [
-        vue(),
+        vue({
+            template: {
+                compilerOptions: {
+                    isCustomElement: tag => customElements.includes(tag)
+                }
+            }
+        }),
         vueDevTools()
     ],
     resolve: {
