@@ -119,6 +119,7 @@
                                 <button
                                     type="button"
                                     class="btn btn-outline-light mt-4 rounded-3"
+                                    @click="onSignup"
                                 >
                                     Registrace
                                 </button>
@@ -130,9 +131,22 @@
         </section>
     </header>
 
-    <div class="container">
-        <ContactForm />
-    </div>
+    <!-- <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-6 mx-auto bg-white p-5 mt-5 rounded-3 shadow">
+                <h2 class="text-center mb-4">
+                    Přihláška
+                    <iconify-icon
+                        :inline="true"
+                        icon="mdi:cow"
+                    />
+                </h2>
+                <SignupForm />
+            </div>
+        </div>
+    </div> -->
+
+    <RouterView />
 
     <footer class="footer text-center text-md-start text-white mt-5">
         <FooterInfo />
@@ -142,12 +156,24 @@
 <script setup lang="ts">
 import FooterInfo from './components/FooterInfo.vue'
 import { onMounted } from 'vue'
-import { users } from './api/services'
-import ContactForm from './components/ContactForm.vue'
+import { users } from './services/api/services'
+import { RouterView, useRouter } from 'vue-router'
+// import ContactForm from './components/ContactForm.vue'
+// import SignupForm from './views/signup/components/SignupForm.vue'
+
+const $router = useRouter()
 
 onMounted(async () => {
     console.log(await users.getAll())
+
+    // void $router.push({ name: 'Signup' })
 })
+
+function onSignup() {
+    console.log('Button clicked! Redirecting to Signup...')
+    void $router.push({ name: 'Signup' })
+    // You can add more logic here if needed
+}
 </script>
 
 <style>

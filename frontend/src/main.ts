@@ -9,10 +9,12 @@ import '@tvaliasek/vue-form-inputs/dist/vue-form-inputs.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
+import router from './services/router/router'
 import 'iconify-icon'
 
 const app = createApp(App)
 
+app.use(router)
 app.use(VueSecureHTML)
 app.use(FormInputsPlugin())
 app.use(DataTablePlugin)
