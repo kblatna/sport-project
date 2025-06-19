@@ -33,11 +33,10 @@ export class UserService {
     }
 
     async createUser(data: CreateUser): Promise<UserDocument> {
-
         // TODO: zkontrolovat, jestli je to správně
         const existingUser = await this.UserModel.findOne({
             email: data.email,
-            username: data.username,
+            username: data.username
         })
 
         if (existingUser) {
@@ -48,14 +47,14 @@ export class UserService {
             username,
             name,
             email,
-            createdAt = new Date(),
+            createdAt = new Date()
         } = data
 
         return await this.UserModel.create({
             username,
             name,
             email,
-            createdAt,
+            createdAt
         })
     }
 
