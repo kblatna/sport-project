@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config'
 import { UserModule } from './Modules/user/user.module'
 import { ContactModule } from './Modules/contact/contact.module'
 import { RaceApplicationModule } from './Modules/raceApplication/raceApplication.module'
+import { ResultModule } from './Modules/result/result.module'
 
 @Module({
     imports: [
@@ -11,7 +12,8 @@ import { RaceApplicationModule } from './Modules/raceApplication/raceApplication
         MongooseModule.forRoot('mongodb://localhost:27017'),
         UserModule,
         ContactModule,
-        RaceApplicationModule
+        RaceApplicationModule,
+        ResultModule
     ],
     controllers: [],
     providers: []
