@@ -92,9 +92,11 @@
         </nav>
     </header>
 
-    <RouterView />
+    <main>
+        <RouterView />
+    </main>
 
-    <footer class="footer text-center text-md-start text-white mt-5">
+    <footer class="footer text-center text-md-start text-white">
         <FooterInfo />
     </footer>
 </template>

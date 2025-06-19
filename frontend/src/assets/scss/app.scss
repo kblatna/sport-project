@@ -14,3 +14,12 @@ body {
 .section {
     padding: 3rem 0;
 }
+#app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    margin-top: auto;
+}
