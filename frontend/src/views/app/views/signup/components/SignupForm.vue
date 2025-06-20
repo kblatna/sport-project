@@ -217,11 +217,17 @@ const raceRules = {
         { min: 60, max: Infinity, options: [{ text: '15 km (3 kola) - WV15', value: 'WV15' }, { text: '30 km - WV30', value: 'WV30' }] }
     ],
     girl: [
+        { min: 0, max: 5, options: [{ text: '140 m - Z1', value: 'Z1' }] },
+        { min: 6, max: 7, options: [{ text: '350 m - Z2', value: 'Z2' }] },
+        { min: 8, max: 9, options: [{ text: '700 m - Z3', value: 'Z3' }] },
         { min: 10, max: 12, options: [{ text: '5 km (2 kola) - Z5', value: 'Z5' }] },
         { min: 13, max: 14, options: [{ text: '7,5 km (3 kola) - Z7', value: 'Z7' }] },
         { min: 15, max: 17, options: [{ text: '10 km (4 kola) - Z10', value: 'Z10' }] }
     ],
     boy: [
+        { min: 0, max: 5, options: [{ text: '140 m - M1', value: 'M1' }] },
+        { min: 6, max: 7, options: [{ text: '350 m - M2', value: 'M2' }] },
+        { min: 8, max: 9, options: [{ text: '700 m - M3', value: 'M3' }] },
         { min: 10, max: 12, options: [{ text: '5 km (2 kola) - M5', value: 'M5' }] },
         { min: 13, max: 14, options: [{ text: '7,5 km (3 kola) - M7', value: 'M7' }] },
         { min: 15, max: 17, options: [{ text: '10 km (4 kola) - M10', value: 'M10' }] }
@@ -232,7 +238,7 @@ const raceOptions = computed(() => {
     const c = category.value
     const a = age.value
 
-    if (!c || !a || !raceRules[c]) {
+    if (!c || a === null || a === undefined || !raceRules[c]) {
         return []
     }
 
@@ -266,10 +272,7 @@ const minBirthDate = computed(() => {
 })
 
 const maxBirthDate = computed(() => {
-    const maxDate = new Date()
-    maxDate.setHours(12, 0, 0, 0)
-    maxDate.setFullYear(maxDate.getFullYear() - 1)
-    return maxDate
+    return new Date()
 })
 
 // TODO: doladit tuto funkci - hlášky, validace, odesílání
