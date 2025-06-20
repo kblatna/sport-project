@@ -1,15 +1,22 @@
 <template>
     <div class="container">
         <h1>Slovo o pořadateli</h1>
-
-        <p>
-            V&nbsp;současné době je pořadatelem závodu spolek Defekt. Skutečnými pořadateli jsou již od počátků stále titíž lidé,
-            do roku 1999 pod hlavičkou Vysokoškolského sportovního klubu Mendelovy zemědělské a&nbsp;lesnické univerzity (který
-            s&nbsp;vlastní organizací závodu neměl nic společného, nicméně umožňoval vyúčtování veškerých finančních transakcí
-            a&nbsp;zajištění potřebného „papírování“). Roku 2000 se pořadatelé rozhodli založit občanské sdružení, které by
-            převzalo veškerou agendu Soběšické Muldy a&nbsp;pořádalo závod pod svou hlavičkou. V&nbsp;roce 2014 se právní forma
-            změnila na „zapsaný spolek“ (z.s.).
-        </p>
+        <div class="row gap-5">
+            <p class="col-12 col-md-7">
+                V&nbsp;současné době je pořadatelem závodu spolek Defekt. Skutečnými pořadateli jsou již od počátků stále titíž lidé,
+                do roku 1999 pod hlavičkou Vysokoškolského sportovního klubu Mendelovy zemědělské a&nbsp;lesnické univerzity (který
+                s&nbsp;vlastní organizací závodu neměl nic společného, nicméně umožňoval vyúčtování veškerých finančních transakcí
+                a&nbsp;zajištění potřebného „papírování“). Roku 2000 se pořadatelé rozhodli založit občanské sdružení, které by
+                převzalo veškerou agendu Soběšické Muldy a&nbsp;pořádalo závod pod svou hlavičkou. V&nbsp;roce 2014 se právní forma
+                změnila na „zapsaný spolek“ (z.s.).
+            </p>
+            <div class="col-12 col-md-3">
+                <img
+                    :src="logo"
+                    alt="Logo spolku Defekt"
+                />
+            </div>
+        </div>
 
         <p>Jediným pořadatelem závodu je z.s. Defekt. Více informací o&nbsp;tomto spolku naleznete například zde.</p>
 
@@ -33,5 +40,6 @@
 </template>
 
 <script lang="ts" setup>
+import logo from '@/assets/images/logo_defekt.jpg'
 
 </script>
