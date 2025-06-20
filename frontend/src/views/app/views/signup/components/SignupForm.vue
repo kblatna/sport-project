@@ -257,6 +257,7 @@ onMounted(() => {
         try {
             (window as any).turnstile.render(turnstileEl.value, {
                 sitekey: turnstileSiteKey,
+                mode: 'invisible',
                 callback: (token: string) => {
                     turnstileToken.value = token
                 }
