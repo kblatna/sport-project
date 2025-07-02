@@ -17,9 +17,4 @@ export class CreateUserDto {
     @IsString()
     @Expose()
     email: string
-
-    @IsNotEmpty()
-    @IsString()
-    @Expose()
-    createdAt: Date
 }

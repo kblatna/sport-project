@@ -46,15 +46,13 @@ export class UserService {
         const {
             username,
             name,
-            email,
-            createdAt = new Date()
+            email
         } = data
 
         return await this.UserModel.create({
             username,
             name,
-            email,
-            createdAt
+            email
         })
     }
 
