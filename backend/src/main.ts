@@ -7,7 +7,7 @@ async function bootstrap(): Promise<void> {
 
     // Povolení CORS
     app.enableCors({
-        origin: ['http://localhost:5173'], // nebo ['*'] během vývoje
+        origin: ['http://localhost:8080', 'http://localhost:5173'], // frontend porty
         credentials: true
     })
 
@@ -24,7 +24,7 @@ async function bootstrap(): Promise<void> {
     )
 
     // Start
-    await app.listen(process.env.PORT ?? 3002)
+    await app.listen(process.env.PORT ?? 3001)
 }
 bootstrap().catch((error) => {
     console.error('Error during application bootstrap:', error)

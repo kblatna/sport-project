@@ -1,0 +1,38 @@
+services:
+  backend:
+    build: ./backend
+    command: npm run start:dev
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - MONGODB_URI=mongodb://root:defekt2025@mongodb:27017/mulda?authSource=admin
+    depends_on:
+      - mongodb
+  frontend:
+    build: ./frontend
+    command: npm run dev -- --host 0.0.0.0 --port 8080
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+  mongodb:
+    image: mongo:7
+    restart: always
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: defekt2025
+      MONGO_INITDB_DATABASE: mulda
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

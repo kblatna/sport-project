@@ -9,7 +9,7 @@ import { ResultModule } from './Modules/result/result.module'
 @Module({
     imports: [
         ConfigModule.forRoot(),
-        MongooseModule.forRoot('mongodb://localhost:27017'),
+        MongooseModule.forRoot(process.env.MONGODB_URI ?? 'mongodb://root:defekt2025@mongodb:27017/mulda?authSource=admin'),
         UserModule,
         ContactModule,
         RaceApplicationModule,
