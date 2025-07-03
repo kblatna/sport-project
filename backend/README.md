@@ -1,98 +1,148 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Sport Project - Backend API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+NestJS REST API for sports application with user management, race results and registrations.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Technologies
 
-## Description
+- **NestJS** - Progressive Node.js framework
+- **TypeScript** - Type-safe JavaScript
+- **MongoDB** - NoSQL database
+- **Mongoose** - MongoDB ODM
+- **Docker** - Containerization
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Quick Start
 
-## Project setup
-
+### With Docker Compose (recommended)
 ```bash
-$ npm install
+# Start entire project including frontend and database
+docker compose up -d
+
+# API will be available at: http://localhost:3001
 ```
 
-## Compile and run the project
-
+### Local Development
 ```bash
-# development
-$ npm run start
+# Install dependencies
+npm install
 
-# watch mode
-$ npm run start:dev
+# Start in watch mode
+npm run start:dev
 
-# production mode
-$ npm run start:prod
+# API will be available at: http://localhost:3001
 ```
 
-## Run tests
+## 📁 Project Structure
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```
+src/
+├── Databases/           # MongoDB schemas and models
+├── Global/             # Global utilities (error handling)
+├── Integrations/       # External integrations (mail)
+├── Modules/            # Modular application structure
+│   ├── user/          # User management
+│   ├── contact/       # Contact forms
+│   ├── raceApplication/ # Race registrations
+│   └── result/        # Race results
+└── main.ts            # Application entry point
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## 🔧 Available Commands
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# Development
+npm run start          # Start application
+npm run start:dev      # Watch mode with hot reload
+npm run start:debug    # Debug mode
+
+# Production
+npm run start:prod     # Production mode
+npm run build          # Build application
+
+# Testing
+npm run test           # Unit tests
+npm run test:e2e       # End-to-end tests
+npm run test:cov       # Coverage report
+
+# Linting
+npm run lint           # Code linting
+npm run format         # Code formatting
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## 🌐 API Endpoints
 
-## Resources
+### 👤 Users (`/api/users`)
+- `GET /` - Get all users
+- `GET /:id` - Get user by ID
+- `POST /` - Create new user
+- `PATCH /:id` - Update user
+- `DELETE /:id` - Delete user
 
-Check out a few resources that may come in handy when working with NestJS:
+### 📊 Results (`/api/results`)
+- `GET /` - Get all results
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### 📝 Race Applications (`/api/race-application`)
+- `POST /` - Register for a race
 
-## Support
+### 📞 Contact (`/api/contact`)
+- `POST /` - Send contact form
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 🗄️ Database
 
-## Stay in touch
+### MongoDB Connection
+```javascript
+mongodb://root:defekt2025@mongodb:27017/mulda?authSource=admin
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Schemas
 
-## License
+**User Schema:**
+```typescript
+{
+  name: string,
+  username: string (unique),
+  email: string,
+  createdAt: Date,
+  updatedAt: Date | null
+}
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## 🔧 Configuration
+
+### Environment Variables
+
+Create a `.env` file:
+```env
+NODE_ENV=development
+PORT=3001
+MONGODB_URI=mongodb://root:defekt2025@mongodb:27017/mulda?authSource=admin
+```
+
+### Docker Compose
+Database and all dependencies are automatically started via Docker Compose.
+
+## 🔒 Validation
+
+- **DTOs** - Automatic input validation using class-validator
+- **Transform pipes** - Data transformation before processing
+- **Global validation** - Applied to all endpoints
+
+## 🚨 Error Handling
+
+- **Global exception filter** - Unified error processing
+- **Custom ErrorException** - Custom error class
+- **HTTP status codes** - Proper return codes
+
+## 🐛 Troubleshooting
+
+### Database Connection
+- Check that MongoDB container is running
+- Verify connection string in environment variables
+- Try connecting from MongoDB Compass
+
+### Port Conflicts
+- Backend runs on port 3001
+- MongoDB on port 27018 (host) → 27017 (container)
+
+### CORS Errors
+CORS is configured for ports 8080 and 5173 (frontend).
+
