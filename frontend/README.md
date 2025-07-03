@@ -7,7 +7,7 @@ Vue.js frontend application for sports project with race results and registratio
 - **Vue 3** - Progressive JavaScript framework
 - **Vite** - Fast build tool
 - **TypeScript** - Type-safe JavaScript
-- **Bootstrap** - CSS framework for styling
+- **Tailwind CSS** - Utility-first CSS framework
 - **Axios** - HTTP client for API communication
 
 ## Quick Start

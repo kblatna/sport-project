@@ -1,5 +1,5 @@
-import './assets/scss/app.scss'
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import './assets/css/tailwind.css'
+// import 'bootstrap/dist/js/bootstrap.bundle.min.js' // Odstraněno - Bootstrap nahrazen Tailwind
 import '@vuepic/vue-datepicker/dist/main.css'
 import { DataTablePlugin } from '@tvaliasek/vue-datatable'
 import VueSecureHTML from 'vue-html-secure'
