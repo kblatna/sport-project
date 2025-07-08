@@ -8,14 +8,14 @@
         :sort-field="'rank'"
         :sort-order="1"
         removable-sort
-        filter-display="menu"
+        filter-display="row"
         :global-filter-fields="['rank', 'startNumber', 'name', 'dateOfBirth', 'totalTime', 'category', 'year']"
-        :global-filter="globalFilter"
         class="p-datatable-sm"
         responsive-layout="scroll"
         striped-rows
         show-gridlines
         table-style="min-width: 50rem"
+        v-model:filters="filters"
     >
         <template #header>
             <div class="flex justify-between">
@@ -27,7 +27,7 @@
                         <i class="pi pi-search"></i>
                     </InputIcon>
                     <InputText
-                        v-model="globalFilter"
+                        v-model="filters['global'].value"
                         placeholder="Globální vyhledávání..."
                         class="p-inputtext-sm"
                     />
@@ -39,6 +39,7 @@
             field="rank"
             header="Pořadí"
             sortable
+            :show-filter-menu="true"
             :style="{ width: '10%' }"
         />
 
@@ -46,6 +47,7 @@
             field="startNumber"
             header="Startovní číslo"
             sortable
+            :show-filter-menu="true"
             :style="{ width: '12%' }"
         />
 
@@ -53,6 +55,7 @@
             field="name"
             header="Jméno"
             sortable
+            :show-filter-menu="true"
             :style="{ width: '20%' }"
         >
             <template #body="slotProps">
@@ -64,6 +67,7 @@
             field="dateOfBirth"
             header="Rok narození"
             sortable
+            :show-filter-menu="true"
             :style="{ width: '12%' }"
         />
 
@@ -71,6 +75,7 @@
             field="totalTime"
             header="Celkový čas"
             sortable
+            :show-filter-menu="true"
             :style="{ width: '12%' }"
         />
 
@@ -78,6 +83,7 @@
             field="category"
             header="Kategorie"
             sortable
+            :show-filter-menu="true"
             :style="{ width: '12%' }"
         />
 
@@ -85,6 +91,7 @@
             field="year"
             header="Ročník"
             sortable
+            :show-filter-menu="true"
             :style="{ width: '10%' }"
         />
 
@@ -113,6 +120,7 @@
 
 <script setup lang="ts">
 import { Result } from '@/interface/result.interface'
+import { FilterMatchMode } from '@primevue/core/api'
 import Column from 'primevue/column'
 import DataTable from 'primevue/datatable'
 import IconField from 'primevue/iconfield'
@@ -125,6 +133,15 @@ defineProps<{
     isLoading: boolean
 }>()
 
-const globalFilter = ref('')
+const filters = ref({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    rank: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    startNumber: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    dateOfBirth: { value: null, matchMode: FilterMatchMode.IN },
+    totalTime: { value: null, matchMode: FilterMatchMode.EQUALS },
+    category: { value: null, matchMode: FilterMatchMode.EQUALS },
+    year: { value: null, matchMode: FilterMatchMode.EQUALS }
+})
 
 </script>
