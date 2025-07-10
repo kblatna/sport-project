@@ -11,7 +11,7 @@
                 </div>
             </template>
             <template #content>
-                <SignupFormPrime />
+                <SignupForm />
             </template>
         </Card>
     </div>
@@ -19,5 +19,5 @@
 
 <script setup lang="ts">
 import Card from 'primevue/card'
-import SignupFormPrime from './components/SignupFormPrime.vue'
+import SignupForm from './components/SignupForm.vue'
 </script>

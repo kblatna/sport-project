@@ -1,115 +1,132 @@
 <template>
+    {{ age }}
     <form
         @submit.prevent="onSubmit"
         :data-is-loading="isLoading"
+        class="space-y-6"
     >
-        <div class="row">
-            <div class="col-12 col-lg-6 mb-3">
-                <FormInput
-                    label="Jméno"
-                    :id="'formInputFirstName'"
-                    v-model="firstName"
-                    :validation="validation.firstName"
-                />
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <FloatLabel>
+                    <InputText
+                        id="firstName"
+                        v-model="firstName"
+                        :validation="validation.firstName"
+                        class="w-full"
+                    />
+                    <label for="firstName">Jméno</label>
+                </FloatLabel>
             </div>
 
-            <div class="col-12 col-lg-6 mb-3">
-                <FormInput
-                    label="Příjmení"
-                    :id="'formInputLastName'"
-                    v-model="lastName"
-                    :validation="validation.lastName"
-                />
+            <div>
+                <FloatLabel>
+                    <InputText
+                        id="lastName"
+                        v-model="lastName"
+                        :validation="validation.lastName"
+                        class="w-full"
+                    />
+                    <label for="lastName">Příjmení</label>
+                </FloatLabel>
             </div>
 
-            <div class="col-12 mb-3">
-                <FormInput
-                    label="E-mail"
-                    :id="'formInputEmail'"
-                    v-model="email"
-                    :validation="validation.email"
-                />
+            <div class="md:col-span-2">
+                <FloatLabel>
+                    <InputText
+                        id="email"
+                        v-model="email"
+                        type="email"
+
+                        class="w-full"
+                    />
+                    <label for="email">Email</label>
+                </FloatLabel>
             </div>
 
-            <div class="col-12 col-lg-6 mb-3">
-                <FormInputDatePicker
-                    label="Datum narození"
-                    v-model="dateOfBirth"
-                    :validation="validation?.dateOfBirth"
-                    :min-date="minBirthDate"
-                    :max-date="maxBirthDate"
-                />
+            <div>
+                <FloatLabel>
+                    <DatePicker
+                        id="dateOfBirth"
+                        v-model="dateOfBirth"
+                        :validation="validation?.dateOfBirth"
+                        class="w-full"
+                        date-format="dd.mm.yy"
+                        :max-date="new Date()"
+                        show-icon
+                        icon-display="input"
+                    />
+                    <label for="dateOfBirth">Datum narození</label>
+                </FloatLabel>
             </div>
 
-            <!--TODO: Přihlášení týmu musím ještě domyslet-->
             <div
-                class="col-12 col-lg-6 mb-3"
-                v-if="age !== null"
+                class="md:col-span-2"
+                v-if="age !==null"
             >
-                <FormInputSelect
-                    label="Zvolte kategorii"
-                    v-model="category"
-                    :validation="validation.category"
-                    :options="categoryOptions"
-                />
+                <FloatLabel>
+                    <Select
+                        id="category"
+                        v-model="category"
+                        :options="categoryOptions"
+                        option-label="label"
+                        option-value="value"
+                        :validation="validation.category"
+                        class="w-full"
+                    />
+                    <label for="category">Kategorie</label>
+                </FloatLabel>
             </div>
 
             <p
                 v-if="category && category !== 'male'"
                 class="mt-2"
             >
-                <strong>Délka závodu:</strong> {{ raceOptions.length > 0 ? raceOptions[0].text : 'Není vybrána' }}
+                <strong>Délka závodu:</strong> {{ raceOptions.length > 0 ? raceOptions[0].label : 'Není vybrána' }}
             </p>
 
-            <!--TODO: Teoreticky multiselect???-->
             <div
-                class="col-12 mb-3"
+                class="md:col-span-2"
                 v-if="category === 'male'"
             >
-                <FormInputSelect
-                    label="Délka závodu"
-                    v-model="race"
-                    :validation="validation.race"
-                    :options="raceOptions"
-                    :placeholder="'Vyberte vzdálenost'"
+                <FloatLabel>
+                    <Select
+                        id="race"
+                        v-model="race"
+                        :options="raceOptions"
+                        option-label="label"
+                        option-value="value"
+                        :validation="validation.race"
+                        class="w-full"
+                    />
+                    <label for="category">Vzdálenost</label>
+                </FloatLabel>
+            </div>
+
+            <div class="hidden">
+                <input
+                    type="text"
+                    aria-hidden="true"
+                    v-model="honeypot"
                 />
             </div>
+
+            <div
+                ref="turnstileEl"
+                class="cf-turnstile mt-3"
+            ></div>
         </div>
 
-        <div class="d-none">
-            <input
-                type="text"
-                aria-hidden="true"
-                v-model="honeypot"
+        <div class="flex justify-end">
+            <Button
+                type="submit"
+                :disabled="isLoading"
+                :loading="isLoading"
+                label="Odeslat přihlášku"
+                icon="pi pi-send"
+                class="px-6 py-2"
             />
         </div>
-
-        <div
-            ref="turnstileEl"
-            class="cf-turnstile mt-3"
-        ></div>
-
-        <div class="text-center mt-5">
-            <button
-                type="submit"
-                class="btn btn-primary px-5 text-uppercase"
-            >
-                Odeslat
-            </button>
-        </div>
     </form>
-
-    <div
-        v-if="isLoading"
-        class="text-center mt-3"
-    >
-        <span
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-        ></span>
-        Odesílání...
-    </div>
 
     <div
         v-if="error"
@@ -127,16 +144,22 @@
 </template>
 
 <script setup lang="ts">
-import { FormInput, FormInputDatePicker, FormInputSelect } from '@tvaliasek/vue-form-inputs'
-import { computed, onMounted, ref, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email as emailValidator } from '@vuelidate/validators'
+
+// PrimeVue components
+import InputText from 'primevue/inputtext'
+import Select from 'primevue/select'
+import DatePicker from 'primevue/datepicker'
+import Button from 'primevue/button'
+import FloatLabel from 'primevue/floatlabel'
 
 const firstName = ref('')
 const lastName = ref('')
 const email = ref('')
 const dateOfBirth = ref<Date | null>(null)
-const category = ref<string | null>(null)
+const category = ref('')
 const race = ref<string | null>(null)
 const honeypot = ref('')
 
@@ -186,19 +209,29 @@ const age = computed(() => {
         return null
     }
     const today = new Date()
-    return today.getFullYear() - dateOfBirth.value.getFullYear()
+    const birthDate = new Date(dateOfBirth.value)
+
+    let age = today.getFullYear() - birthDate.getFullYear()
+    const monthDiff = today.getMonth() - birthDate.getMonth()
+
+    // If the current month is before the birth month, or it's the same month but the day hasn't occurred yet, subtract one year
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--
+    }
+
+    return age
 })
 
 const categoryOptions = computed(() => {
     if (dateOfBirth.value && age.value <= 17) {
         return [
-            { text: 'Dívka', value: 'girl' },
-            { text: 'Chlapec', value: 'boy' }
+            { label: 'Dívka', value: 'girl' },
+            { label: 'Chlapec', value: 'boy' }
         ]
     } else if (dateOfBirth.value && age.value >= 18) {
         return [
-            { text: 'Žena', value: 'female' },
-            { text: 'Muž', value: 'male' }
+            { label: 'Žena', value: 'female' },
+            { label: 'Muž', value: 'male' }
         ]
     }
     return []
@@ -206,31 +239,31 @@ const categoryOptions = computed(() => {
 
 const raceRules = {
     female: [
-        { min: 18, max: 39, options: [{ text: '15 km (3 kola) - Z15', value: 'Z15' }] },
-        { min: 40, max: 49, options: [{ text: '15 km (3 kola) - ZV15', value: 'ZV15' }] },
-        { min: 50, max: Infinity, options: [{ text: '15 km (3 kola) - ZW15', value: 'ZW15' }] }
+        { min: 18, max: 39, options: [{ label: '15 km (3 kola) - Z15', value: 'Z15' }] },
+        { min: 40, max: 49, options: [{ label: '15 km (3 kola) - ZV15', value: 'ZV15' }] },
+        { min: 50, max: Infinity, options: [{ label: '15 km (3 kola) - ZW15', value: 'ZW15' }] }
     ],
     male: [
-        { min: 18, max: 39, options: [{ text: '15 km (3 kola) - M15', value: 'M15' }, { text: '30 km (6 kol) - M30', value: 'M30' }] },
-        { min: 40, max: 49, options: [{ text: '15 km (3 kola) - V15', value: 'V15' }, { text: '30 km (6 kol) - V30', value: 'V30' }] },
-        { min: 50, max: 59, options: [{ text: '15 km (3 kola) - W15', value: 'W15' }, { text: '30 km (6 kol) - W30', value: 'W30' }] },
-        { min: 60, max: Infinity, options: [{ text: '15 km (3 kola) - WV15', value: 'WV15' }, { text: '30 km - WV30', value: 'WV30' }] }
+        { min: 18, max: 39, options: [{ label: '15 km (3 kola) - M15', value: 'M15' }, { label: '30 km (6 kol) - M30', value: 'M30' }] },
+        { min: 40, max: 49, options: [{ label: '15 km (3 kola) - V15', value: 'V15' }, { label: '30 km (6 kol) - V30', value: 'V30' }] },
+        { min: 50, max: 59, options: [{ label: '15 km (3 kola) - W15', value: 'W15' }, { label: '30 km (6 kol) - W30', value: 'W30' }] },
+        { min: 60, max: Infinity, options: [{ label: '15 km (3 kola) - WV15', value: 'WV15' }, { label: '30 km - WV30', value: 'WV30' }] }
     ],
     girl: [
-        { min: 0, max: 5, options: [{ text: '140 m - Z1', value: 'Z1' }] },
-        { min: 6, max: 7, options: [{ text: '350 m - Z2', value: 'Z2' }] },
-        { min: 8, max: 9, options: [{ text: '700 m - Z3', value: 'Z3' }] },
-        { min: 10, max: 12, options: [{ text: '5 km (2 kola) - Z5', value: 'Z5' }] },
-        { min: 13, max: 14, options: [{ text: '7,5 km (3 kola) - Z7', value: 'Z7' }] },
-        { min: 15, max: 17, options: [{ text: '10 km (4 kola) - Z10', value: 'Z10' }] }
+        { min: 0, max: 5, options: [{ label: '140 m - Z1', value: 'Z1' }] },
+        { min: 6, max: 7, options: [{ label: '350 m - Z2', value: 'Z2' }] },
+        { min: 8, max: 9, options: [{ label: '700 m - Z3', value: 'Z3' }] },
+        { min: 10, max: 12, options: [{ label: '5 km (2 kola) - Z5', value: 'Z5' }] },
+        { min: 13, max: 14, options: [{ label: '7,5 km (3 kola) - Z7', value: 'Z7' }] },
+        { min: 15, max: 17, options: [{ label: '10 km (4 kola) - Z10', value: 'Z10' }] }
     ],
     boy: [
-        { min: 0, max: 5, options: [{ text: '140 m - M1', value: 'M1' }] },
-        { min: 6, max: 7, options: [{ text: '350 m - M2', value: 'M2' }] },
-        { min: 8, max: 9, options: [{ text: '700 m - M3', value: 'M3' }] },
-        { min: 10, max: 12, options: [{ text: '5 km (2 kola) - M5', value: 'M5' }] },
-        { min: 13, max: 14, options: [{ text: '7,5 km (3 kola) - M7', value: 'M7' }] },
-        { min: 15, max: 17, options: [{ text: '10 km (4 kola) - M10', value: 'M10' }] }
+        { min: 0, max: 5, options: [{ label: '140 m - M1', value: 'M1' }] },
+        { min: 6, max: 7, options: [{ label: '350 m - M2', value: 'M2' }] },
+        { min: 8, max: 9, options: [{ label: '700 m - M3', value: 'M3' }] },
+        { min: 10, max: 12, options: [{ label: '5 km (2 kola) - M5', value: 'M5' }] },
+        { min: 13, max: 14, options: [{ label: '7,5 km (3 kola) - M7', value: 'M7' }] },
+        { min: 15, max: 17, options: [{ label: '10 km (4 kola) - M10', value: 'M10' }] }
     ]
 }
 
@@ -252,6 +285,13 @@ watch([category, raceOptions], ([newCategory, newRaceOptions]) => {
     }
 })
 
+watch(age, (newAge) => {
+    if (newAge !== null) {
+        category.value = ''
+        race.value = null
+    }
+})
+
 onMounted(() => {
     if ((window as any).turnstile && turnstileSiteKey) {
         try {
@@ -266,14 +306,6 @@ onMounted(() => {
             console.error('Error rendering Turnstile:', err)
         }
     }
-})
-
-const minBirthDate = computed(() => {
-    return new Date('1920-01-01T00:00:00')
-})
-
-const maxBirthDate = computed(() => {
-    return new Date()
 })
 
 // TODO: doladit tuto funkci - hlášky, validace, odesílání
