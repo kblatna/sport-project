@@ -28,6 +28,7 @@
         "mailgun.js": "^12.0.2",
         "mjml": "^4.15.3",
         "mongoose": "^8.14.3",
+        "mongoose-paginate-v2": "^1.9.1",
         "reflect-metadata": "^0.2.2",
         "rxjs": "^7.8.1"
     },
@@ -41,6 +42,7 @@
         "@swc/cli": "^0.6.0",
         "@swc/core": "^1.10.7",
         "@types/express": "^5.0.0",
+        "@types/mjml": "^4.7.4",
         "@types/node": "^22.10.7",
         "@types/supertest": "^6.0.2",
         "@vue/eslint-config-typescript": "^14.5.0",
