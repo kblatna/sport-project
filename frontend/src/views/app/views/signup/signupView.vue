@@ -6,7 +6,7 @@
                     <span>Přihláška na závod</span>
                     <iconify-icon
                         :inline="true"
-                        icon="mdi:cow"
+                        icon="mdi:bicycle"
                     />
                 </div>
             </template>

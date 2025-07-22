@@ -4,8 +4,8 @@ const BASE_URL = import.meta.env.VITE_API_URL
 
 export function createService(resource: string) {
     return {
-        async getAll() {
-            const response = await axios.get(`${BASE_URL}/${resource}`)
+        async getAll(params?: Record<string, unknown>) {
+            const response = await axios.get(`${BASE_URL}/${resource}`, { params })
             return response.data
         },
 
