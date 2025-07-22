@@ -1,6 +1,7 @@
 <template>
     <DataTable
         :value="results"
+        :lazy="true"
         :loading="isLoading"
         :paginator="true"
         :rows="10"
@@ -15,6 +16,7 @@
         show-gridlines
         table-style="min-width: 50rem"
         v-model:filters="filters"
+        @on-lazy-load="onLazyLoadHandler()"
     >
         <template #header>
             <div class="flex justify-between">
@@ -169,14 +171,19 @@ import DataTable from 'primevue/datatable'
 import IconField from 'primevue/iconfield'
 import InputIcon from 'primevue/inputicon'
 import InputText from 'primevue/inputtext'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 defineProps<{
     results: Result[]
+    totalRecords: number
     isLoading: boolean
 }>()
 
 const filters = ref<Record<string, any>>({})
+
+const $emit = defineEmits<{
+    (e: 'on-lazy-load', filters: Record<string, unknown>): void
+}>()
 
 const initFilters = () => {
     filters.value = {
@@ -193,8 +200,29 @@ const initFilters = () => {
 
 initFilters()
 
+watch(filters, () => {
+    onLazyLoadHandler()
+}, { deep: true })
+
 const clearFilter = () => {
     initFilters()
+}
+
+function onLazyLoadHandler() {
+    const activeFilters: Record<string, unknown> = {}
+
+    Object.keys(filters.value).forEach((key) => {
+        const filter = filters.value[key]
+        if (filter?.value !== null && filter?.value !== undefined && filter?.value !== '') {
+            activeFilters[key] = filter.value
+        }
+    })
+
+    if (!activeFilters.year) {
+        activeFilters.year = 2024
+    }
+
+    return $emit('on-lazy-load', activeFilters)
 }
 
 </script>

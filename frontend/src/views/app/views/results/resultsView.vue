@@ -19,7 +19,9 @@
             <template #content>
                 <ResultsDataTable
                     :results="result ?? []"
+                    :total-records="result.length"
                     :is-loading="isLoading"
+                    @on-lazy-load="loadData"
                 />
             </template>
         </Card>
@@ -30,23 +32,42 @@
 import { onMounted, ref } from 'vue'
 import ResultsDataTable from './components/ResultsDataTable.vue'
 import { Result } from '@/interface/result.interface'
-import { results } from '../../../../services/api/services'
+import { listResults } from '@/services/api/services'
 import Card from 'primevue/card'
 
 const result = ref<Result[]>([])
 const isLoading = ref(false)
 
 onMounted(async () => {
-    isLoading.value = true
+    listAllResultsThisYear()
+})
 
+async function listAllResultsThisYear(): Promise<void> {
+    isLoading.value = true
     try {
-        const response = await results.getAll()
+        const response = await listResults({
+            year: new Date().getFullYear() - 1 // TODO: Change to current or last year
+        })
         result.value = response
     } catch (error) {
         console.error('Error fetching results:', error)
+        // TODO: add notifier for error
     } finally {
         isLoading.value = false
     }
-})
+}
+
+async function loadData(filters?: Record<string, unknown>): Promise<void> {
+    isLoading.value = true
+    try {
+        const response = await listResults(filters)
+        result.value = response
+    } catch (error) {
+        console.error('Error fetching results:', error)
+        // TODO: add notifier for error
+    } finally {
+        isLoading.value = false
+    }
+}
 
 </script>
