@@ -3,7 +3,7 @@ import {
     Logger
 } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import { FilterQuery, PaginateModel, PaginateResult, PaginateOptions } from 'mongoose'
+import { FilterQuery, Model } from 'mongoose'
 import { Result, ResultDocument, ResultLeanDocument } from '../../Databases/result.schema'
 import { ListResultsQuery } from './Interface/ListResultsQuery.interface'
 
@@ -13,14 +13,14 @@ export class ResultService {
 
     constructor(
         @InjectModel(Result.name)
-        private readonly ResultModel: PaginateModel<ResultDocument>
+        private readonly ResultModel: Model<ResultDocument>
     ) { }
 
     async getAllResults(): Promise<ResultLeanDocument[]> {
         return await this.ResultModel.find().lean()
     }
 
-    async getLeanResults(filter: ListResultsQuery, paginateOptions: PaginateOptions): Promise<PaginateResult<ResultLeanDocument>> {
+    async getLeanResults(filter: ListResultsQuery): Promise<ResultLeanDocument[]> {
         const { rank, startNumber, name, dateOfBirth, totalTime, category, year } = filter
         const filterQuery: FilterQuery<Result> = {}
 
@@ -52,8 +52,8 @@ export class ResultService {
             filterQuery.year = year
         }
 
-        return await this.ResultModel.paginate(filterQuery, {
-            ...paginateOptions
-        })
+        return await this.ResultModel
+            .find(filterQuery)
+            .lean(true)
     }
 }
