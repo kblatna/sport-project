@@ -1,8 +1,9 @@
 import { Exclude, Expose } from 'class-transformer'
 import { IsOptional, IsString } from 'class-validator'
+import { PagingQueryOptionsDto } from '../../../Global/PagingQueryOptions.dto'
 
 @Exclude()
-export class ListResultsQueryDto {
+export class ListResultsQueryDto extends PagingQueryOptionsDto {
     @IsOptional()
     @IsString()
     @Expose()

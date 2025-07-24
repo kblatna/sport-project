@@ -1,7 +1,8 @@
 import { Controller, Get, Query } from '@nestjs/common'
 import { ResultService } from './result.service'
-import { ResultLeanDocument } from '../../Databases/result.schema'
+import type { ResultLeanDocument, ResultDocument } from '../../Databases/result.schema'
 import { ListResultsQueryDto } from './DTO/ListResultsQuery.dto'
+import { PaginateResult } from 'mongoose'
 
 @Controller('results')
 export class ResultController {
@@ -9,12 +10,13 @@ export class ResultController {
         private readonly resultService: ResultService
     ) { }
 
-    @Get()
-    async listResults(
-        @Query() query: ListResultsQueryDto
-    ): Promise<ResultLeanDocument[]> {
-        console.log('Received query params:', query)
-        return await this.resultService.getLeanResults(query)
+    @Get('paginate')
+    async paginateResults(
+    @Query() query: ListResultsQueryDto
+    ): Promise<PaginateResult<ResultDocument>> {
+        const paginateOptions = query.toPaginateOptions()
+        console.log('PaginateOptions:', paginateOptions)
+        return await this.resultService.paginateResults(query)
     }
 
     @Get('all')

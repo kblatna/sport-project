@@ -1,59 +1,40 @@
-import {
-    Injectable,
-    Logger
-} from '@nestjs/common'
+import { Injectable, Logger } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import { FilterQuery, Model } from 'mongoose'
+import { type FilterQuery, type PaginateModel, type PaginateResult } from 'mongoose'
 import { Result, ResultDocument, ResultLeanDocument } from '../../Databases/result.schema'
-import { ListResultsQuery } from './Interface/ListResultsQuery.interface'
+import { ListResultsQueryDto } from './DTO/ListResultsQuery.dto' // doporučuji DTO, ne interface
+import { buildFilterQuery, FilterConfig } from '../../Global/buildFilterQuery' // upravte cestu podle vašeho projektu
 
 @Injectable()
 export class ResultService {
     protected readonly logger = new Logger(ResultService.name)
 
     constructor(
-        @InjectModel(Result.name)
-        private readonly ResultModel: Model<ResultDocument>
-    ) { }
+    @InjectModel(Result.name)
+    private readonly ResultModel: PaginateModel<ResultDocument>
+    ) {}
 
     async getAllResults(): Promise<ResultLeanDocument[]> {
         return await this.ResultModel.find().lean()
     }
 
-    async getLeanResults(filter: ListResultsQuery): Promise<ResultLeanDocument[]> {
-        const { rank, startNumber, name, dateOfBirth, totalTime, category, year } = filter
-        const filterQuery: FilterQuery<Result> = {}
-
-        if (rank) {
-            filterQuery.rank = rank
+    async paginateResults(
+        pagingQuery: ListResultsQueryDto
+    ): Promise<PaginateResult<ResultDocument>> {
+        const filterConfig: FilterConfig<Result> = {
+            rank: { type: 'exact' },
+            startNumber: { type: 'exact' },
+            name: { type: 'regex' },
+            dateOfBirth: { type: 'exact' },
+            totalTime: { type: 'exact' },
+            category: { type: 'exact' },
+            year: { type: 'exact' }
         }
 
-        if (startNumber) {
-            filterQuery.startNumber = startNumber
-        }
+        const filterQuery: FilterQuery<Result> = buildFilterQuery<Result>(pagingQuery, filterConfig)
 
-        if (name) {
-            filterQuery.name = { $regex: name, $options: 'i' } // case-insensitive
-        }
+        const options = pagingQuery.toPaginateOptions()
 
-        if (dateOfBirth) {
-            filterQuery.dateOfBirth = dateOfBirth
-        }
-
-        if (totalTime) {
-            filterQuery.totalTime = totalTime
-        }
-
-        if (category) {
-            filterQuery.category = category
-        }
-
-        if (year) {
-            filterQuery.year = year
-        }
-
-        return await this.ResultModel
-            .find(filterQuery)
-            .lean(true)
+        return await this.ResultModel.paginate(filterQuery, options)
     }
 }
