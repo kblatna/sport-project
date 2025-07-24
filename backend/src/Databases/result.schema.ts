@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { SchemaTypes, type HydratedDocument } from 'mongoose'
+import mongoosePaginate from 'mongoose-paginate-v2'
 
 @Schema({
     minimize: false,
@@ -49,6 +50,8 @@ export class Result {
     year: string
 }
 
-export const ResultSchema = SchemaFactory.createForClass(Result)
 export type ResultDocument = HydratedDocument<Result>
 export type ResultLeanDocument = LeanDocument<ResultDocument>
+
+export const ResultSchema = SchemaFactory.createForClass(Result)
+ResultSchema.plugin(mongoosePaginate)
