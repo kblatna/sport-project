@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = import.meta.env.VITE_API_URL
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
 
 export function createService(resource: string) {
     return {
@@ -26,6 +26,11 @@ export function createService(resource: string) {
 
         async delete(id: string | number) {
             const response = await axios.delete(`${BASE_URL}/${resource}/${id}`)
+            return response.data
+        },
+
+        async paginate(params?: Record<string, unknown>) {
+            const response = await axios.get(`${BASE_URL}/${resource}/paginate`, { params })
             return response.data
         }
     }

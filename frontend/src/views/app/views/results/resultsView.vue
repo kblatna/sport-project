@@ -18,8 +18,8 @@
             </template>
             <template #content>
                 <ResultsDataTable
-                    :results="result ?? []"
-                    :total-records="result.length"
+                    :results="result.docs"
+                    :total-records="result.totalDocs"
                     :is-loading="isLoading"
                     @on-lazy-load="loadData"
                 />
@@ -29,33 +29,32 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import ResultsDataTable from './components/ResultsDataTable.vue'
 import { Result } from '@/interface/result.interface'
 import { listResults } from '@/services/api/services'
 import Card from 'primevue/card'
+import { PaginateResult } from '@/interface/PaginateResult.interface'
 
-const result = ref<Result[]>([])
+const result = ref<PaginateResult<Result[]>>({
+    docs: [],
+    totalDocs: 0,
+    offset: 0,
+    limit: 10,
+    totalPages: 0,
+    page: 1,
+    pagingCounter: 1,
+    hasPrevPage: false,
+    hasNextPage: false,
+    prevPage: null,
+    nextPage: null
+})
+
 const isLoading = ref(false)
 
 onMounted(async () => {
-    listAllResultsThisYear()
+    await loadData({ year: new Date().getFullYear() - 1 })
 })
-
-async function listAllResultsThisYear(): Promise<void> {
-    isLoading.value = true
-    try {
-        const response = await listResults({
-            year: new Date().getFullYear() - 1 // TODO: Change to current or last year
-        })
-        result.value = response
-    } catch (error) {
-        console.error('Error fetching results:', error)
-        // TODO: add notifier for error
-    } finally {
-        isLoading.value = false
-    }
-}
 
 async function loadData(filters?: Record<string, unknown>): Promise<void> {
     isLoading.value = true
@@ -64,10 +63,9 @@ async function loadData(filters?: Record<string, unknown>): Promise<void> {
         result.value = response
     } catch (error) {
         console.error('Error fetching results:', error)
-        // TODO: add notifier for error
+    // TODO: add notifier for error
     } finally {
         isLoading.value = false
     }
 }
-
 </script>
