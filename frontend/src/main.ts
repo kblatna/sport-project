@@ -4,7 +4,7 @@ import VueSecureHTML from 'vue-html-secure'
 
 // PrimeVue imports
 import PrimeVue from 'primevue/config'
-import Aura from '@primevue/themes/aura'
+import Aura from '@primeuix/themes/aura'
 import 'primeicons/primeicons.css'
 
 import { createApp } from 'vue'
