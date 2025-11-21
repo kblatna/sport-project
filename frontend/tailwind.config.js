@@ -20,6 +20,13 @@ module.exports = {
                     900: '#111827'
                 }
             }
+        },
+        container: {
+            center: true,
+            padding: {
+                DEFAULT: '1rem',
+                lg: '2rem',
+            },
         }
     },
     plugins: [
