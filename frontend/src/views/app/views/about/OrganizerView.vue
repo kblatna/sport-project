@@ -1,6 +1,6 @@
 <template>   
     <PageWrapper>            
-        <PageTitle title="Slovo o pořadateli" />
+        <PageTitle title="Slovo o pořadateli" center/>
         <div class="flex flex-col md:flex-row md:gap-20 gap-8">
             <div class="flex flex-col flex-1">
                 <h3 class="text-xl font-semibold mb-4">Spolek Defekt</h3>
