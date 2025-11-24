@@ -9,33 +9,30 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tvaliasek/vue-datatable": "^2.3.3",
-    "@tvaliasek/vue-form-inputs": "^5.0.6",
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
-    "@vuepic/vue-datepicker": "^5.4.0",
-    "axios": "^1.9.0",
-    "iconify-icon": "^3.0.0",
+    "axios": "^1.13.2",
+    "iconify-icon": "^3.0.2",
     "primeicons": "^7.0.0",
-    "primevue": "^4.3.6",
-    "vue": "^3.5.13",
+    "primevue": "^4.4.1",
+    "vue": "^3.5.25",
     "vue-html-secure": "^1.0.10",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.6.3"
   },
   "devDependencies": {
     "@primevue/themes": "^4.4.1",
-    "@stylistic/eslint-plugin": "^4.4.0",
+    "@stylistic/eslint-plugin": "^5.6.1",
     "@tailwindcss/forms": "^0.5.10",
-    "@types/node": "^22.15.23",
-    "@vitejs/plugin-vue": "^5.2.3",
-    "@vue/eslint-config-typescript": "^14.5.0",
+    "@types/node": "^24.10.1",
+    "@vitejs/plugin-vue": "^6.0.2",
+    "@vue/eslint-config-typescript": "^14.6.0",
     "autoprefixer": "^10.4.22",
-    "eslint": "^9.28.0",
-    "eslint-plugin-oxlint": "^0.17.0",
-    "eslint-plugin-vue": "^10.1.0",
+    "eslint": "^9.39.1",
+    "eslint-plugin-oxlint": "^1.30.0",
+    "eslint-plugin-vue": "^10.6.0",
     "postcss": "^8.5.6",
-    "tailwindcss": "^3.4.18",
-    "vite": "^6.2.4",
-    "vite-plugin-vue-devtools": "^7.7.2"
+    "tailwindcss": "^4.1.17",
+    "vite": "^7.2.4",
+    "vite-plugin-vue-devtools": "^8.0.5"
   }
 }
