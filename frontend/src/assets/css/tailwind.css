@@ -16,7 +16,22 @@
         @apply bg-white rounded-lg shadow-md p-6;
     }
     
-    .container-app {
+    .container                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .container {
         @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
     }
+}
+
+/* TODO: pořešit vlastní styly + variables na barvy */
+
+.header {
+    background: #003049;
+    background: linear-gradient(to right, #003049, #164263, #2a5a88);
+}
+
+.footer {
+    background: #003049;
+}
+
+.copyright {
+    background: #002837
 }
