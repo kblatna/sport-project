@@ -1,4 +1,4 @@
 export default {
     path: '/results',
-    component: () => import('@/views/app/views/results/resultsView.vue')
+    component: () => import('@/views/app/views/results/ResultsView.vue')
 }

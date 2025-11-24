@@ -167,7 +167,7 @@
 </template>
 
 <script setup lang="ts">
-import { Result } from '@/interface/result.interface'
+import { Result } from '@/interface/Result.interface'
 import { FilterMatchMode } from '@primevue/core/api'
 import Button from 'primevue/button'
 import Column from 'primevue/column'

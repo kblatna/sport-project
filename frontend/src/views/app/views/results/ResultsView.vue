@@ -31,7 +31,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import ResultsDataTable from './components/ResultsDataTable.vue'
-import { Result } from '@/interface/result.interface'
+import { Result } from '@/interface/Result.interface'
 import { listResults } from '@/services/api/services'
 import Card from 'primevue/card'
 import { PaginateResult } from '@/interface/PaginateResult.interface'

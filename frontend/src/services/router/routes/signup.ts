@@ -1,4 +1,4 @@
 export default {
     path: '/signup',
-    component: () => import('@/views/app/views/signup/signupView.vue')
+    component: () => import('@/views/app/views/signup/SignupView.vue')
 }
