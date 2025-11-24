@@ -48,7 +48,7 @@ docker compose down -v
 ### Frontend
 - **Vue 3** + **TypeScript**
 - **Vite** (build tool)
-- **Bootstrap** (CSS framework)
+- **Tailwind** (CSS framework)
 - **Axios** (HTTP client)
 
 ### Backend
