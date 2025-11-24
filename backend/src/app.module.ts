@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
 import { ConfigModule } from '@nestjs/config'
-import { UserModule } from './Modules/user/user.module'
-import { ContactModule } from './Modules/contact/contact.module'
-import { RaceApplicationModule } from './Modules/raceApplication/raceApplication.module'
-import { ResultModule } from './Modules/result/result.module'
+import { UserModule } from './modules/user/User.module'
+import { ContactModule } from './modules/contact/Contact.module'
+import { RaceApplicationModule } from './modules/raceApplication/RaceApplication.module'
+import { ResultModule } from './modules/result/Result.module'
 
 @Module({
     imports: [
