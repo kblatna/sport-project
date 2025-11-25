@@ -29,12 +29,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import ResultsDataTable from './components/ResultsDataTable.vue'
+import { PaginateResult } from '@/interface/PaginateResult.interface'
 import { Result } from '@/interface/Result.interface'
 import { listResults } from '@/services/api/services'
 import Card from 'primevue/card'
-import { PaginateResult } from '@/interface/PaginateResult.interface'
+import { onMounted, ref } from 'vue'
+import ResultsDataTable from './components/ResultsDataTable.vue'
 
 const result = ref<PaginateResult<Result[]>>({
     docs: [],
@@ -53,8 +53,18 @@ const result = ref<PaginateResult<Result[]>>({
 const isLoading = ref(false)
 
 onMounted(async () => {
-    await loadData({ year: new Date().getFullYear() - 1 })
+    const currentYear = new Date().getFullYear()
+    await loadDataWithFallback(currentYear)
 })
+
+async function loadDataWithFallback(year: number): Promise<void> {
+    await loadData({ year })
+
+    if (result.value.totalDocs === 0) {
+        console.warn(`No results for year ${year}. I try lo load last year ${year - 1}…`)
+        await loadData({ year: year - 1 })
+    }
+}
 
 async function loadData(filters?: Record<string, unknown>): Promise<void> {
     isLoading.value = true

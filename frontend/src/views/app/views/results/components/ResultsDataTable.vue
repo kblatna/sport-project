@@ -241,10 +241,6 @@ function onLazyLoadHandler(event?: LazyLoadEvent) {
         }
     })
 
-    if (!activeFilters.year) {
-        activeFilters.year = 2024
-    }
-
     if (event?.page !== undefined) {
         activeFilters.page = event.page + 1
     }
