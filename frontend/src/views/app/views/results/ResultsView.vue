@@ -9,22 +9,12 @@
             </p>
         </div>
 
-        <Card>
-            <template #title>
-                <div class="flex items-center">
-                    <i class="pi pi-trophy text-2xl text-yellow-500 mr-2"></i>
-                    Výsledky závodů
-                </div>
-            </template>
-            <template #content>
-                <ResultsDataTable
-                    :results="result.docs"
-                    :total-records="result.totalDocs"
-                    :is-loading="isLoading"
-                    @on-lazy-load="loadData"
-                />
-            </template>
-        </Card>
+        <ResultsDataTable
+            :results="result.docs"
+            :total-records="result.totalDocs"
+            :is-loading="isLoading"
+            @on-lazy-load="loadData"
+        />
     </div>
 </template>
 

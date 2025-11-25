@@ -22,7 +22,10 @@
         @filter="onLazyLoadHandler($event)"
     >
         <template #header>
-            <div class="flex justify-end">
+            <div class="flex flex-wrap justify-between items-end w-full gap-2 mb-3">
+                <h3 class="text-xl font-semibold">
+                    Výsledky závodů
+                </h3>
                 <Button
                     type="button"
                     icon="pi pi-filter-slash"
@@ -260,5 +263,9 @@ function onLazyLoadHandler(event?: any) {
         display: none !important;
         visibility: hidden !important;
     }
+}
+
+.p-datatable-header {
+    border: none !important;
 }
 </style>
