@@ -4,14 +4,13 @@
         :lazy="true"
         :loading="isLoading"
         :paginator="true"
-        :rows="10"
+        :rows="rows"
         :rows-per-page-options="[5, 10, 25, 50, 100]"
         :total-records="totalRecords"
         :sort-field="sortField"
         :sort-order="sortOrder"
         :first="first"
         filter-display="row"
-        :global-filter-fields="['rank', 'startNumber', 'name', 'dateOfBirth', 'totalTime', 'category', 'year']"
         class="results-table p-datatable-sm"
         responsive-layout="scroll"
         striped-rows
@@ -23,24 +22,14 @@
         @filter="onLazyLoadHandler($event)"
     >
         <template #header>
-            <div class="flex justify-between">
+            <div class="flex justify-end">
                 <Button
                     type="button"
                     icon="pi pi-filter-slash"
                     label="Reset filtrů"
                     outlined
-                    @click="clearFilter()"
+                    @click="clearFilter"
                 />
-                <IconField icon-position="left">
-                    <InputIcon>
-                        <i class="pi pi-search"></i>
-                    </InputIcon>
-                    <InputText
-                        v-model="filters['global'].value"
-                        placeholder="Globální vyhledávání..."
-                        class="p-inputtext-sm"
-                    />
-                </IconField>
             </div>
         </template>
 
@@ -63,7 +52,7 @@
                 <InputText
                     v-model="filterModel.value"
                     type="text"
-                    @input="filterCallback()"
+                    @input="filterCallback"
                     placeholder="Hledat číslo"
                 />
             </template>
@@ -76,13 +65,15 @@
             :show-filter-menu="true"
         >
             <template #body="slotProps">
-                <span class="font-medium">{{ slotProps.data.name }}</span>
+                <span class="font-medium">
+                    {{ slotProps.data.name }}
+                </span>
             </template>
             <template #filter="{ filterModel, filterCallback }">
                 <InputText
                     v-model="filterModel.value"
                     type="text"
-                    @input="filterCallback()"
+                    @input="filterCallback"
                     placeholder="Hledat jméno"
                 />
             </template>
@@ -98,7 +89,7 @@
                 <InputText
                     v-model="filterModel.value"
                     type="text"
-                    @input="filterCallback()"
+                    @input="filterCallback"
                     placeholder="Hledat rok"
                 />
             </template>
@@ -121,7 +112,7 @@
                 <InputText
                     v-model="filterModel.value"
                     type="text"
-                    @input="filterCallback()"
+                    @input="filterCallback"
                     placeholder="Hledat kategorii"
                 />
             </template>
@@ -137,7 +128,7 @@
                 <InputText
                     v-model="filterModel.value"
                     type="text"
-                    @input="filterCallback()"
+                    @input="filterCallback"
                     placeholder="Hledat ročník"
                 />
             </template>
@@ -172,18 +163,8 @@ import { FilterMatchMode } from '@primevue/core/api'
 import Button from 'primevue/button'
 import Column from 'primevue/column'
 import DataTable from 'primevue/datatable'
-import IconField from 'primevue/iconfield'
-import InputIcon from 'primevue/inputicon'
 import InputText from 'primevue/inputtext'
-import { ref } from 'vue'
-
-interface LazyLoadEvent {
-    first: number
-    rows: number
-    sortField?: string
-    sortOrder?: number
-    filters?: Record<string, any>
-}
+import { ref, watch } from 'vue'
 
 defineProps<{
     results: Result[]
@@ -193,8 +174,9 @@ defineProps<{
 
 const filters = ref<Record<string, any>>({})
 const sortField = ref<string>('rank')
-const sortOrder = ref<number>(1)
+const sortOrder = ref<0 | 1 | -1>(1)
 const first = ref<number>(0)
+const rows = ref<number>(10)
 
 const $emit = defineEmits<{
     (e: 'on-lazy-load', filters: Record<string, unknown>): void
@@ -202,7 +184,6 @@ const $emit = defineEmits<{
 
 const initFilters = () => {
     filters.value = {
-        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         rank: { value: null, matchMode: FilterMatchMode.CONTAINS },
         startNumber: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         name: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -222,16 +203,28 @@ const clearFilter = () => {
     first.value = 0
 }
 
-function onLazyLoadHandler(event?: LazyLoadEvent) {
+watch([filters, sortField, sortOrder, first, rows], () => {
+    onLazyLoadHandler({
+        first: first.value,
+        rows: rows.value,
+        sortField: sortField.value,
+        sortOrder: sortOrder.value
+    })
+}, { immediate: true })
+
+function onLazyLoadHandler(event?: any) {
     const activeFilters: Record<string, unknown> = {}
 
-    if (event?.page !== undefined) {
+    if (event?.first !== undefined) {
         first.value = event.first
     }
 
-    if (event?.sortField !== undefined) {
-        sortField.value = event.sortField
-        sortOrder.value = event.sortOrder
+    if (event.sortField !== undefined) {
+        if (typeof event.sortField === 'string') {
+            sortField.value = event.sortField
+        } else {
+            sortField.value = ''
+        }
     }
 
     Object.keys(filters.value).forEach((key) => {
@@ -241,11 +234,12 @@ function onLazyLoadHandler(event?: LazyLoadEvent) {
         }
     })
 
-    if (event?.page !== undefined) {
-        activeFilters.page = event.page + 1
+    if (event?.first !== undefined && event?.rows !== undefined) {
+        activeFilters.page = Math.floor(event.first / event.rows) + 1
     }
 
     if (event?.rows !== undefined) {
+        rows.value = event.rows
         activeFilters.limit = event.rows
     }
 
