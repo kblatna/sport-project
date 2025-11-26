@@ -135,7 +135,7 @@
 
             <div class="w-20 h-1 bg-teal-500 rounded mx-auto mt-6"></div>
 
-            <ul class="grid sm:grid-cols-2 gap-y-3 gap-x-10 text-left mt-14 text-lg">
+            <ul class="grid md:grid-cols-2 gap-y-3 gap-x-10 text-center md:text-left mt-14 text-lg">
                 <li>atraktivní a&nbsp;dobře zabezpečená trať</li>
                 <li>skvělá atmosféra</li>
                 <li>měření časů pomocí nevratných čipů</li>
@@ -147,12 +147,101 @@
             </ul>
         </div>
     </section>
+
+    <section class="my-20">
+        <div class="container">
+            <template v-if="isLoading">
+                <div class="grid grid-cols-12 gap-4 w-full">
+                    <Skeleton
+                        v-for="n in 8"
+                        :key="n"
+                        class="col-span-12 sm:col-span-6 lg:col-span-3 aspect-[4/3] min-h-[180px] w-full rounded-lg"
+                    />
+                </div>
+            </template>
+
+            <template v-else>
+                <Galleria
+                    v-model:active-index="activeIndex"
+                    v-model:visible="displayCustom"
+                    :value="images"
+                    :num-visible="7"
+                    :circular="true"
+                    :full-screen="true"
+                    :show-item-navigators="true"
+                    :show-thumbnails="false"
+                    class="max-w-50"
+                >
+                    <template #item="slotProps">
+                        <Image
+                            :src="slotProps.item.thumbnailImageSrc"
+                            :alt="slotProps.item.alt"
+                            image-class="block w-full rounded-md w-full"
+                        />
+                    </template>
+                    <template #thumbnail="slotProps">
+                        <Image
+                            :src="slotProps.item.thumbnailImageSrc"
+                            :alt="slotProps.item.alt"
+                            image-class="block w-full rounded-md"
+                        />
+                    </template>
+                </Galleria>
+
+                <div
+                    v-if="images"
+                    class="grid grid-cols-12 gap-4 w-full"
+                >
+                    <div
+                        v-for="(image, index) of images"
+                        :key="index"
+                        class="col-span-12 sm:col-span-6 lg:col-span-3"
+                    >
+                        <Image
+                            :src="image.thumbnailImageSrc"
+                            :alt="image.alt"
+                            image-class="w-full rounded-md cursor-pointer"
+                            @click="imageClick(index)"
+                        />
+                    </div>
+                </div>
+            </template>
+        </div>
+    </section>
 </template>
 
 <script lang="ts" setup>
 import adults from '@/assets/images/adults.webp'
 import kids from '@/assets/images/kids.webp'
-import { Button, Card, Image } from 'primevue'
+import { PhotoService } from '@/services/photoService'
+import { Button, Card, Galleria, Image, Skeleton } from 'primevue'
+import { onMounted, ref } from 'vue'
+
+const images = ref()
+const activeIndex = ref(0)
+const displayCustom = ref(false)
+const isLoading = ref(false)
+
+onMounted(async () => {
+    getImages()
+})
+
+const imageClick = (index) => {
+    activeIndex.value = index
+    displayCustom.value = true
+}
+
+async function getImages() {
+    isLoading.value = true
+    try {
+        const data = await PhotoService.getImages()
+        images.value = data
+    } catch (error) {
+        console.error('Nepodařilo se načíst obrázky:', error)
+    } finally {
+        isLoading.value = false
+    }
+}
 
 </script>
 
