@@ -45,7 +45,7 @@
     </section>
 
     <section class="my-20">
-        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 justify-item-center">
+        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 justify-items-center">
             <Card class="equal-card w-full max-w-sm flex flex-col h-full">
                 <template #header>
                     <Image
