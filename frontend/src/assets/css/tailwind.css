@@ -1,18 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* TODO: pořešit vlastní styly + variables na barvy */
-
-.header {
-    background: #003049;
-    background: linear-gradient(to right, #003049, #164263, #2a5a88);
-}
-
-.footer {
-    background: #003049;
-}
-
-.copyright {
-    background: #002837
+@layer base {
+    body {
+        font-family: 'Montserrat', sans-serif;
+    }
+        #app {
+            @apply min-h-screen flex flex-col;
+        }
+        }
+    
+        @layer components {
+    .header {
+        @apply bg-gradient-to-r from-primary-700 via-primary-600 to-primary-500;
+        }
+        
+        .header a {
+            @apply transition-all duration-300;
+        }
+        
+        .header a:hover {
+            @apply transition-all duration-300;
+        }
+        
+        .footer {
+        @apply w-full bg-primary-700 mt-auto;
+        }
+        
+        .footer a {
+            @apply transition-all duration-300;
+        }
+        
+        .footer a:hover {
+            @apply transition-all duration-300;
+        }
+        
+        .copyright {
+        @apply bg-primary-800;
+        }
 }
