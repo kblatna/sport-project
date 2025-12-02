@@ -225,7 +225,6 @@ async function loadContentData(): Promise<void> {
     isLoading.value = true
     try {
         const response = await mainPageContent.getAll()
-        console.log('Fetched page content:', response)
         pageContent.value = response || null
     } catch (err) {
         console.error('Error fetching page content:', err)
