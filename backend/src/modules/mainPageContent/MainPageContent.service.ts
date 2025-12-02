@@ -10,7 +10,7 @@ export class MainPageContentService {
         private readonly mainPageContentModel: Model<MainPageContentDocument>
     ) {}
 
-    async getAllContent(): Promise<MainPageContentLeanDocument[]> {
-        return await this.mainPageContentModel.find().lean()
+    async getAllContent(): Promise<MainPageContentLeanDocument | null> {
+        return await this.mainPageContentModel.findOne().lean()
     }
 }

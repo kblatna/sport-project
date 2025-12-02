@@ -12,7 +12,7 @@ export class MainPageContentController {
     ) {}
 
     @Get()
-    async getAllContent(): Promise<MainPageContentLeanDocument[]> {
+    async getAllContent(): Promise<MainPageContentLeanDocument | null> {
         return await this.mainPageContentService.getAllContent()
     }
 }
