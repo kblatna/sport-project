@@ -9,6 +9,9 @@ services:
     environment:
       - NODE_ENV=development
       - MONGODB_URI=mongodb://root:defekt2025@mongodb:27017/mulda?authSource=admin
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
     depends_on:
       - mongodb
   frontend:
