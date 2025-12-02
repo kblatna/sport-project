@@ -1,5 +1,4 @@
 import './assets/css/tailwind.css'
-import '@vuepic/vue-datepicker/dist/main.css'
 import VueSecureHTML from 'vue-html-secure'
 
 // PrimeVue imports

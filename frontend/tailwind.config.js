@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+import forms from '@tailwindcss/forms'
+
 export default {
     content: [
         './index.html',
@@ -35,9 +37,8 @@ export default {
                 '2xl': '1440px'
             }
         }
-
     },
     plugins: [
-        import('@tailwindcss/forms')
+        forms
     ]
 }
