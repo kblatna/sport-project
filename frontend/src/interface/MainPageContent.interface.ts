@@ -33,4 +33,27 @@ export interface MainPageContent {
         alt: string
         title: string
     }>
+    schedule?: {
+        title: string
+        description: string[]
+        tableTitle: string
+        scheduleTable: Array<{
+            category: string
+            attendance: string
+            training: string
+            restrictedTraining: string
+            start: string
+            limit: string
+            announcement: string
+            drawing: string
+        }>
+        legend: Array<{
+            term: string
+            definition: string
+        }>
+    }
+    video?: {
+        title: string
+        videoUrl: string
+    }
 }

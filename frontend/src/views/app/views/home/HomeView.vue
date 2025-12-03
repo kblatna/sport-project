@@ -1,16 +1,18 @@
 <template>
+    <!-- TODO: samostatná obecná komponenta-->
     <div
         v-if="isLoading"
         class="min-h-screen flex items-center justify-center"
     >
         <div class="text-center">
-            <div class="animate-spin rounded-full h-32 w-32 border-b-2 border-teal-500 mx-auto"></div>
+            <div class="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-500 mx-auto"></div>
             <p class="mt-4 text-gray-600">
                 Načítání obsahu...
             </p>
         </div>
     </div>
 
+    <!-- TODO: samostatná obecná komponenta-->
     <div
         v-else-if="error"
         class="min-h-screen flex items-center justify-center"
@@ -25,7 +27,7 @@
     <div v-else-if="pageContent">
         <section
             v-if="pageContent.hero"
-            class="relative h-[65vh]"
+            class="relative h-[50vh] md:h-[65vh]"
         >
             <div
                 class="absolute inset-0 bg-cover bg-start"
@@ -34,12 +36,10 @@
                 }"
             ></div>
 
-            <div class="absolute inset-0 bg-black/20"></div>
-
             <div class="relative z-10 flex items-center h-full">
                 <div class="container">
                     <div class="max-w-2xl text-white">
-                        <h1 class="text-4xl md:text-6xl font-extrabold mb-10">
+                        <h1 class="text-3xl md:text-5xl font-extrabold mb-10">
                             {{ pageContent.hero.title }}
                         </h1>
 
@@ -48,15 +48,15 @@
                             v-html="pageContent.hero.subtitle"
                         ></p>
 
-                        <div class="flex gap-5">
+                        <div class="flex flex-wrap gap-4">
                             <Button
                                 v-for="button in pageContent.hero.buttons || []"
                                 :key="button.label"
                                 :to="{ name: button.link }"
                                 router-link
                                 :class="{
-                                    'border border-white text-white px-6 py-3 rounded-lg hover:bg-white hover:text-black transition': button.variant === 'secondary',
-                                    'bg-teal-500 text-white px-6 py-3 rounded-lg hover:bg-teal-600 transition': button.variant === 'primary'
+                                    'border-2 border-white text-white px-6 py-3 rounded-lg hover:bg-white hover:text-primary-700 transition-all duration-300': button.variant === 'secondary',
+                                    'bg-white text-primary-700 px-6 py-3 rounded-lg hover:bg-primary-50 transition-all duration-300 font-semibold': button.variant === 'primary'
                                 }"
                                 :label="button.label"
                             />
@@ -68,79 +68,101 @@
 
         <section
             v-if="pageContent.raceCards && pageContent.raceCards.length > 0"
-            class="my-20"
+            class="py-16 md:py-20"
         >
-            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 justify-items-center">
-                <Card
-                    v-for="card in pageContent.raceCards"
-                    :key="card.title"
-                    class="equal-card w-full max-w-sm flex flex-col h-full"
-                >
-                    <template #header>
-                        <Image
-                            :src="card.image"
-                            :alt="card.title"
-                            image-class="rounded-t-xl"
-                        />
-                    </template>
+            <div class="container">
+                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 justify-items-center">
+                    <Card
+                        v-for="card in pageContent.raceCards"
+                        :key="card.title"
+                        class="equal-card w-full max-w-sm flex flex-col h-full"
+                    >
+                        <template #header>
+                            <div class="relative">
+                                <Image
+                                    :src="card.image"
+                                    :alt="card.title"
+                                    image-class="rounded-t-xl"
+                                />
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-6">
+                                    <h3 class="text-2xl font-bold text-white">
+                                        {{ card.title }}
+                                    </h3>
+                                </div>
+                            </div>
+                        </template>
 
-                    <template #title>
-                        {{ card.title }}
-                    </template>
+                        <template #subtitle>
+                            {{ card.subtitle }}
+                        </template>
 
-                    <template #subtitle>
-                        {{ card.subtitle }}
-                    </template>
+                        <template #content>
+                            <p
+                                class="m-0"
+                                v-html="card.description"
+                            ></p>
+                        </template>
 
-                    <template #content>
-                        <p
-                            class="m-0"
-                            v-html="card.description"
-                        ></p>
-                    </template>
-
-                    <template #footer>
-                        <div class="flex gap-4 mt-auto pt-4">
-                            <Button
-                                v-for="button in card.buttons || []"
-                                :key="button.label"
-                                :label="button.label"
-                                :variant="button.variant"
-                                class="w-full"
-                            />
-                        </div>
-                    </template>
-                </Card>
+                        <template #footer>
+                            <div class="flex gap-4 mt-auto pt-4">
+                                <Button
+                                    v-for="button in card.buttons || []"
+                                    :key="button.label"
+                                    :label="button.label"
+                                    :variant="button.variant"
+                                    class="w-full"
+                                />
+                            </div>
+                        </template>
+                    </Card>
+                </div>
             </div>
         </section>
 
         <section
             v-if="pageContent.info"
-            class="my-20 py-20 px-5 bg-gradient-to-b from-slate-50 to-slate-100"
+            class="py-16 md:py-20 bg-gradient-to-b from-slate-50 to-slate-100"
         >
-            <div class="max-w-4xl mx-auto text-center">
-                <p class="uppercase tracking-widest text-sm text-slate-500">
-                    {{ pageContent.info.overtitle }}
-                </p>
-                <h3 class="text-4xl md:text-5xl font-bold mt-3">
-                    {{ pageContent.info.title }}
-                </h3>
+            <div class="container">
+                <div class="max-w-4xl mx-auto text-center">
+                    <p class="uppercase tracking-widest text-sm text-slate-500">
+                        {{ pageContent.info.overtitle }}
+                    </p>
+                    <h3 class="text-4xl md:text-5xl font-bold mt-3">
+                        {{ pageContent.info.title }}
+                    </h3>
 
-                <div class="w-20 h-1 bg-teal-500 rounded mx-auto mt-6"></div>
+                    <div class="w-20 h-1 bg-primary-500 rounded mx-auto mt-6"></div>
 
-                <ul class="grid md:grid-cols-2 gap-y-3 gap-x-10 text-center md:text-left mt-14 text-lg">
-                    <li
-                        v-for="feature in pageContent.info.features || []"
-                        :key="feature"
-                        v-html="feature"
-                    ></li>
-                </ul>
+                    <ul class="grid md:grid-cols-2 gap-y-4 gap-x-10 text-left mt-14 text-lg">
+                        <li
+                            v-for="feature in pageContent.info.features || []"
+                            :key="feature"
+                            class="flex items-start gap-3"
+                        >
+                            <svg
+                                class="w-6 h-6 text-primary-500 flex-shrink-0 mt-1"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 5l7 7-7 7"
+                                />
+                            </svg>
+                            <span v-html="feature"></span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </section>
 
         <section
             v-if="pageContent.gallery && pageContent.gallery.length > 0"
-            class="my-20"
+            class="py-16 md:py-20"
         >
             <div class="container">
                 <Galleria
@@ -158,7 +180,7 @@
                         <Image
                             :src="slotProps.item.src"
                             :alt="slotProps.item.alt"
-                            image-class="block w-full rounded-md w-full"
+                            image-class="block w-full rounded-md"
                         />
                     </template>
                     <template #thumbnail="slotProps">
@@ -170,11 +192,10 @@
                     </template>
                 </Galleria>
 
-                <div class="grid grid-cols-12 gap-4 w-full">
+                <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
                     <div
                         v-for="(image, index) of pageContent.gallery"
                         :key="index"
-                        class="col-span-12 sm:col-span-6 lg:col-span-3"
                     >
                         <Image
                             :src="image.src"
@@ -186,17 +207,87 @@
                 </div>
             </div>
         </section>
-    </div>
 
-    <div
-        v-else
-        class="min-h-screen flex items-center justify-center"
-    >
-        <div class="text-center">
-            <p class="text-gray-600">
-                Obsah stránky nebyl nalezen.
-            </p>
-        </div>
+        <section
+            v-if="pageContent.schedule"
+            class="py-16 md:py-20 bg-gradient-to-b from-slate-50 to-slate-100"
+        >
+            <div class="container">
+                <div class="max-w-4xl mx-auto text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900">
+                        {{ pageContent.schedule.title }}
+                    </h2>
+
+                    <div class="w-20 h-1 bg-primary-500 rounded mx-auto mt-6 mb-10"></div>
+
+                    <div class="space-y-4 text-lg text-gray-700">
+                        <p
+                            v-for="(paragraph, index) in pageContent.schedule.description"
+                            :key="index"
+                            v-html="paragraph"
+                        ></p>
+                    </div>
+                </div>
+
+                <div class="max-w-6xl mx-auto">
+                    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-10 border border-gray-100">
+                        <h3 class="text-2xl md:text-3xl font-semibold mb-8 text-center text-primary-700">
+                            {{ pageContent.schedule.tableTitle }}
+                        </h3>
+                        <div class="overflow-x-auto -mx-6 md:-mx-10 px-6 md:px-10">
+                            <ScheduleDataTable :schedule-data="pageContent.schedule.scheduleTable" />
+                        </div>
+
+                        <div class="pt-8">
+                            <h4 class="text-lg font-semibold mb-4 text-gray-800">
+                                Vysvětlivky:
+                            </h4>
+                            <dl class="space-y-3 text-sm md:text-base text-gray-700">
+                                <div
+                                    v-for="item in pageContent.schedule.legend"
+                                    :key="item.term"
+                                >
+                                    <dt class="font-semibold inline">
+                                        {{ item.term }}
+                                    </dt>
+                                    <dd
+                                        class="inline"
+                                        v-html="item.definition"
+                                    ></dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section
+            v-if="pageContent.video"
+            class="py-16 md:py-20"
+        >
+            <div class="container">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                        {{ pageContent.video.title }}
+                    </h2>
+
+                    <div class="w-20 h-1 bg-primary-500 rounded mx-auto mb-12"></div>
+
+                    <div class="relative w-full aspect-video rounded-xl overflow-hidden shadow-lg">
+                        <iframe
+                            class="absolute inset-0 w-full h-full"
+                            :src="pageContent.video.videoUrl"
+                            :title="pageContent.video.title"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 </template>
 
@@ -205,6 +296,7 @@ import type { MainPageContent } from '@/interface/MainPageContent.interface'
 import { mainPageContent } from '@/services/api/services'
 import { Button, Card, Galleria, Image } from 'primevue'
 import { onMounted, ref } from 'vue'
+import ScheduleDataTable from './components/ScheduleDataTable.vue'
 
 const pageContent = ref<MainPageContent | null>(null)
 const activeIndex = ref<number>(0)
@@ -228,6 +320,7 @@ async function loadContentData(): Promise<void> {
         pageContent.value = response || null
     } catch (err) {
         console.error('Error fetching page content:', err)
+        // TODO: doplnit komponentu na error notifier
         error.value = 'Došlo k chybě při načítání obsahu stránky. Zkuste to prosím později.'
     } finally {
         isLoading.value = false
