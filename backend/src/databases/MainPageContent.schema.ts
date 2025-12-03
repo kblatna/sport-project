@@ -133,6 +133,102 @@ export class GalleryImage {
     title: string
 }
 
+@Schema({ _id: false })
+export class ScheduleSection {
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    title: string
+
+    @Prop([{
+        type: SchemaTypes.String,
+        required: true
+    }])
+    description: string[]
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    tableTitle: string
+
+    @Prop([{
+        category: {
+            type: SchemaTypes.String,
+            required: true
+        },
+        attendance: {
+            type: SchemaTypes.String,
+            required: true
+        },
+        training: {
+            type: SchemaTypes.String,
+            required: true
+        },
+        restrictedTraining: {
+            type: SchemaTypes.String,
+            required: true
+        },
+        start: {
+            type: SchemaTypes.String,
+            required: true
+        },
+        limit: {
+            type: SchemaTypes.String,
+            required: true
+        },
+        announcement: {
+            type: SchemaTypes.String,
+            required: true
+        },
+        drawing: {
+            type: SchemaTypes.String,
+            required: true
+        }
+    }])
+    scheduleTable: Array<{
+        category: string
+        attendance: string
+        training: string
+        restrictedTraining: string
+        start: string
+        limit: string
+        announcement: string
+        drawing: string
+    }>
+
+    @Prop([{
+        term: {
+            type: SchemaTypes.String,
+            required: true
+        },
+        definition: {
+            type: SchemaTypes.String,
+            required: true
+        }
+    }])
+    legend: Array<{
+        term: string
+        definition: string
+    }>
+}
+
+@Schema({ _id: false })
+export class VideoSection {
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    title: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    videoUrl: string
+}
+
 @Schema({
     collection: 'mainpagecontents',
     minimize: false,
@@ -177,6 +273,18 @@ export class MainPageContent {
     gallery: GalleryImage[]
 
     @Prop({
+        type: ScheduleSection,
+        required: false
+    })
+    schedule?: ScheduleSection
+
+    @Prop({
+        type: VideoSection,
+        required: false
+    })
+    video?: VideoSection
+
+    @Prop({
         type: SchemaTypes.Date,
         default: () => new Date()
     })
@@ -193,6 +301,8 @@ export const HeroSectionSchema = SchemaFactory.createForClass(HeroSection)
 export const RaceCardSchema = SchemaFactory.createForClass(RaceCard)
 export const InfoSectionSchema = SchemaFactory.createForClass(InfoSection)
 export const GalleryImageSchema = SchemaFactory.createForClass(GalleryImage)
+export const ScheduleSectionSchema = SchemaFactory.createForClass(ScheduleSection)
+export const VideoSectionSchema = SchemaFactory.createForClass(VideoSection)
 export const MainPageContentSchema = SchemaFactory.createForClass(MainPageContent)
 
 export type MainPageContentDocument = HydratedDocument<MainPageContent>
