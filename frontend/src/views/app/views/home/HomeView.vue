@@ -105,18 +105,14 @@
             v-if="pageContent.info"
             background="gray"
         >
+            <SectionHeader
+                :title="pageContent.info.title"
+                :overtitle="pageContent.info.overtitle"
+            />
+
             <div class="container">
-                <div class="max-w-4xl mx-auto text-center">
-                    <p class="uppercase tracking-widest text-sm text-slate-500">
-                        {{ pageContent.info.overtitle }}
-                    </p>
-                    <h3 class="text-4xl md:text-5xl font-bold mt-3">
-                        {{ pageContent.info.title }}
-                    </h3>
-
-                    <div class="w-20 h-1 bg-primary-500 rounded mx-auto mt-6"></div>
-
-                    <ul class="grid md:grid-cols-2 gap-y-4 gap-x-10 text-left mt-14 text-lg">
+                <div class="max-w-4xl mx-auto">
+                    <ul class="grid md:grid-cols-2 gap-y-4 gap-x-10 text-left text-lg">
                         <li
                             v-for="feature in pageContent.info.features || []"
                             :key="feature"
@@ -194,23 +190,17 @@
             v-if="pageContent.schedule"
             background="gray"
         >
-            <div class="container">
-                <div class="max-w-4xl mx-auto text-center mb-16">
-                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900">
-                        {{ pageContent.schedule.title }}
-                    </h2>
-
-                    <div class="w-20 h-1 bg-primary-500 rounded mx-auto mt-6 mb-10"></div>
-
-                    <div class="space-y-4 text-lg text-gray-700">
-                        <p
-                            v-for="(paragraph, index) in pageContent.schedule.description"
-                            :key="index"
-                            v-html="paragraph"
-                        ></p>
-                    </div>
+            <SectionHeader :title="pageContent.schedule.title">
+                <div class="space-y-4 text-lg text-gray-700">
+                    <p
+                        v-for="(paragraph, index) in pageContent.schedule.description"
+                        :key="index"
+                        v-html="paragraph"
+                    ></p>
                 </div>
+            </SectionHeader>
 
+            <div class="container">
                 <div class="max-w-6xl mx-auto">
                     <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-10 border border-gray-100">
                         <h3 class="text-2xl md:text-3xl font-semibold mb-8 text-center text-primary-700">
@@ -248,14 +238,10 @@
             v-if="pageContent.video"
             background="white"
         >
+            <SectionHeader :title="pageContent.video.title" />
+
             <div class="container">
                 <div class="max-w-4xl mx-auto text-center">
-                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                        {{ pageContent.video.title }}
-                    </h2>
-
-                    <div class="w-20 h-1 bg-primary-500 rounded mx-auto mb-12"></div>
-
                     <div class="relative w-full aspect-video rounded-xl overflow-hidden shadow-lg">
                         <iframe
                             class="absolute inset-0 w-full h-full"
@@ -274,6 +260,7 @@
 </template>
 
 <script lang="ts" setup>
+import SectionHeader from '@/components/SectionHeader.vue'
 import SectionWrapper from '@/components/SectionWrapper.vue'
 import type { MainPageContent } from '@/interface/MainPageContent.interface'
 import { mainPageContent } from '@/services/api/services'
