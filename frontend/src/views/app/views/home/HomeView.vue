@@ -66,9 +66,9 @@
             </div>
         </section>
 
-        <section
+        <SectionWrapper
             v-if="pageContent.raceCards && pageContent.raceCards.length > 0"
-            class="py-16 md:py-20"
+            background="white"
         >
             <div class="container">
                 <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 justify-items-center">
@@ -117,11 +117,11 @@
                     </Card>
                 </div>
             </div>
-        </section>
+        </SectionWrapper>
 
-        <section
+        <SectionWrapper
             v-if="pageContent.info"
-            class="py-16 md:py-20 bg-gradient-to-b from-slate-50 to-slate-100"
+            background="gray"
         >
             <div class="container">
                 <div class="max-w-4xl mx-auto text-center">
@@ -158,11 +158,11 @@
                     </ul>
                 </div>
             </div>
-        </section>
+        </SectionWrapper>
 
-        <section
+        <SectionWrapper
             v-if="pageContent.gallery && pageContent.gallery.length > 0"
-            class="py-16 md:py-20"
+            background="white"
         >
             <div class="container">
                 <Galleria
@@ -206,11 +206,11 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </SectionWrapper>
 
-        <section
+        <SectionWrapper
             v-if="pageContent.schedule"
-            class="py-16 md:py-20 bg-gradient-to-b from-slate-50 to-slate-100"
+            background="gray"
         >
             <div class="container">
                 <div class="max-w-4xl mx-auto text-center mb-16">
@@ -260,11 +260,11 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </SectionWrapper>
 
-        <section
+        <SectionWrapper
             v-if="pageContent.video"
-            class="py-16 md:py-20"
+            background="white"
         >
             <div class="container">
                 <div class="max-w-4xl mx-auto text-center">
@@ -287,11 +287,12 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </SectionWrapper>
     </div>
 </template>
 
 <script lang="ts" setup>
+import SectionWrapper from '@/components/SectionWrapper.vue'
 import type { MainPageContent } from '@/interface/MainPageContent.interface'
 import { mainPageContent } from '@/services/api/services'
 import { Button, Card, Galleria, Image } from 'primevue'
