@@ -22,14 +22,14 @@
         @filter="onLazyLoadHandler($event)"
     >
         <template #header>
-            <div class="flex flex-wrap justify-between items-end w-full gap-2 mb-3">
-                <h3 class="text-xl font-semibold">
-                    Výsledky závodů
+            <div class="flex flex-wrap justify-between items-center w-full gap-4 pb-4">
+                <h3 class="text-2xl font-semibold text-gray-800">
+                    {{ pageContent?.tableTitle || 'Výsledky závodů' }}
                 </h3>
                 <Button
                     type="button"
                     icon="pi pi-filter-slash"
-                    label="Reset filtrů"
+                    :label="pageContent?.resetButtonLabel || 'Reset filtrů'"
                     outlined
                     @click="clearFilter"
                 />
@@ -38,16 +38,14 @@
 
         <Column
             field="rank"
-            header="Pořadí"
+            :header="pageContent?.columnHeaders?.rank || 'Pořadí'"
             sortable
             :show-filter-menu="true"
-            style="width: 50px"
-            header-style="width: 50px"
         />
 
         <Column
             field="startNumber"
-            header="Startovní číslo"
+            :header="pageContent?.columnHeaders?.startNumber || 'Startovní číslo'"
             sortable
             :show-filter-menu="true"
         >
@@ -56,14 +54,14 @@
                     v-model="filterModel.value"
                     type="text"
                     @input="filterCallback"
-                    placeholder="Hledat číslo"
+                    :placeholder="pageContent?.filterPlaceholders?.startNumber || 'Hledat číslo'"
                 />
             </template>
         </Column>
 
         <Column
             field="name"
-            header="Jméno"
+            :header="pageContent?.columnHeaders?.name || 'Jméno'"
             sortable
             :show-filter-menu="true"
         >
@@ -77,14 +75,14 @@
                     v-model="filterModel.value"
                     type="text"
                     @input="filterCallback"
-                    placeholder="Hledat jméno"
+                    :placeholder="pageContent?.filterPlaceholders?.name || 'Hledat jméno'"
                 />
             </template>
         </Column>
 
         <Column
             field="dateOfBirth"
-            header="Rok narození"
+            :header="pageContent?.columnHeaders?.dateOfBirth || 'Rok narození'"
             sortable
             :show-filter-menu="true"
         >
@@ -93,21 +91,21 @@
                     v-model="filterModel.value"
                     type="text"
                     @input="filterCallback"
-                    placeholder="Hledat rok"
+                    :placeholder="pageContent?.filterPlaceholders?.dateOfBirth || 'Hledat rok'"
                 />
             </template>
         </Column>
 
         <Column
             field="totalTime"
-            header="Celkový čas"
+            :header="pageContent?.columnHeaders?.totalTime || 'Celkový čas'"
             sortable
             :show-filter-menu="true"
         />
 
         <Column
             field="category"
-            header="Kategorie"
+            :header="pageContent?.columnHeaders?.category || 'Kategorie'"
             sortable
             :show-filter-menu="true"
         >
@@ -116,14 +114,14 @@
                     v-model="filterModel.value"
                     type="text"
                     @input="filterCallback"
-                    placeholder="Hledat kategorii"
+                    :placeholder="pageContent?.filterPlaceholders?.category || 'Hledat kategorii'"
                 />
             </template>
         </Column>
 
         <Column
             field="year"
-            header="Ročník"
+            :header="pageContent?.columnHeaders?.year || 'Ročník'"
             sortable
             :show-filter-menu="true"
         >
@@ -132,7 +130,7 @@
                     v-model="filterModel.value"
                     type="text"
                     @input="filterCallback"
-                    placeholder="Hledat ročník"
+                    :placeholder="pageContent?.filterPlaceholders?.year || 'Hledat ročník'"
                 />
             </template>
         </Column>
@@ -141,10 +139,10 @@
             <div class="text-center py-8">
                 <i class="pi pi-search text-4xl text-gray-400 mb-4"></i>
                 <p class="text-gray-500 text-lg">
-                    Žádné výsledky nenalezeny
+                    {{ pageContent?.emptyState?.title || 'Žádné výsledky nenalezeny' }}
                 </p>
                 <p class="text-gray-400 text-sm">
-                    Zkuste změnit filtry nebo vyhledávací kritéria
+                    {{ pageContent?.emptyState?.subtitle || 'Zkuste změnit filtry nebo vyhledávací kritéria' }}
                 </p>
             </div>
         </template>
@@ -153,7 +151,7 @@
             <div class="text-center py-8">
                 <i class="pi pi-spin pi-spinner text-4xl text-blue-500 mb-4"></i>
                 <p class="text-gray-500 text-lg">
-                    Načítání výsledků...
+                    {{ pageContent?.loadingText || 'Načítání výsledků...' }}
                 </p>
             </div>
         </template>
@@ -162,6 +160,7 @@
 
 <script setup lang="ts">
 import { Result } from '@/interface/Result.interface'
+import { ResultPageContent } from '@/interface/ResultPageContent.interface'
 import { FilterMatchMode } from '@primevue/core/api'
 import Button from 'primevue/button'
 import Column from 'primevue/column'
@@ -173,6 +172,7 @@ defineProps<{
     results: Result[]
     totalRecords: number
     isLoading: boolean
+    pageContent: ResultPageContent | null
 }>()
 
 const filters = ref<Record<string, any>>({})
@@ -188,12 +188,12 @@ const $emit = defineEmits<{
 const initFilters = () => {
     filters.value = {
         rank: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        startNumber: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        startNumber: { value: null, matchMode: FilterMatchMode.CONTAINS },
         name: { value: null, matchMode: FilterMatchMode.CONTAINS },
         dateOfBirth: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        totalTime: { value: null, matchMode: FilterMatchMode.EQUALS },
-        category: { value: null, matchMode: FilterMatchMode.EQUALS },
-        year: { value: null, matchMode: FilterMatchMode.EQUALS }
+        totalTime: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        category: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        year: { value: null, matchMode: FilterMatchMode.CONTAINS }
     }
 }
 

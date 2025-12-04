@@ -1,32 +1,36 @@
 <template>
-    <div class="container mx-auto px-4 py-6">
-        <div class="mb-6">
-            <h1 class="text-3xl font-bold text-gray-800 mb-2">
-                Vyhledávání výsledků Soběšické Muldy
-            </h1>
-            <p class="text-gray-600">
-                V tabulce níže si můžete filtrovat podle zvolených kritérií napříč jednotlivými ročníky závodu.
+    <SectionWrapper>
+        <SectionHeader
+            :title="pageContent?.title || 'Výsledky závodu'"
+        >
+            <p class="text-gray-600 my-10">
+                {{ pageContent?.description || 'V tabulce níže si můžete filtrovat podle zvolených kritérií napříč jednotlivými ročníky závodu.' }}
             </p>
-        </div>
+        </SectionHeader>
 
-        <ResultsDataTable
-            :results="result.docs"
-            :total-records="result.totalDocs"
-            :is-loading="isLoading"
-            @on-lazy-load="loadData"
-        />
-    </div>
+        <div class="rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-10 mx-10 border border-gray-200/60">
+            <ResultsDataTable
+                :results="result.docs"
+                :total-records="result.totalDocs"
+                :is-loading="isLoading"
+                :page-content="pageContent"
+                @on-lazy-load="loadData"
+            />
+        </div>
+    </SectionWrapper>
 </template>
 
 <script setup lang="ts">
 import { PaginateResult } from '@/interface/PaginateResult.interface'
 import { Result } from '@/interface/Result.interface'
-import { listResults } from '@/services/api/services'
-import Card from 'primevue/card'
+import { ResultPageContent } from '@/interface/ResultPageContent.interface'
+import { listResults, resultPageContent } from '@/services/api/services'
 import { onMounted, ref } from 'vue'
 import ResultsDataTable from './components/ResultsDataTable.vue'
+import SectionWrapper from '@/components/SectionWrapper.vue'
+import SectionHeader from '@/components/SectionHeader.vue'
 
-const result = ref<PaginateResult<Result[]>>({
+const result = ref<PaginateResult<Result>>({
     docs: [],
     totalDocs: 0,
     offset: 0,
@@ -40,12 +44,24 @@ const result = ref<PaginateResult<Result[]>>({
     nextPage: null
 })
 
+const pageContent = ref<ResultPageContent | null>(null)
 const isLoading = ref(false)
 
 onMounted(async () => {
+    await loadPageContent()
     const currentYear = new Date().getFullYear()
     await loadDataWithFallback(currentYear)
 })
+
+async function loadPageContent(): Promise<void> {
+    try {
+        const response = await resultPageContent.getAll()
+        pageContent.value = response
+    } catch (error) {
+        console.error('Error fetching page content:', error)
+        // TODO: add notifier for error
+    }
+}
 
 async function loadDataWithFallback(year: number): Promise<void> {
     await loadData({ year })
