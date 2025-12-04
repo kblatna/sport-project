@@ -1,28 +1,10 @@
 <template>
-    <!-- TODO: samostatná obecná komponenta-->
-    <div
-        v-if="isLoading"
-        class="min-h-screen flex items-center justify-center"
-    >
-        <div class="text-center">
-            <div class="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-500 mx-auto"></div>
-            <p class="mt-4 text-gray-600">
-                Načítání obsahu...
-            </p>
-        </div>
-    </div>
+    <LoadingSpinner v-if="isLoading" />
 
-    <!-- TODO: samostatná obecná komponenta-->
-    <div
+    <ErrorMessage
         v-else-if="error"
-        class="min-h-screen flex items-center justify-center"
-    >
-        <div class="text-center">
-            <p class="text-red-600">
-                {{ error }}
-            </p>
-        </div>
-    </div>
+        :message="error"
+    />
 
     <div v-else-if="pageContent">
         <section
