@@ -6,6 +6,7 @@ import { ContactModule } from './modules/contact/Contact.module'
 import { RaceApplicationModule } from './modules/raceApplication/RaceApplication.module'
 import { ResultModule } from './modules/result/Result.module'
 import { MainPageContentModule } from './modules/mainPageContent/MainPageContent.module'
+import { ResultPageContentModule } from './modules/resultPageContent/ResultPageContent.module'
 
 @Module({
     imports: [
@@ -15,7 +16,8 @@ import { MainPageContentModule } from './modules/mainPageContent/MainPageContent
         ContactModule,
         RaceApplicationModule,
         ResultModule,
-        MainPageContentModule
+        MainPageContentModule,
+        ResultPageContentModule
     ],
     controllers: [],
     providers: []
