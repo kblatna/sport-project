@@ -22,13 +22,13 @@ export class ResultService {
         pagingQuery: ListResultsQueryDto
     ): Promise<PaginateResult<ResultDocument>> {
         const filterConfig: FilterConfig<Result> = {
-            rank: { type: 'exact' },
-            startNumber: { type: 'exact' },
+            rank: { type: 'regex' },
+            startNumber: { type: 'regex' },
             name: { type: 'regex' },
             dateOfBirth: { type: 'exact' },
-            totalTime: { type: 'exact' },
-            category: { type: 'exact' },
-            year: { type: 'exact' }
+            totalTime: { type: 'regex' },
+            category: { type: 'regex' },
+            year: { type: 'regex' }
         }
 
         const filterQuery: FilterQuery<Result> = buildFilterQuery<Result>(pagingQuery, filterConfig)
