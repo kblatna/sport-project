@@ -74,7 +74,9 @@
                         </template>
 
                         <template #subtitle>
-                            {{ card.subtitle }}
+                            <span class="text-lg font-bold text-black">
+                                {{ card.subtitle }}
+                            </span>
                         </template>
 
                         <template #content>
