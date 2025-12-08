@@ -16,113 +16,183 @@
                 </div>
 
                 <div class="hidden md:flex items-center space-x-8">
-                    <router-link
-                        to="/"
-                        class="text-white border-transparent border-b-2 hover:border-white px-3 py-2 text-lg font-medium"
+                    <NavLink
+                        v-for="item in navItems"
+                        :key="item.label"
+                        :to="item.to"
+                        link-class="text-white border-transparent border-b-2 hover:border-white px-3 py-2 text-lg font-medium"
                         active-class="text-white border-b-2 border-white"
                     >
-                        Domů
-                    </router-link>
-                    <router-link
-                        to="/results"
-                        class="text-white border-transparent border-b-2 hover:border-white px-3 py-2 text-lg font-medium"
-                        active-class="text-white border-b-2 border-white"
-                    >
-                        Výsledky
-                    </router-link>
-                    <router-link
-                        to="/signup"
-                        class="text-white border-transparent border-b-2 hover:border-white px-3 py-2 text-lg font-medium"
-                        active-class="text-white border-b-2 border-white"
-                    >
-                        Registrace
-                    </router-link>
-                    <router-link
-                        to="/about/organizer"
-                        class="text-white border-transparent border-b-2 hover:border-white px-3 py-2 text-lg font-medium"
-                        active-class="text-white border-b-2 border-white"
-                    >
-                        O nás
-                    </router-link>
+                        {{ item.label }}
+                    </NavLink>
                 </div>
 
                 <!-- Mobile menu button -->
                 <div class="md:hidden">
-                    <button
+                    <Button
                         @click="isMobileMenuOpen = !isMobileMenuOpen"
-                        class="text-white hover:text-white p-2"
+                        text
+                        rounded
+                        class="menu-button text-white p-2 transition-all duration-300"
                         aria-label="Otevřít menu"
                     >
-                        <svg
-                            class="h-6 w-6"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                v-if="!isMobileMenuOpen"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h16"
-                            />
-                            <path
-                                v-else
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12"
-                            />
-                        </svg>
-                    </button>
+                        <template #icon>
+                            <svg
+                                class="h-6 w-6"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    v-if="!isMobileMenuOpen"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16"
+                                />
+                                <path
+                                    v-else
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                            </svg>
+                        </template>
+                    </Button>
                 </div>
             </div>
-            <!--TODO: rozhodnout jak bude vypadat hover a active na mobilu (podtržení, background, jiná barva?)-->
+
+            <Transition name="fade">
+                <div
+                    v-if="isMobileMenuOpen"
+                    class="fixed inset-0 bg-black/70 z-40 md:hidden"
+                    @click="isMobileMenuOpen = false"
+                ></div>
+            </Transition>
+
             <!-- Mobile Menu -->
-            <div
-                v-if="isMobileMenuOpen"
-                class="md:hidden py-3 space-y-2"
-            >
-                <router-link
-                    to="/"
-                    @click="isMobileMenuOpen = false"
-                    class="block px-3 py-2 text-base font-medium text-white border-transparent border-b-2 hover:border-white"
-                    exact-active-class="text-white hover:border-b-2 hover:border-white"
+            <Transition name="slide">
+                <div
+                    v-if="isMobileMenuOpen"
+                    class="fixed top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-primary-700 via-primary-600 to-primary-500 z-50 md:hidden overflow-y-auto"
                 >
-                    Domů
-                </router-link>
-                <router-link
-                    to="/results"
-                    @click="isMobileMenuOpen = false"
-                    class="block px-3 py-2 text-base font-medium text-white border-transparent border-b-2 hover:border-white"
-                    exact-active-class="border-white"
-                >
-                    Výsledky
-                </router-link>
-                <router-link
-                    to="/signup"
-                    @click="isMobileMenuOpen = false"
-                    class="block px-3 py-2 text-base font-medium text-white hover:text-primary-600 hover:bg-gray-50 transition-colors rounded-md"
-                    active-class="text-primary-600 bg-primary-50"
-                >
-                    Registrace
-                </router-link>
-                <router-link
-                    to="/about/organizer"
-                    @click="isMobileMenuOpen = false"
-                    class="block px-3 py-2 text-base font-medium text-white hover:text-teal-600  transition-colors rounded-md"
-                    exact-active-class="text-teal-600"
-                >
-                    O nás
-                </router-link>
-            </div>
+                    <div class="flex justify-between items-center h-20 px-4 bg-primary-800/50 backdrop-blur-sm">
+                        <span class="text-white text-xl font-semibold">Menu</span>
+                        <Button
+                            @click="isMobileMenuOpen = false"
+                            text
+                            rounded
+                            class="menu-button text-white p-3 transition-all duration-300"
+                            aria-label="Zavřít menu"
+                        >
+                            <template #icon>
+                                <svg
+                                    class="h-7 w-7"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="2.5"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M6 18L18 6M6 6l12 12"
+                                    />
+                                </svg>
+                            </template>
+                        </Button>
+                    </div>
+
+                    <nav class="flex flex-col space-y-2 p-6 min-h-screen">
+                        <NavLink
+                            v-for="item in navItems"
+                            :key="item.label"
+                            :to="item.to"
+                            link-class="block px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
+                            exact-active-class="bg-white/20"
+                            @click="isMobileMenuOpen = false"
+                        >
+                            {{ item.label }}
+                        </NavLink>
+                    </nav>
+                </div>
+            </Transition>
         </nav>
     </header>
 </template>
 
 <script setup lang="ts">
-import { Image } from 'primevue'
+import { Button, Image } from 'primevue'
 import { ref } from 'vue'
+import type { RouteLocationRaw } from 'vue-router'
+import NavLink from './NavLink.vue'
 
 const isMobileMenuOpen = ref(false)
+
+interface NavItem {
+    to: RouteLocationRaw
+    label: string
+}
+
+// TODO: Prozatím ponechat zde, ale bylo by vhodné přesunout do databáze a načítat dynamicky
+const navItems: NavItem[] = [
+    { to: { name: 'Home' }, label: 'Domů' },
+    { to: { name: 'Results' }, label: 'Výsledky' },
+    { to: { name: 'Signup' }, label: 'Registrace' },
+    { to: { name: 'Organizer' }, label: 'O nás' }
+]
 </script>
+
+<!-- TODO: Pořešit styly - dá se aplikovat styly přímo z tailwindu? případně použití scss?? -->
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+    transition: transform 0.3s ease;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+    transform: translateX(100%);
+}
+
+.p-button-text:not(:disabled) {
+    transition: all 0.3s ease;
+}
+
+.p-button-text:not(:disabled):hover {
+    transition: all 0.3s ease;
+}
+
+/* Přepsání PrimeVue Button stylů pro hamburger a close ikony */
+:deep(.menu-button.p-button) {
+    color: white;
+}
+
+:deep(.menu-button.p-button:hover svg) {
+    color: black;
+    stroke: currentColor;
+    transition: color 0.3s ease;
+}
+
+:deep(.menu-button.p-button svg) {
+    color: white;
+    stroke: currentColor;
+    transition: color 0.3s ease;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+    transform: translateX(100%);
+}
+</style>
