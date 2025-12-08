@@ -9,7 +9,7 @@ export interface MainPageContent {
         buttons?: Array<{
             label: string
             link: string
-            variant: 'primary' | 'secondary'
+            severity: 'primary' | 'secondary'
         }>
     }
     raceCards?: Array<{
@@ -20,7 +20,7 @@ export interface MainPageContent {
         buttons?: Array<{
             label: string
             link: string
-            variant: 'primary' | 'outlined'
+            severity: 'primary' | 'secondary'
         }>
     }>
     info?: {

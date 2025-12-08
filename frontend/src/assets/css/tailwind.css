@@ -4,40 +4,67 @@
 @tailwind utilities;
 
 @layer base {
+    :root {
+        --p-primary-50: #e6f1f7;
+        --p-primary-100: #cce3ef;
+        --p-primary-200: #99c7df;
+        --p-primary-300: #66abcf;
+        --p-primary-400: #338fbf;
+        --p-primary-500: #2a5a88;
+        --p-primary-600: #164263;
+        --p-primary-700: #003049;
+        --p-primary-800: #002837;
+        --p-primary-900: #002029;
+        --white: #ffffff;
+    }
+
     body {
         font-family: 'Montserrat', sans-serif;
     }
-        #app {
-            @apply min-h-screen flex flex-col;
-        }
-        }
-    
-        @layer components {
+
+    #app {
+        @apply min-h-screen flex flex-col;
+    }
+}
+
+@layer components {
     .header {
         @apply bg-gradient-to-r from-primary-700 via-primary-600 to-primary-500;
-        }
-        
-        .header a {
-            @apply transition-all duration-300;
-        }
-        
-        .header a:hover {
-            @apply transition-all duration-300;
-        }
-        
-        .footer {
+    }
+
+    .header a {
+        @apply transition-all duration-300;
+    }
+
+    .header a:hover {
+        @apply transition-all duration-300;
+    }
+
+    .footer {
         @apply w-full bg-primary-700 mt-auto;
-        }
-        
-        .footer a {
-            @apply transition-all duration-300;
-        }
-        
-        .footer a:hover {
-            @apply transition-all duration-300;
-        }
-        
-        .copyright {
+    }
+
+    .footer a {
+        @apply transition-all duration-300;
+    }
+
+    .footer a:hover {
+        @apply transition-all duration-300;
+    }
+
+    .copyright {
         @apply bg-primary-800;
-        }
+    }
+}
+
+.p-button-outlined.p-button-secondary {
+    --p-button-outlined-secondary-color: var(--white);
+    --p-button-outlined-secondary-border-color: var(--white);
+    --p-button-outlined-secondary-hover-background: var(--white);
+    --p-button-outlined-secondary-active-background: var(--white);
+    @apply transition-all duration-300;
+}
+
+.p-button-outlined.p-button-secondary:not(:disabled):hover {
+    --p-button-outlined-secondary-color: var(--p-primary-700);
 }

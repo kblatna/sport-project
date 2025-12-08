@@ -30,7 +30,7 @@ export class HeroSection {
             type: SchemaTypes.String,
             required: true
         },
-        variant: {
+        severity: {
             type: SchemaTypes.String,
             enum: ['primary', 'secondary'],
             default: 'primary'
@@ -39,7 +39,7 @@ export class HeroSection {
     buttons: Array<{
         label: string
         link: string
-        variant: 'primary' | 'secondary'
+        severity: 'primary' | 'secondary'
     }>
 }
 
@@ -78,16 +78,16 @@ export class RaceCard {
             type: SchemaTypes.String,
             required: true
         },
-        variant: {
+        severity: {
             type: SchemaTypes.String,
-            enum: ['primary', 'outlined'],
+            enum: ['primary', 'secondary'],
             default: 'primary'
         }
     }])
     buttons: Array<{
         label: string
         link: string
-        variant: 'primary' | 'outlined'
+        severity: 'primary' | 'secondary'
     }>
 }
 

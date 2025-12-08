@@ -36,11 +36,10 @@
                                 :key="button.label"
                                 :to="{ name: button.link }"
                                 router-link
-                                :class="{
-                                    'border-2 border-white text-white px-6 py-3 rounded-lg hover:bg-white hover:text-primary-700 transition-all duration-300': button.variant === 'secondary',
-                                    'bg-white text-primary-700 px-6 py-3 rounded-lg hover:bg-primary-50 transition-all duration-300 font-semibold': button.variant === 'primary'
-                                }"
+                                :severity="button.severity"
+                                :outlined="button.severity === 'secondary'"
                                 :label="button.label"
+                                class="px-6 py-3"
                             />
                         </div>
                     </div>
@@ -90,8 +89,8 @@
                                 <Button
                                     v-for="button in card.buttons || []"
                                     :key="button.label"
+                                    :severity="button.severity"
                                     :label="button.label"
-                                    :variant="button.variant"
                                     class="w-full"
                                 />
                             </div>
