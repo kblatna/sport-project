@@ -3,6 +3,9 @@
         <!-- Header -->
         <HeaderNav />
 
+        <!-- Breadcrumb Navigation -->
+        <BreadcrumbNav />
+
         <!-- Main Content -->
         <main class="flex-1">
             <RouterView />
@@ -14,11 +17,12 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
+import { RouterView } from 'vue-router'
+import BreadcrumbNav from './components/BreadcrumbNav.vue'
 import FooterInfo from './components/FooterInfo.vue'
 import HeaderNav from './components/HeaderNav.vue'
-import { onMounted } from 'vue'
 import { users } from './services/api/services'
-import { RouterView } from 'vue-router'
 
 onMounted(async () => {
     console.log(await users.getAll())
