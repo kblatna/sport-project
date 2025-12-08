@@ -9,24 +9,24 @@
     <div v-else-if="pageContent">
         <section
             v-if="pageContent.hero"
-            class="relative h-[50vh] md:h-[65vh]"
+            class="relative h-[40vh] md:h-[55vh]"
         >
             <div
                 class="absolute inset-0 bg-cover bg-start"
                 :style="{
-                    backgroundImage: `linear-gradient(to left, rgba(245,246,252,0.52), rgba(0,0,0,0.73)), url(${pageContent.hero.backgroundImage})`
+                    backgroundImage: `linear-gradient(to left, rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url(${pageContent.hero.backgroundImage})`
                 }"
             ></div>
 
             <div class="relative z-10 flex items-center h-full">
                 <div class="container">
-                    <div class="max-w-2xl text-white">
-                        <h1 class="text-3xl md:text-5xl font-extrabold mb-10">
+                    <div class="max-w-4xl text-white">
+                        <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 md:mb-10">
                             {{ pageContent.hero.title }}
                         </h1>
 
                         <p
-                            class="text-lg md:text-2xl leading-snug mb-8"
+                            class="text-xl md:text-2xl lg:text-3xl leading-relaxed mb-8 md:mb-10"
                             v-html="pageContent.hero.subtitle"
                         ></p>
 
@@ -39,7 +39,7 @@
                                 :severity="button.severity"
                                 :outlined="button.severity === 'secondary'"
                                 :label="button.label"
-                                class="px-6 py-3"
+                                class="px-8 py-4 text-lg"
                             />
                         </div>
                     </div>
