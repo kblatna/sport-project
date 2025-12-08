@@ -26,7 +26,7 @@
                         </h1>
 
                         <p
-                            class="text-xl md:text-2xl lg:text-3xl leading-relaxed mb-8 md:mb-10"
+                            class="text-xl md:text-2xl lg:text-3xl mb-8 md:mb-10 max-w-2xl"
                             v-html="pageContent.hero.subtitle"
                         ></p>
 
