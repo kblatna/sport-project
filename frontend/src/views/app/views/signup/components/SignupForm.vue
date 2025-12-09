@@ -114,9 +114,14 @@
                 <Textarea
                     id="note"
                     v-model="note"
+                    :validation="validation.note"
                     rows="4"
+                    maxlength="500"
                     class="w-full"
                 />
+                <small class="text-gray-600">
+                    {{ note.length }}/500 znaků
+                </small>
             </div>
 
             <div class="hidden">
@@ -171,17 +176,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
-import { required, email as emailValidator } from '@vuelidate/validators'
-
-// PrimeVue components
-import InputText from 'primevue/inputtext'
-import Select from 'primevue/select'
-import DatePicker from 'primevue/datepicker'
-import Button from 'primevue/button'
-import Message from 'primevue/message'
+import { email as emailValidator, maxLength, required } from '@vuelidate/validators'
 import { Textarea } from 'primevue'
+import Button from 'primevue/button'
+import DatePicker from 'primevue/datepicker'
+import InputText from 'primevue/inputtext'
+import Message from 'primevue/message'
+import Select from 'primevue/select'
+import { computed, onMounted, ref, watch } from 'vue'
 
 const firstName = ref('')
 const lastName = ref('')
@@ -221,6 +224,9 @@ const validation = useVuelidate(
         },
         race: {
             required
+        },
+        note: {
+            maxLength: maxLength(500)
         }
     },
     {
@@ -229,7 +235,8 @@ const validation = useVuelidate(
         email,
         dateOfBirth,
         category,
-        race
+        race,
+        note
     }
 )
 
@@ -337,7 +344,6 @@ onMounted(() => {
     }
 })
 
-// TODO: doladit tuto funkci - hlášky, validace, odesílání
 async function onSubmit() {
     await validation.value.$validate()
     if (validation.value.$invalid) {
@@ -365,6 +371,7 @@ async function onSubmit() {
             dateOfBirth: dateOfBirth.value ? dateOfBirth.value.toISOString() : null,
             category: category.value,
             race: race.value,
+            note: note.value.trim(),
             honeypot: honeypot.value,
             token: cfResponse.value
         }
