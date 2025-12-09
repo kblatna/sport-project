@@ -340,21 +340,27 @@ async function onSubmit() {
             token: cfResponse.value
         }
 
-        await fetch('api/race-application', {
+        const response = await fetch('api/race-application', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         })
 
+        if (!response.ok) {
+            const errorData = await response.json()
+            console.error('Backend error:', errorData)
+            throw new Error(errorData.message || 'Server returned an error')
+        }
+
         success.value = 'Přihláška byla úspěšně odeslána.'
         resetForm()
     } catch (fetchError) {
+        console.error('Submit error:', fetchError)
         if (fetchError instanceof Error) {
-            error.value = 'CSRF token is invalid or missing. Please try again.'
-            return
+            error.value = fetchError.message || 'Došlo k chybě při odesílání přihlášky.'
+        } else {
+            error.value = 'Došlo k chybě při odesílání přihlášky. Zkuste to prosím znovu později.'
         }
-        error.value
-            = 'Došlo k chybě při odesílání přihlášky. Zkuste to prosím znovu později.'
     } finally {
         isLoading.value = false
     }
