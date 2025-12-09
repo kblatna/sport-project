@@ -51,10 +51,25 @@
                     <h6 class="text-lg font-semibold text-white mb-4 uppercase">
                         Informace
                     </h6>
-                    <div class="space-y-2 text-gray-300">
-                        <div>Mulda</div>
-                        <div>Muldička</div>
-                        <div>Registrace</div>
+                    <div class="space-y-2">
+                        <router-link
+                            :to="{ name: 'Home' }"
+                            class="block text-gray-300 hover:text-white transition-colors"
+                        >
+                            Mulda
+                        </router-link>
+                        <router-link
+                            :to="{ name: 'Home' }"
+                            class="block text-gray-300 hover:text-white transition-colors"
+                        >
+                            Muldička
+                        </router-link>
+                        <router-link
+                            :to="{ name: 'Signup' }"
+                            class="block text-gray-300 hover:text-white transition-colors"
+                        >
+                            Registrace
+                        </router-link>
                     </div>
                 </div>
 
@@ -62,9 +77,19 @@
                     <h6 class="text-lg font-semibold text-white mb-4 uppercase">
                         Kontakty
                     </h6>
-                    <div class="space-y-2 text-gray-300">
-                        <div>Pořadatel</div>
-                        <div>Odkazy</div>
+                    <div class="space-y-2">
+                        <router-link
+                            :to="{ name: 'Organizer' }"
+                            class="block text-gray-300 hover:text-white transition-colors"
+                        >
+                            Pořadatel
+                        </router-link>
+                        <router-link
+                            :to="{ name: 'Links' }"
+                            class="block text-gray-300 hover:text-white transition-colors"
+                        >
+                            Odkazy
+                        </router-link>
                     </div>
                 </div>
 
@@ -74,25 +99,25 @@
                     </h6>
                     <div class="space-y-2">
                         <router-link
-                            to="/"
+                            :to="{ name: 'Home' }"
                             class="block text-gray-300 hover:text-white transition-colors"
                         >
                             Domů
                         </router-link>
                         <router-link
-                            to="/results"
+                            :to="{ name: 'Results' }"
                             class="block text-gray-300 hover:text-white transition-colors"
                         >
                             Výsledky
                         </router-link>
                         <router-link
-                            to="/signup"
+                            :to="{ name: 'Signup' }"
                             class="block text-gray-300 hover:text-white transition-colors"
                         >
                             Registrace
                         </router-link>
                         <router-link
-                            to="/about"
+                            :to="{ name: 'Organizer' }"
                             class="block text-gray-300 hover:text-white transition-colors"
                         >
                             O nás
