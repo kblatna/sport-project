@@ -68,3 +68,8 @@
 .p-button-outlined.p-button-secondary:not(:disabled):hover {
     --p-button-outlined-secondary-color: var(--p-primary-700);
 }
+
+/* PrimeVue card component - custom border shadow */
+.p-card {
+    --p-card-shadow: 0 5.6px 11.2px 0 rgba(0, 0, 0, 0.15);
+}
