@@ -1,80 +1,83 @@
 <template>
-    {{ age }}
     <form
         @submit.prevent="onSubmit"
         :data-is-loading="isLoading"
-        class="space-y-6"
     >
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-                <FloatLabel>
-                    <InputText
-                        id="firstName"
-                        v-model="firstName"
-                        :validation="validation.firstName"
-                        class="w-full"
-                    />
-                    <label for="firstName">Jméno</label>
-                </FloatLabel>
+                <label
+                    for="firstName"
+                    class="block mb-2 font-medium"
+                >Jméno</label>
+                <InputText
+                    id="firstName"
+                    v-model="firstName"
+                    :validation="validation.firstName"
+                    class="w-full"
+                />
             </div>
 
             <div>
-                <FloatLabel>
-                    <InputText
-                        id="lastName"
-                        v-model="lastName"
-                        :validation="validation.lastName"
-                        class="w-full"
-                    />
-                    <label for="lastName">Příjmení</label>
-                </FloatLabel>
+                <label
+                    for="lastName"
+                    class="block mb-2 font-medium"
+                >Příjmení</label>
+                <InputText
+                    id="lastName"
+                    v-model="lastName"
+                    :validation="validation.lastName"
+                    class="w-full"
+                />
             </div>
 
             <div class="md:col-span-2">
-                <FloatLabel>
-                    <InputText
-                        id="email"
-                        v-model="email"
-                        type="email"
-
-                        class="w-full"
-                    />
-                    <label for="email">Email</label>
-                </FloatLabel>
+                <label
+                    for="email"
+                    class="block mb-2 font-medium"
+                >Email</label>
+                <InputText
+                    id="email"
+                    v-model="email"
+                    type="email"
+                    class="w-full"
+                />
             </div>
 
             <div>
-                <FloatLabel>
-                    <DatePicker
-                        id="dateOfBirth"
-                        v-model="dateOfBirth"
-                        :validation="validation?.dateOfBirth"
-                        class="w-full"
-                        date-format="dd.mm.yy"
-                        :max-date="new Date()"
-                        show-icon
-                        icon-display="input"
-                    />
-                    <label for="dateOfBirth">Datum narození</label>
-                </FloatLabel>
+                <label
+                    for="dateOfBirth"
+                    class="block mb-2 font-medium"
+                >Datum narození</label>
+                <DatePicker
+                    id="dateOfBirth"
+                    v-model="dateOfBirth"
+                    :validation="validation?.dateOfBirth"
+                    class="w-full"
+                    date-format="dd.mm.yy"
+                    :max-date="new Date()"
+                    show-icon
+                    fluid
+                    icon-display="input"
+                />
             </div>
 
             <div
                 class="md:col-span-2"
                 v-if="age !==null"
             >
-                <FloatLabel>
-                    <Select
-                        id="category"
-                        v-model="category"
-                        :options="categoryOptions"
-                        option-label="label"
-                        option-value="value"
-                        :validation="validation.category"
-                        class="w-full"
-                    />
-                    <label for="category">Kategorie</label>
-                </FloatLabel>
+                <label
+                    for="category"
+                    class="block mb-2 font-medium"
+                >Kategorie</label>
+                <Select
+                    id="category"
+                    v-model="category"
+                    :options="categoryOptions"
+                    option-label="label"
+                    option-value="value"
+                    :validation="validation.category"
+                    class="w-full"
+                />
             </div>
 
             <p
@@ -88,18 +91,32 @@
                 class="md:col-span-2"
                 v-if="category === 'male'"
             >
-                <FloatLabel>
-                    <Select
-                        id="race"
-                        v-model="race"
-                        :options="raceOptions"
-                        option-label="label"
-                        option-value="value"
-                        :validation="validation.race"
-                        class="w-full"
-                    />
-                    <label for="category">Vzdálenost</label>
-                </FloatLabel>
+                <label
+                    for="race"
+                    class="block mb-2 font-medium"
+                >Vzdálenost</label>
+                <Select
+                    id="race"
+                    v-model="race"
+                    :options="raceOptions"
+                    option-label="label"
+                    option-value="value"
+                    :validation="validation.race"
+                    class="w-full"
+                />
+            </div>
+
+            <div class="md:col-span-2">
+                <label
+                    for="note"
+                    class="block mb-2 font-medium"
+                >Poznámka (nepovinné)</label>
+                <Textarea
+                    id="note"
+                    v-model="note"
+                    rows="4"
+                    class="w-full"
+                />
             </div>
 
             <div class="hidden">
@@ -112,9 +129,13 @@
 
             <div
                 ref="turnstileEl"
-                class="cf-turnstile mt-3"
+                class="cf-turnstile"
             ></div>
         </div>
+
+        <p class="text-xs text-gray-500 mb-5">
+            Uvedené údaje použije pořadatel Defekt z.s., Bratří Mrštíků 24, 614 00, Brno, IČ: 708342237 pouze pro účely spojené s&nbsp;pořádáním závodů Soběšická Mulda a&nbsp;Muldička a&nbsp;neposkytne je třetím osobám. Odesláním formuláře vyjadřujete svůj souhlas ve smyslu zákona 101/2000 Sb., o&nbsp;ochraně osobních údajů, v&nbsp;platném znění, s&nbsp;výše uvedeným zpracováním osobních údajů.
+        </p>
 
         <div class="flex justify-end">
             <Button
@@ -128,19 +149,25 @@
         </div>
     </form>
 
-    <div
+    <Message
         v-if="error"
-        class="alert alert-danger mt-3"
+        severity="error"
+        class="mt-6"
+        :closable="true"
+        @close="error = null"
     >
         {{ error }}
-    </div>
+    </Message>
 
-    <div
+    <Message
         v-if="success"
-        class="alert alert-success mt-3"
+        severity="success"
+        class="mt-6"
+        :closable="true"
+        @close="success = null"
     >
         {{ success }}
-    </div>
+    </Message>
 </template>
 
 <script setup lang="ts">
@@ -153,7 +180,8 @@ import InputText from 'primevue/inputtext'
 import Select from 'primevue/select'
 import DatePicker from 'primevue/datepicker'
 import Button from 'primevue/button'
-import FloatLabel from 'primevue/floatlabel'
+import Message from 'primevue/message'
+import { Textarea } from 'primevue'
 
 const firstName = ref('')
 const lastName = ref('')
@@ -162,6 +190,7 @@ const dateOfBirth = ref<Date | null>(null)
 const category = ref('')
 const race = ref<string | null>(null)
 const honeypot = ref('')
+const note = ref('')
 
 const isLoading = ref(false)
 const error = ref<string | null>(null)
@@ -356,11 +385,7 @@ async function onSubmit() {
         resetForm()
     } catch (fetchError) {
         console.error('Submit error:', fetchError)
-        if (fetchError instanceof Error) {
-            error.value = fetchError.message || 'Došlo k chybě při odesílání přihlášky.'
-        } else {
-            error.value = 'Došlo k chybě při odesílání přihlášky. Zkuste to prosím znovu později.'
-        }
+        error.value = 'Došlo k chybě při odesílání přihlášky. Zkuste to prosím znovu později.'
     } finally {
         isLoading.value = false
     }
@@ -373,6 +398,7 @@ function resetForm(): void {
     dateOfBirth.value = null
     category.value = ''
     race.value = ''
+    note.value = ''
     cfResponse.value = ''
     validation.value.$reset()
 }
