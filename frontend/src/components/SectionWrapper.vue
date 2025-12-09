@@ -15,7 +15,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
     background: 'white',
-    paddingY: 'md',
+    paddingY: 'sm',
     customClass: ''
 })
 
