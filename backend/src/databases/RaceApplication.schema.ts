@@ -47,6 +47,12 @@ export class RaceApplication {
 
     @Prop({
         type: SchemaTypes.String,
+        default: ''
+    })
+    note?: string
+
+    @Prop({
+        type: SchemaTypes.String,
         required: true
     })
     token: string

@@ -1,5 +1,5 @@
 import { Exclude, Expose, Type } from 'class-transformer'
-import { IsDate, IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator'
+import { IsDate, IsEmail, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator'
 
 @Exclude()
 export class CreateRaceApplicationDto {
@@ -33,6 +33,12 @@ export class CreateRaceApplicationDto {
     @IsString()
     @Expose()
     race: string
+
+    @IsOptional()
+    @IsString()
+    @MaxLength(500)
+    @Expose()
+    note?: string
 
     @IsNotEmpty()
     @IsString()

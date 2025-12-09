@@ -44,6 +44,7 @@ export class RaceApplicationService {
             dateOfBirth: new Date(data.dateOfBirth),
             category: data.category,
             race: data.race,
+            note: data.note || '',
             honeypot: data.honeypot || '',
             token: data.token
         })
