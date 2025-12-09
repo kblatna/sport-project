@@ -7,6 +7,7 @@ import { RaceApplicationModule } from './modules/raceApplication/RaceApplication
 import { ResultModule } from './modules/result/Result.module'
 import { MainPageContentModule } from './modules/mainPageContent/MainPageContent.module'
 import { ResultPageContentModule } from './modules/resultPageContent/ResultPageContent.module'
+import { OrganizerPageContentModule } from './modules/organizersPageContent/OrganizersPageContent.module'
 
 @Module({
     imports: [
@@ -17,7 +18,8 @@ import { ResultPageContentModule } from './modules/resultPageContent/ResultPageC
         RaceApplicationModule,
         ResultModule,
         MainPageContentModule,
-        ResultPageContentModule
+        ResultPageContentModule,
+        OrganizerPageContentModule
     ],
     controllers: [],
     providers: []
