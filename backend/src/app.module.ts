@@ -8,6 +8,7 @@ import { ResultModule } from './modules/result/Result.module'
 import { MainPageContentModule } from './modules/mainPageContent/MainPageContent.module'
 import { ResultPageContentModule } from './modules/resultPageContent/ResultPageContent.module'
 import { OrganizerPageContentModule } from './modules/organizersPageContent/OrganizersPageContent.module'
+import { LinksPageContentModule } from './modules/linksPageContent/LinksPageContent.module'
 
 @Module({
     imports: [
@@ -19,7 +20,8 @@ import { OrganizerPageContentModule } from './modules/organizersPageContent/Orga
         ResultModule,
         MainPageContentModule,
         ResultPageContentModule,
-        OrganizerPageContentModule
+        OrganizerPageContentModule,
+        LinksPageContentModule
     ],
     controllers: [],
     providers: []
