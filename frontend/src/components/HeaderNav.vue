@@ -25,6 +25,38 @@
                     >
                         {{ item.label }}
                     </NavLink>
+
+                    <div class="relative">
+                        <button
+                            @click="isAboutDropdownOpen = !isAboutDropdownOpen"
+                            class="text-white border-transparent border-b-2 hover:border-white px-3 py-2 text-lg font-medium flex items-center gap-1"
+                            :class="{ 'border-white': isAboutDropdownOpen || isAboutActive }"
+                        >
+                            O nás
+                            <iconify-icon
+                                :inline="true"
+                                icon="mdi:chevron-down"
+                                class="transition-transform"
+                                :class="{ 'rotate-180': isAboutDropdownOpen }"
+                            />
+                        </button>
+                        <Transition name="dropdown">
+                            <div
+                                v-if="isAboutDropdownOpen"
+                                class="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg overflow-hidden z-50"
+                            >
+                                <router-link
+                                    v-for="item in aboutMenuItems"
+                                    :key="item.label"
+                                    :to="item.to"
+                                    class="block px-4 py-3 text-gray-700 hover:bg-primary-50 transition-colors"
+                                    @click="isAboutDropdownOpen = false"
+                                >
+                                    {{ item.label }}
+                                </router-link>
+                            </div>
+                        </Transition>
+                    </div>
                 </div>
 
                 <!-- Mobile menu button -->
@@ -115,6 +147,38 @@
                         >
                             {{ item.label }}
                         </NavLink>
+
+                        <div>
+                            <button
+                                @click="isMobileAboutDropdownOpen = !isMobileAboutDropdownOpen"
+                                class="w-full flex justify-between items-center px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
+                                :class="{ 'bg-white/20': isMobileAboutDropdownOpen || isAboutActive }"
+                            >
+                                O nás
+                                <iconify-icon
+                                    :inline="true"
+                                    icon="mdi:chevron-down"
+                                    class="transition-transform"
+                                    :class="{ 'rotate-180': isMobileAboutDropdownOpen }"
+                                />
+                            </button>
+                            <Transition name="slide-down">
+                                <div
+                                    v-if="isMobileAboutDropdownOpen"
+                                    class="ml-4 mt-2 space-y-2"
+                                >
+                                    <router-link
+                                        v-for="item in aboutMenuItems"
+                                        :key="item.label"
+                                        :to="item.to"
+                                        class="block px-4 py-2 text-base text-white hover:bg-white/10 rounded-lg transition-all"
+                                        @click="isMobileMenuOpen = false; isMobileAboutDropdownOpen = false"
+                                    >
+                                        {{ item.label }}
+                                    </router-link>
+                                </div>
+                            </Transition>
+                        </div>
                     </nav>
                 </div>
             </Transition>
@@ -124,11 +188,19 @@
 
 <script setup lang="ts">
 import { Button, Image } from 'primevue'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import type { RouteLocationRaw } from 'vue-router'
 import NavLink from './NavLink.vue'
 
 const isMobileMenuOpen = ref(false)
+const isAboutDropdownOpen = ref(false)
+const isMobileAboutDropdownOpen = ref(false)
+const route = useRoute()
+
+const isAboutActive = computed(() => {
+    return route.name === 'Organizer' || route.name === 'Links' || route.name === 'Contact'
+})
 
 interface NavItem {
     to: RouteLocationRaw
@@ -139,8 +211,13 @@ interface NavItem {
 const navItems: NavItem[] = [
     { to: { name: 'Home' }, label: 'Domů' },
     { to: { name: 'Results' }, label: 'Výsledky' },
-    { to: { name: 'Signup' }, label: 'Registrace' },
-    { to: { name: 'Organizer' }, label: 'O nás' }
+    { to: { name: 'Signup' }, label: 'Registrace' }
+]
+
+const aboutMenuItems: NavItem[] = [
+    { to: { name: 'Organizer' }, label: 'Pořadatel' },
+    { to: { name: 'Links' }, label: 'Odkazy a ohlasy' },
+    { to: { name: 'Contact' }, label: 'Kontakt' }
 ]
 </script>
 
@@ -166,6 +243,34 @@ const navItems: NavItem[] = [
     transform: translateX(100%);
 }
 
+.dropdown-enter-active,
+.dropdown-leave-active {
+    transition: all 0.2s ease;
+}
+
+.dropdown-enter-from,
+.dropdown-leave-to {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.slide-down-enter-active,
+.slide-down-leave-active {
+    transition: all 0.3s ease;
+}
+
+.slide-down-enter-from,
+.slide-down-leave-to {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+}
+
+.slide-down-enter-to,
+.slide-down-leave-from {
+    max-height: 500px;
+}
+
 .p-button-text:not(:disabled) {
     transition: all 0.3s ease;
 }
@@ -189,10 +294,5 @@ const navItems: NavItem[] = [
     color: white;
     stroke: currentColor;
     transition: color 0.3s ease;
-}
-
-.slide-enter-from,
-.slide-leave-to {
-    transform: translateX(100%);
 }
 </style>

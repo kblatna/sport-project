@@ -14,7 +14,7 @@ export default {
             path: 'reviews',
             name: 'Reviews',
             props: true,
-            component: () => import('@/views/app/views/about/ReviewsView.vue'),
+            component: () => import('@/views/app/views/about/ContactView.vue'),
             meta: { breadcrumb: 'Recenze' }
         },
         {
@@ -23,6 +23,13 @@ export default {
             props: true,
             component: () => import('@/views/app/views/about/LinksView.vue'),
             meta: { breadcrumb: 'Odkazy' }
+        },
+        {
+            path: 'contact',
+            name: 'Contact',
+            props: true,
+            component: () => import('@/views/app/views/about/ContactView.vue'),
+            meta: { breadcrumb: 'Kontakt' }
         }
     ]
 }
