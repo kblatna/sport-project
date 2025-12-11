@@ -1,5 +1,8 @@
 <template>
-    <header class="header">
+    <header
+        class="fixed top-0 left-0 right-0 z-50 h-20 bg-gradient-to-r from-primary-700 via-primary-600 to-primary-500 backdrop-blur-md transition-all duration-200"
+        :class="{ '-translate-y-full': isHidden }"
+    >
         <nav class="container">
             <div class="flex justify-between items-center h-20">
                 <div class="flex items-center">
@@ -187,16 +190,19 @@
 </template>
 
 <script setup lang="ts">
+import { useScrollHeader } from '@/composables/useScrollHeader'
 import { Button, Image } from 'primevue'
-import { ref, computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, ref } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
+import { useRoute } from 'vue-router'
 import NavLink from './NavLink.vue'
 
 const isMobileMenuOpen = ref(false)
 const isAboutDropdownOpen = ref(false)
 const isMobileAboutDropdownOpen = ref(false)
 const route = useRoute()
+
+const { isHidden } = useScrollHeader()
 
 const isAboutActive = computed(() => {
     return route.name === 'Organizer' || route.name === 'Links' || route.name === 'Contact'
