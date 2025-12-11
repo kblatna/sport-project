@@ -30,7 +30,7 @@
                 />
             </div>
 
-            <div class="md:col-span-2">
+            <div>
                 <label
                     for="email"
                     class="block mb-2 font-medium"
