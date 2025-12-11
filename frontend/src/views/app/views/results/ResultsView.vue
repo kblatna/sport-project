@@ -1,5 +1,5 @@
 <template>
-    <SectionWrapper>
+    <SectionWrapper class="container">
         <SectionHeader
             :title="pageContent?.title || 'Výsledky závodu'"
         >
@@ -8,7 +8,7 @@
             </p>
         </SectionHeader>
 
-        <div class="rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-10 mx-10 border border-gray-200/60">
+        <div class="rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-10 border border-gray-200/60">
             <ResultsDataTable
                 :results="result.docs"
                 :total-records="result.totalDocs"
