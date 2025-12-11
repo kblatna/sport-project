@@ -43,11 +43,13 @@
             :show-filter-menu="true"
         />
 
+        <!-- TODO: Check better way to set width -->
         <Column
             field="startNumber"
             :header="pageContent?.columnHeaders?.startNumber || 'Startovní číslo'"
             sortable
             :show-filter-menu="true"
+            style="width: 10rem;"
         >
             <template #filter="{ filterModel, filterCallback }">
                 <InputText
@@ -55,6 +57,7 @@
                     type="text"
                     @input="filterCallback"
                     :placeholder="pageContent?.filterPlaceholders?.startNumber || 'Hledat číslo'"
+                    style="width: 9rem;"
                 />
             </template>
         </Column>
@@ -85,6 +88,7 @@
             :header="pageContent?.columnHeaders?.dateOfBirth || 'Rok narození'"
             sortable
             :show-filter-menu="true"
+            style="width: 10rem;"
         >
             <template #filter="{ filterModel, filterCallback }">
                 <InputText
@@ -92,6 +96,7 @@
                     type="text"
                     @input="filterCallback"
                     :placeholder="pageContent?.filterPlaceholders?.dateOfBirth || 'Hledat rok'"
+                    style="width: 9rem;"
                 />
             </template>
         </Column>
@@ -101,6 +106,7 @@
             :header="pageContent?.columnHeaders?.totalTime || 'Celkový čas'"
             sortable
             :show-filter-menu="true"
+            style="width: 10rem;"
         />
 
         <Column
@@ -108,6 +114,7 @@
             :header="pageContent?.columnHeaders?.category || 'Kategorie'"
             sortable
             :show-filter-menu="true"
+            style="width: 11rem;"
         >
             <template #filter="{ filterModel, filterCallback }">
                 <InputText
@@ -115,6 +122,7 @@
                     type="text"
                     @input="filterCallback"
                     :placeholder="pageContent?.filterPlaceholders?.category || 'Hledat kategorii'"
+                    style="width: 10rem;"
                 />
             </template>
         </Column>
@@ -124,6 +132,7 @@
             :header="pageContent?.columnHeaders?.year || 'Ročník'"
             sortable
             :show-filter-menu="true"
+            style="width: 10rem;"
         >
             <template #filter="{ filterModel, filterCallback }">
                 <InputText
@@ -131,6 +140,7 @@
                     type="text"
                     @input="filterCallback"
                     :placeholder="pageContent?.filterPlaceholders?.year || 'Hledat ročník'"
+                    style="width: 9rem;"
                 />
             </template>
         </Column>
