@@ -10,9 +10,9 @@
         v-else-if="pageContent"
         class="pt-20"
     >
-        <section
+        <SectionWrapper
             v-if="pageContent.hero"
-            class="relative h-[40vh] md:h-[55vh]"
+            class="relative h-[30vh] lg:h-[50vh]"
         >
             <div
                 class="absolute inset-0 bg-cover bg-start"
@@ -24,12 +24,11 @@
             <div class="relative z-10 flex items-center h-full">
                 <div class="container">
                     <div class="max-w-4xl text-white">
-                        <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 md:mb-10">
+                        <h1 class="text-4xl lg:text-5xl xl:text-6xl font-extrabold mb-6 md:mb-10">
                             {{ pageContent.hero.title }}
                         </h1>
-
                         <p
-                            class="text-xl md:text-2xl lg:text-3xl mb-8 md:mb-10 max-w-2xl"
+                            class="text-base md:text-lg lg:text-xl xl:text-2xl mb-4 md:mb-6 max-w-2xl leading-relaxed text-white/95"
                             v-html="pageContent.hero.subtitle"
                         ></p>
 
@@ -48,7 +47,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </SectionWrapper>
 
         <SectionWrapper
             v-if="pageContent.raceCards && pageContent.raceCards.length > 0"
