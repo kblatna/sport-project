@@ -8,50 +8,48 @@
         <template v-else-if="!isLoading && !error && linksContent && linksContent.heroImage">
             <SectionHeader :title="linksContent?.titles?.main ?? 'Ohlasy a odkazy'" />
 
-            <div>
-                <div
-                    class="links-hero-image mb-12 rounded-xl overflow-hidden h-64 md:h-96 shadow-lg bg-cover bg-center"
-                    :style="`background-image: url('${linksContent.heroImage}'); background-position: center 70%; background-size: cover;`"
-                ></div>
+            <div
+                class="links-hero-image mb-12 rounded-xl overflow-hidden h-64 md:h-96 shadow-lg bg-cover bg-center"
+                :style="`background-image: url('${linksContent.heroImage}'); background-position: center 70%; background-size: cover;`"
+            ></div>
 
-                <div
-                    v-if="linksContent"
-                    class="mb-16"
-                >
-                    <SectionTitle
-                        :icon="'mdi:television-classic'"
-                        :title="linksContent?.titles?.sectionOhlasy ?? 'Ohlasy'"
+            <div
+                v-if="linksContent"
+                class="mb-16"
+            >
+                <SectionTitle
+                    :icon="'mdi:television-classic'"
+                    :title="linksContent?.titles?.sectionOhlasy ?? 'Ohlasy'"
+                />
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <MediaListCard
+                        icon="mdi:television"
+                        :title="linksContent?.titles?.tv ?? 'Mulda v televizi'"
+                        :items="linksContent.tvItems"
+                        item-icon="mdi:play-circle"
                     />
 
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <MediaListCard
-                            icon="mdi:television"
-                            :title="linksContent?.titles?.tv ?? 'Mulda v televizi'"
-                            :items="linksContent.tvItems"
-                            item-icon="mdi:play-circle"
-                        />
+                    <MediaListCard
+                        icon="mdi:youtube"
+                        :title="linksContent?.titles?.videos ?? 'Videa na internetu'"
+                        :items="linksContent.videoItems"
+                        item-icon="mdi:video"
+                    />
 
-                        <MediaListCard
-                            icon="mdi:youtube"
-                            :title="linksContent?.titles?.videos ?? 'Videa na internetu'"
-                            :items="linksContent.videoItems"
-                            item-icon="mdi:video"
-                        />
+                    <MediaListCard
+                        icon="mdi:newspaper-variant"
+                        :title="linksContent?.titles?.press ?? 'Články v tisku'"
+                        :items="linksContent.pressItems"
+                        item-icon="mdi:file-document"
+                    />
 
-                        <MediaListCard
-                            icon="mdi:newspaper-variant"
-                            :title="linksContent?.titles?.press ?? 'Články v tisku'"
-                            :items="linksContent.pressItems"
-                            item-icon="mdi:file-document"
-                        />
-
-                        <MediaListCard
-                            icon="mdi:web"
-                            :title="linksContent?.titles?.web ?? 'Sesbíráno po internetu'"
-                            :items="linksContent.webItems"
-                            item-icon="mdi:link"
-                        />
-                    </div>
+                    <MediaListCard
+                        icon="mdi:web"
+                        :title="linksContent?.titles?.web ?? 'Sesbíráno po internetu'"
+                        :items="linksContent.webItems"
+                        item-icon="mdi:link"
+                    />
                 </div>
             </div>
 

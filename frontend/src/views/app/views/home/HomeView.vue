@@ -12,7 +12,7 @@
     >
         <SectionWrapper
             v-if="pageContent.hero"
-            class="relative h-[30vh] lg:h-[50vh]"
+            class="relative h-[40vh] lg:h-[50vh]"
         >
             <div
                 class="absolute inset-0 bg-cover bg-start"

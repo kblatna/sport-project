@@ -15,7 +15,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
     background: 'white',
-    paddingY: 'sm',
+    paddingY: 'lg',
     customClass: ''
 })
 
@@ -27,9 +27,9 @@ const backgroundMap = {
 
 const paddingMap = {
     none: '',
-    sm: 'py-8 md:py-12',
-    md: 'py-16 md:py-20',
-    lg: 'py-20 md:py-28'
+    sm: 'py-4 md:py-6 lg:py-10',
+    md: 'py-6 md:py-10 lg:py-16',
+    lg: 'py-12 md:py-20 lg:py-28'
 }
 
 const sectionClasses = computed(() => {

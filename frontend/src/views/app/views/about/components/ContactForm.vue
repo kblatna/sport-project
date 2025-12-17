@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-2xl mx-auto">
+    <div class="max-w-3xl mx-auto">
         <h2 class="text-2xl font-bold text-gray-900 mb-6">
             Kontaktní formulář
         </h2>
