@@ -30,169 +30,33 @@
                     </h2>
 
                     <div class="grid md:grid-cols-2 gap-6">
-                        <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition-shadow">
-                            <div class="flex items-center gap-3 mb-4">
-                                <iconify-icon
-                                    icon="mdi:television"
-                                    :inline="true"
-                                    class="text-primary text-3xl"
-                                />
-                                <h3 class="text-xl font-semibold text-gray-800">
-                                    Mulda v televizi
-                                </h3>
-                            </div>
-                            <div class="max-h-96 overflow-y-auto pr-2">
-                                <component
-                                    v-for="(item, index) in linksContent.tvItems"
-                                    :key="index"
-                                    :is="item.link ? 'a' : 'div'"
-                                    :href="item.link || undefined"
-                                    :target="item.link ? '_blank' : undefined"
-                                    :rel="item.link ? 'noopener noreferrer' : undefined"
-                                    class="flex items-center gap-3 p-3 rounded-lg transition-colors"
-                                    :class="item.link ? 'hover:bg-gray-50 group cursor-pointer' : ''"
-                                >
-                                    <iconify-icon
-                                        icon="mdi:play-circle"
-                                        :inline="true"
-                                        class="text-primary text-xl mt-0.5 flex-shrink-0"
-                                    />
-                                    <span
-                                        class="text-gray-700 text-sm"
-                                        :class="item.link ? 'group-hover:text-primary transition-colors' : ''"
-                                    >{{ item.title }}</span>
-                                    <iconify-icon
-                                        v-if="item.link"
-                                        icon="mdi:open-in-new"
-                                        :inline="true"
-                                        class="text-gray-400 text-sm ml-auto flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                                    />
-                                </component>
-                            </div>
-                        </div>
+                        <MediaListCard
+                            icon="mdi:television"
+                            title="Mulda v televizi"
+                            :items="linksContent.tvItems"
+                            item-icon="mdi:play-circle"
+                        />
 
-                        <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition-shadow">
-                            <div class="flex items-center gap-3 mb-4">
-                                <iconify-icon
-                                    icon="mdi:youtube"
-                                    :inline="true"
-                                    class="text-primary text-3xl"
-                                />
-                                <h3 class="text-xl font-semibold text-gray-800">
-                                    Videa na internetu
-                                </h3>
-                            </div>
-                            <div class="max-h-96 overflow-y-auto pr-2">
-                                <component
-                                    v-for="(item, index) in linksContent.videoItems"
-                                    :key="index"
-                                    :is="item.link ? 'a' : 'div'"
-                                    :href="item.link || undefined"
-                                    :target="item.link ? '_blank' : undefined"
-                                    :rel="item.link ? 'noopener noreferrer' : undefined"
-                                    class="flex items-center gap-3 p-3 rounded-lg transition-colors"
-                                    :class="item.link ? 'hover:bg-gray-50 group cursor-pointer' : ''"
-                                >
-                                    <iconify-icon
-                                        icon="mdi:video"
-                                        :inline="true"
-                                        class="text-primary text-xl mt-0.5 flex-shrink-0"
-                                    />
-                                    <span
-                                        class="text-gray-700 text-sm"
-                                        :class="item.link ? 'group-hover:text-primary transition-colors' : ''"
-                                    >{{ item.title }}</span>
-                                    <iconify-icon
-                                        v-if="item.link"
-                                        icon="mdi:open-in-new"
-                                        :inline="true"
-                                        class="text-gray-400 text-sm ml-auto flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                                    />
-                                </component>
-                            </div>
-                        </div>
+                        <MediaListCard
+                            icon="mdi:youtube"
+                            title="Videa na internetu"
+                            :items="linksContent.videoItems"
+                            item-icon="mdi:video"
+                        />
 
-                        <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition-shadow">
-                            <div class="flex items-center gap-3 mb-4">
-                                <iconify-icon
-                                    icon="mdi:newspaper-variant"
-                                    :inline="true"
-                                    class="text-primary text-3xl"
-                                />
-                                <h3 class="text-xl font-semibold text-gray-800">
-                                    Články v tisku
-                                </h3>
-                            </div>
-                            <div class="max-h-96 overflow-y-auto pr-2">
-                                <component
-                                    v-for="(item, index) in linksContent.pressItems"
-                                    :key="index"
-                                    :is="item.link ? 'a' : 'div'"
-                                    :href="item.link || undefined"
-                                    :target="item.link ? '_blank' : undefined"
-                                    :rel="item.link ? 'noopener noreferrer' : undefined"
-                                    class="flex items-center gap-3 p-3 rounded-lg transition-colors"
-                                    :class="item.link ? 'hover:bg-gray-50 group cursor-pointer' : ''"
-                                >
-                                    <iconify-icon
-                                        icon="mdi:file-document"
-                                        :inline="true"
-                                        class="text-primary text-xl mt-0.5 flex-shrink-0"
-                                    />
-                                    <span
-                                        class="text-gray-700 text-sm"
-                                        :class="item.link ? 'group-hover:text-primary transition-colors' : ''"
-                                    >{{ item.title }}</span>
-                                    <iconify-icon
-                                        v-if="item.link"
-                                        icon="mdi:open-in-new"
-                                        :inline="true"
-                                        class="text-gray-400 text-sm ml-auto flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                                    />
-                                </component>
-                            </div>
-                        </div>
+                        <MediaListCard
+                            icon="mdi:newspaper-variant"
+                            title="Články v tisku"
+                            :items="linksContent.pressItems"
+                            item-icon="mdi:file-document"
+                        />
 
-                        <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition-shadow">
-                            <div class="flex items-center gap-3 mb-4">
-                                <iconify-icon
-                                    icon="mdi:web"
-                                    :inline="true"
-                                    class="text-primary text-3xl"
-                                />
-                                <h3 class="text-xl font-semibold text-gray-800">
-                                    Sesbíráno po internetu
-                                </h3>
-                            </div>
-                            <div>
-                                <component
-                                    v-for="(item, index) in linksContent.webItems"
-                                    :key="index"
-                                    :is="item.link ? 'a' : 'div'"
-                                    :href="item.link || undefined"
-                                    :target="item.link ? '_blank' : undefined"
-                                    :rel="item.link ? 'noopener noreferrer' : undefined"
-                                    class="flex items-center gap-3 p-3 rounded-lg transition-colors"
-                                    :class="item.link ? 'hover:bg-gray-50 group cursor-pointer' : ''"
-                                >
-                                    <iconify-icon
-                                        icon="mdi:link"
-                                        :inline="true"
-                                        class="text-primary text-xl mt-0.5 flex-shrink-0"
-                                    />
-                                    <span
-                                        class="text-gray-700 text-sm"
-                                        :class="item.link ? 'group-hover:text-primary transition-colors' : ''"
-                                    >{{ item.title }}</span>
-                                    <iconify-icon
-                                        v-if="item.link"
-                                        icon="mdi:open-in-new"
-                                        :inline="true"
-                                        class="text-gray-400 text-sm ml-auto flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                                    />
-                                </component>
-                            </div>
-                        </div>
+                        <MediaListCard
+                            icon="mdi:web"
+                            title="Sesbíráno po internetu"
+                            :items="linksContent.webItems"
+                            item-icon="mdi:link"
+                        />
                     </div>
                 </div>
             </div>
@@ -258,11 +122,12 @@
 
 import ErrorMessage from '@/components/ErrorMessage.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import MediaListCard from '@/components/MediaListCard.vue'
 import SectionHeader from '@/components/SectionHeader.vue'
 import SectionWrapper from '@/components/SectionWrapper.vue'
-import { ref, onMounted } from 'vue'
-import { linksPageContent } from '@/services/api/services'
 import type { LinksPageContent } from '@/interface/LinksPageContent.interface'
+import { linksPageContent } from '@/services/api/services'
+import { onMounted, ref } from 'vue'
 
 const linksContent = ref<LinksPageContent | null>(null)
 const isLoading = ref<boolean>(false)
