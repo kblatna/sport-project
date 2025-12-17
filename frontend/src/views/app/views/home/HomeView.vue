@@ -6,7 +6,10 @@
         :message="error"
     />
 
-    <div v-else-if="pageContent">
+    <div
+        v-else-if="pageContent"
+        class="pt-20"
+    >
         <section
             v-if="pageContent.hero"
             class="relative h-[40vh] md:h-[55vh]"

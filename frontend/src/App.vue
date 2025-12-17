@@ -7,7 +7,7 @@
         <BreadcrumbNav />
 
         <!-- Main Content -->
-        <main class="pt-20 flex-1">
+        <main class="flex-1">
             <RouterView />
         </main>
 
