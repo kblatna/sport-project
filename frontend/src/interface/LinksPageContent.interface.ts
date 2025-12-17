@@ -34,4 +34,13 @@ export interface LinksPageContent {
     webItems: MediaItem[]
     links: UsefulLink[]
     contactBox?: ContactBox
+    titles?: {
+        main?: string
+        sectionOhlasy?: string
+        tv?: string
+        videos?: string
+        press?: string
+        web?: string
+        links?: string
+    }
 }

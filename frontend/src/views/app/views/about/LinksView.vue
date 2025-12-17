@@ -6,7 +6,7 @@
             :message="error"
         />
         <template v-else-if="!isLoading && !error && linksContent && linksContent.heroImage">
-            <SectionHeader title="Ohlasy a odkazy" />
+            <SectionHeader :title="linksContent?.titles?.main ?? 'Ohlasy a odkazy'" />
 
             <div>
                 <div
@@ -26,34 +26,34 @@
                                 class="text-primary text-2xl"
                             />
                         </div>
-                        Ohlasy
+                        {{ linksContent?.titles?.sectionOhlasy ?? 'Ohlasy' }}
                     </h2>
 
                     <div class="grid md:grid-cols-2 gap-6">
                         <MediaListCard
                             icon="mdi:television"
-                            title="Mulda v televizi"
+                            :title="linksContent?.titles?.tv ?? 'Mulda v televizi'"
                             :items="linksContent.tvItems"
                             item-icon="mdi:play-circle"
                         />
 
                         <MediaListCard
                             icon="mdi:youtube"
-                            title="Videa na internetu"
+                            :title="linksContent?.titles?.videos ?? 'Videa na internetu'"
                             :items="linksContent.videoItems"
                             item-icon="mdi:video"
                         />
 
                         <MediaListCard
                             icon="mdi:newspaper-variant"
-                            title="Články v tisku"
+                            :title="linksContent?.titles?.press ?? 'Články v tisku'"
                             :items="linksContent.pressItems"
                             item-icon="mdi:file-document"
                         />
 
                         <MediaListCard
                             icon="mdi:web"
-                            title="Sesbíráno po internetu"
+                            :title="linksContent?.titles?.web ?? 'Sesbíráno po internetu'"
                             :items="linksContent.webItems"
                             item-icon="mdi:link"
                         />
@@ -70,7 +70,7 @@
                             class="text-primary text-2xl"
                         />
                     </div>
-                    Užitečné odkazy
+                    {{ linksContent?.titles?.links ?? 'Užitečné odkazy' }}
                 </h2>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <a
