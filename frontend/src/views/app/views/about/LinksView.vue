@@ -18,16 +18,10 @@
                     v-if="linksContent"
                     class="mb-16"
                 >
-                    <h2 class="text-3xl font-bold mb-8 flex items-center gap-3 text-gray-800">
-                        <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
-                            <iconify-icon
-                                icon="mdi:television-classic"
-                                :inline="true"
-                                class="text-primary text-2xl"
-                            />
-                        </div>
-                        {{ linksContent?.titles?.sectionOhlasy ?? 'Ohlasy' }}
-                    </h2>
+                    <SectionTitle
+                        :icon="'mdi:television-classic'"
+                        :title="linksContent?.titles?.sectionOhlasy ?? 'Ohlasy'"
+                    />
 
                     <div class="grid md:grid-cols-2 gap-6">
                         <MediaListCard
@@ -62,16 +56,10 @@
             </div>
 
             <div v-if="linksContent && linksContent.links">
-                <h2 class="text-3xl font-bold mb-8 flex items-center gap-3 text-gray-800">
-                    <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
-                        <iconify-icon
-                            icon="mdi:link-variant"
-                            :inline="true"
-                            class="text-primary text-2xl"
-                        />
-                    </div>
-                    {{ linksContent?.titles?.links ?? 'Užitečné odkazy' }}
-                </h2>
+                <SectionTitle
+                    :icon="'mdi:link-variant'"
+                    :title="linksContent?.titles?.links ?? 'Užitečné odkazy'"
+                />
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <a
                         v-for="(link, index) in linksContent.links"
@@ -120,6 +108,7 @@ import InfoBox from '@/components/InfoBox.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import MediaListCard from '@/components/MediaListCard.vue'
 import SectionHeader from '@/components/SectionHeader.vue'
+import SectionTitle from '@/components/SectionTitle.vue'
 import SectionWrapper from '@/components/SectionWrapper.vue'
 import type { LinksPageContent } from '@/interface/LinksPageContent.interface'
 import { linksPageContent } from '@/services/api/services'
