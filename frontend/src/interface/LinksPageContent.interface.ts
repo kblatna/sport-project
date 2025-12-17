@@ -18,4 +18,20 @@ export interface LinksPageContent {
     links: UsefulLink[]
 }
 
-export default LinksPageContent
+export interface ContactBox {
+    icon?: string
+    message?: string
+    ctaText?: string
+    ctaRouteName?: string
+    ctaHref?: string
+}
+
+export interface LinksPageContent {
+    heroImage: string
+    tvItems: MediaItem[]
+    videoItems: MediaItem[]
+    pressItems: MediaItem[]
+    webItems: MediaItem[]
+    links: UsefulLink[]
+    contactBox?: ContactBox
+}

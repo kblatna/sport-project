@@ -98,29 +98,25 @@
                         />
                     </a>
                 </div>
-                <div class="mt-8 bg-primary-50  border-primary rounded-lg p-6">
-                    <div class="flex items-center gap-4">
-                        <iconify-icon
-                            icon="mdi:information"
-                            :inline="true"
-                            class="text-primary text-2xl flex-shrink-0 mt-1"
-                        />
-                        <p class="text-gray-700">
-                            Máte-li nápad, co dalšího sem přidat, dejte nám vědět prostřednictvím kontaktního
-                            <router-link :to="{ name: 'Contact' }">
-                                <span class="font-bold hover:underline"> formuláře</span>
-                            </router-link>.
-                        </p>
-                    </div>
-                </div>
+                <InfoBox
+                    v-if="linksContent"
+                    :icon="linksContent.contactBox?.icon ?? 'mdi:information'"
+                    :message="linksContent.contactBox?.message ?? 'Máte-li nápad, co dalšího sem přidat, dejte nám vědět prostřednictvím kontaktního'"
+                    :cta-text="linksContent.contactBox?.ctaText ?? 'formuláře'"
+                    :cta-route-name="linksContent.contactBox?.ctaRouteName ?? 'Contact'"
+                    bg-class="bg-primary-50"
+                    border-class="border-primary"
+                    icon-class="text-primary text-2xl"
+                    class="mt-8"
+                />
             </div>
         </template>
     </SectionWrapper>
 </template>
 
 <script setup lang="ts">
-
 import ErrorMessage from '@/components/ErrorMessage.vue'
+import InfoBox from '@/components/InfoBox.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import MediaListCard from '@/components/MediaListCard.vue'
 import SectionHeader from '@/components/SectionHeader.vue'
@@ -140,7 +136,6 @@ onMounted(async () => {
 async function loadlinksContentData(): Promise<void> {
     isLoading.value = true
     error.value = ''
-
     try {
         const response = await linksPageContent.getAll()
         linksContent.value = response || null
@@ -153,6 +148,7 @@ async function loadlinksContentData(): Promise<void> {
 }
 
 </script>
+
 <style scoped>
 .links-hero-image {
     background-image: url('/images/20251012-brnow-154.webp');
