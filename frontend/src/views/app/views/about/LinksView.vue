@@ -1,5 +1,5 @@
 <template>
-    <SectionWrapper>
+    <SectionWrapper class="container">
         <LoadingSpinner v-if="isLoading" />
         <ErrorMessage
             v-else-if="error"
@@ -8,7 +8,7 @@
         <template v-else-if="!isLoading && !error && linksContent && linksContent.heroImage">
             <SectionHeader title="Ohlasy a odkazy" />
 
-            <div class="container max-w-6xl mx-auto">
+            <div>
                 <div
                     class="links-hero-image mb-12 rounded-xl overflow-hidden h-64 md:h-96 shadow-lg bg-cover bg-center"
                     :style="`background-image: url('${linksContent.heroImage}'); background-position: center 70%; background-size: cover;`"
@@ -196,61 +196,61 @@
                     </div>
                 </div>
             </div>
-        </template>
 
-        <div v-if="linksContent && linksContent.links">
-            <h2 class="text-3xl font-bold mb-8 flex items-center gap-3 text-gray-800">
-                <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
-                    <iconify-icon
-                        icon="mdi:link-variant"
-                        :inline="true"
-                        class="text-primary text-2xl"
-                    />
-                </div>
-                Užitečné odkazy
-            </h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <a
-                    v-for="(link, index) in linksContent.links"
-                    :key="index"
-                    :href="link.link"
-                    class="group bg-white rounded-lg shadow-md p-5 hover:shadow-xl hover:bg-primary-50 transition-all flex items-center gap-4"
-                >
-                    <div class="w-10 h-10 flex items-center justify-center flex-shrink-0">
+            <div v-if="linksContent && linksContent.links">
+                <h2 class="text-3xl font-bold mb-8 flex items-center gap-3 text-gray-800">
+                    <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
                         <iconify-icon
-                            :icon="link.icon"
+                            icon="mdi:link-variant"
                             :inline="true"
                             class="text-primary text-2xl"
                         />
                     </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="text-gray-800 font-medium group-hover:text-primary transition-colors">
-                            {{ link.text }}
+                    Užitečné odkazy
+                </h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <a
+                        v-for="(link, index) in linksContent.links"
+                        :key="index"
+                        :href="link.link"
+                        class="group bg-white rounded-lg shadow-md p-5 hover:shadow-xl hover:bg-primary-50 transition-all flex items-center gap-4"
+                    >
+                        <div class="w-10 h-10 flex items-center justify-center flex-shrink-0">
+                            <iconify-icon
+                                :icon="link.icon"
+                                :inline="true"
+                                class="text-primary text-2xl"
+                            />
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-gray-800 font-medium group-hover:text-primary transition-colors">
+                                {{ link.text }}
+                            </p>
+                        </div>
+                        <iconify-icon
+                            icon="mdi:chevron-right"
+                            :inline="true"
+                            class="text-gray-400 text-3xl group-hover:text-primary group-hover:translate-x-1 transition-all flex-shrink-0"
+                        />
+                    </a>
+                </div>
+                <div class="mt-8 bg-primary-50  border-primary rounded-lg p-6">
+                    <div class="flex items-center gap-4">
+                        <iconify-icon
+                            icon="mdi:information"
+                            :inline="true"
+                            class="text-primary text-2xl flex-shrink-0 mt-1"
+                        />
+                        <p class="text-gray-700">
+                            Máte-li nápad, co dalšího sem přidat, dejte nám vědět prostřednictvím kontaktního
+                            <router-link :to="{ name: 'Contact' }">
+                                <span class="font-bold hover:underline"> formuláře</span>
+                            </router-link>.
                         </p>
                     </div>
-                    <iconify-icon
-                        icon="mdi:chevron-right"
-                        :inline="true"
-                        class="text-gray-400 text-3xl group-hover:text-primary group-hover:translate-x-1 transition-all flex-shrink-0"
-                    />
-                </a>
-            </div>
-            <div class="mt-8 bg-primary-50  border-primary rounded-lg p-6">
-                <div class="flex items-center gap-4">
-                    <iconify-icon
-                        icon="mdi:information"
-                        :inline="true"
-                        class="text-primary text-2xl flex-shrink-0 mt-1"
-                    />
-                    <p class="text-gray-700">
-                        Máte-li nápad, co dalšího sem přidat, dejte nám vědět prostřednictvím kontaktního
-                        <router-link :to="{ name: 'Contact' }">
-                            <span class="font-bold hover:underline"> formuláře</span>
-                        </router-link>.
-                    </p>
                 </div>
             </div>
-        </div>
+        </template>
     </SectionWrapper>
 </template>
 
@@ -262,8 +262,9 @@ import SectionHeader from '@/components/SectionHeader.vue'
 import SectionWrapper from '@/components/SectionWrapper.vue'
 import { ref, onMounted } from 'vue'
 import { linksPageContent } from '@/services/api/services'
+import type { LinksPageContent } from '@/interface/LinksPageContent.interface'
 
-const linksContent = ref<any | null>(null) // TODO: doplnit interface
+const linksContent = ref<LinksPageContent | null>(null)
 const isLoading = ref<boolean>(false)
 const error = ref<string>('')
 
