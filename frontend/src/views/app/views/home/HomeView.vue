@@ -21,16 +21,19 @@
             </template>
 
             <template #actions>
-                <Button
+                <router-link
                     v-for="button in pageContent.hero.buttons || []"
                     :key="button.label"
                     :to="{ name: button.link }"
-                    router-link
-                    :severity="button.severity"
-                    :outlined="button.severity === 'secondary'"
-                    :label="button.label"
-                    class="px-8 py-4 text-lg"
-                />
+                    class="inline-block"
+                >
+                    <Button
+                        :severity="button.severity"
+                        :outlined="button.severity === 'secondary'"
+                        :label="button.label"
+                        class="px-8 py-4 text-lg"
+                    />
+                </router-link>
             </template>
         </BannerHero>
 
@@ -38,6 +41,10 @@
             v-if="pageContent.raceCards && pageContent.raceCards.length > 0"
             background="white"
         >
+            <SectionHeader
+                title="Kategorie závodů"
+                :show-divider="false"
+            />
             <div class="container">
                 <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 justify-items-center">
                     <Card
@@ -75,13 +82,18 @@
 
                         <template #footer>
                             <div class="flex gap-4 mt-auto pt-4">
-                                <Button
+                                <router-link
                                     v-for="button in card.buttons || []"
                                     :key="button.label"
-                                    :severity="button.severity"
-                                    :label="button.label"
+                                    :to="{ name: button.link }"
                                     class="w-full"
-                                />
+                                >
+                                    <Button
+                                        :severity="button.severity"
+                                        :label="button.label"
+                                        class="w-full"
+                                    />
+                                </router-link>
                             </div>
                         </template>
                     </Card>
