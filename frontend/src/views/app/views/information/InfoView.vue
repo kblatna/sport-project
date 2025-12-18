@@ -13,7 +13,7 @@
         </div>
 
         <div class="max-w-6xl mx-auto rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-10 border border-gray-200/60">
-            <CategoryDataTable />
+            <CategoryDataTable id="categoryTable" />
         </div>
     </SectionWrapper>
 
@@ -63,46 +63,123 @@
     </SectionWrapper>
 
     <SectionWrapper
+        class="container"
         padding-y="md"
-        background="gray"
     >
         <SectionHeader
             title="Startovné"
             :show-divider="false"
-        >
-            <p class="text-gray-600 my-10 max-w-3xl mx-auto">
-                Výše startovného se liší podle data přihlášení a způsobu platby.
+        />
+        <div class="mx-auto mt-6">
+            <div class="md:col-span-2 space-y-4">
+                <div>
+                    <h4 class="text-lg font-semibold mb-2">
+                        Přihlášení a platba
+                    </h4>
+                    <p class="text-gray-600 mb-8">
+                        Výše startovného se liší podle data přihlášení a způsobu platby. Startovné lze platit bankovním převodem do 9. 10. 2026. V případě platby na účet je třeba uvést variabilní symbol, jež zjistíte v emailu po odeslání elektronické přihlášky (pokud vám nic nepřijde, zkontrolujte si adresář „Spam“, „Nevyžádaná pošta“ atd.). Vezměte si na prezenci kopii platebního dokladu, můžete tím předejít případným komplikacím..
+                    </p>
 
-                Dospělí (kategorie M15/30, Z15/ZV15/ZW15, V15/30, W15/30, WV15/30):
-                150,- Kč v případě přihlášení a zaplacení startovného předem. Startovné lze platit bankovním převodem na účet č. 2900161474/2010 do 7. 10. 2026. V případě platby na účet je třeba uvést variabilní symbol, jež zjistíte v emailu po odeslání elektronické přihlášky (pokud vám nic nepřijde, zkontrolujte si adresář „Spam“, „Nevyžádaná pošta“ atd.). Vezměte si na prezenci kopii platebního dokladu, můžete tím předejít případným komplikacím.
-                250,- Kč v případě platby na místě.
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="border rounded-lg p-4">
+                            <div class="flex items-baseline justify-between">
+                                <div>
+                                    <div class="font-medium">
+                                        Dospělí
+                                    </div>
+                                    <div class="text-md text-gray-500">
+                                        M15/30, Z15/ZV15/ZW15, V15/30, W15/30, WV15/30
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-2xl font-semibold">
+                                        150 Kč
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="mt-3">
+                                Platba převodem do pátku 9. 10. 2026 nebo na místě za <strong>250 Kč</strong>.
+                            </p>
+                        </div>
 
-                Mládež (kategorie M5/7/10 a Z5/7/10):
-                Zdarma v případě přihlášení do pátku 9. 10. 2026 do 23:59.
-                50,- Kč v případě přihlášení na místě.
+                        <div class="border rounded-lg p-4">
+                            <div class="flex items-baseline justify-between">
+                                <div>
+                                    <div class="font-medium">
+                                        Mládež
+                                    </div>
+                                    <div class="text-md text-gray-500">
+                                        M5/7/10 a Z5/7/10
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-2xl font-semibold">
+                                        0 Kč
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="mt-3">
+                                Zdarma při přihlášení do pátku 9. 10. 2026 23:59. Na místě <strong>50 Kč</strong>.
+                            </p>
+                        </div>
+                    </div>
 
-                Podmínkou připuštění ke startu a ponechání v závodě je horské kolo s příslušným startovním číslem a cyklistická přilba připevněná na hlavě po celou dobu závodu.
-
-                Každý závodník startuje na vlastní nebezpečí!
-            </p>
-        </SectionHeader>
+                    <div class="mt-8">
+                        <h5 class="font-semibold mb-3">
+                            Platba převodem
+                        </h5>
+                        <div class=" mb-3">
+                            <p class="font-medium">
+                                Č. účtu:
+                            </p>
+                            <p>
+                                2900161474/2010
+                            </p>
+                        </div>
+                        <div class="mb-3">
+                            <p class="font-medium">
+                                Variabilní symbol:
+                            </p>
+                            <p>zjistíte v emailu po odeslání elektronické přihlášky</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </SectionWrapper>
 
     <SectionWrapper
         padding-y="md"
+        background="gray"
     >
         <SectionHeader
             title="Prezence závodníků"
             :show-divider="false"
-        >
-            <p class="text-gray-600 my-10 max-w-3xl mx-auto">
-                Prezence závodníků je možná jen v den závodu v době (viz tabulka). Prezence proběhne na startovní a cílové louce (viz mapa, vedle vysoké červené budovy (Okružní 29a, červená budova s vysílačem), nedaleko konečné autobusu č. 46 a 57 - Haškova (příchod bude vyznačen). Závodník se nejprve zaregistruje (vyplní přihlášku - není-li přihlášen předem), zaplatí startovné, nebo ukáže doklad o zaplacení a převezme startovní číslo a tři plastové pásky. Na startovním čísle bude nalepen nevratný čip (záloha na čip nebude tedy vybírána). Závodník si startovní číslo co nejdříve připevní plastovými pásky na řídítka svého kola (bez startovního čísla nebude možné změřit čas). Start i cíl bude na téže louce.
-            </p>
-        </SectionHeader>
+        />
+        <div class="container flex justify-between items-center gap-10">
+            <div>
+                <p class="mb-5">
+                    Prezence závodníků je možná jen v den závodu v době (viz <a href="#categoryTable">tabulka</a>). Prezence proběhne na startovní a cílové louce (viz <a
+                        href="http://mapy.cz/s/lS2O"
+                        target="_blank"
+                    >mapa</a>), vedle vysoké červené budovy (Okružní 29a, červená budova s vysílačem), nedaleko konečné autobusu č. 46 a 57 - Haškova (příchod bude vyznačen).
+                </p>
+                <p>Závodník se nejprve zaregistruje (vyplní přihlášku - není-li přihlášen předem), zaplatí startovné, nebo ukáže doklad o zaplacení a převezme startovní číslo a tři plastové pásky. Na startovním čísle bude nalepen nevratný čip (záloha na čip nebude tedy vybírána). Závodník si startovní číslo co nejdříve připevní plastovými pásky na řídítka svého kola (bez startovního čísla nebude možné změřit čas). Start i cíl bude na téže louce.</p>
+            </div>
+            <div>
+                <iframe
+                    style="border:none"
+                    src="https://mapy.com/s/mabosuromu"
+                    width="700"
+                    height="350"
+                    frameborder="0"
+                    class="rounded-md"
+                ></iframe>
+            </div>
+        </div>
     </SectionWrapper>
     <SectionWrapper
         padding-y="md"
-        background="gray"
     >
         <SectionHeader
             title="Losované ceny"
@@ -115,6 +192,7 @@
     </SectionWrapper>
     <SectionWrapper
         padding-y="md"
+        background="gray"
     >
         <SectionHeader
             title="Ocenění a vyhlášení vítězů"
@@ -134,7 +212,6 @@
     </SectionWrapper>
     <SectionWrapper
         padding-y="md"
-        background="gray"
     >
         <SectionHeader
             title="Mytí"
@@ -149,6 +226,7 @@
     </SectionWrapper>
     <SectionWrapper
         padding-y="md"
+        background="gray"
     >
         <SectionHeader
             title="Parkování"
@@ -161,7 +239,6 @@
     </SectionWrapper>
     <SectionWrapper
         padding-y="md"
-        background="gray"
     >
         <SectionHeader
             title="Servis kol a nákup náhradních dílů"
