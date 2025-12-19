@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="max-w-4xl mx-auto text-center mb-16">
+        <div class="max-w-4xl mx-auto text-center mb-10 lg:mb-16">
             <p
                 v-if="overtitle"
                 class="uppercase tracking-widest text-sm text-slate-500"

@@ -1,4 +1,5 @@
 <template>
+    <!-- TODO: šířka se vyřeší pomocí užšího containeru -->
     <div class="max-w-6xl mx-auto py-8">
         <div class="grid lg:grid-cols-2 gap-10 items-center">
             <div :class="['prose prose-lg max-w-none', isImageLeft ? 'lg:order-2' : 'lg:order-1']">

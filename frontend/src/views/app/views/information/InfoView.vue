@@ -8,8 +8,7 @@
             <h3 class="font-bold mb-5">
                 Mulda pro mládež od 10 let a dospělé
             </h3>
-
-            <p>Zařazení do kategorie je určeno ročníkem narození, jednotlivé kategorie startují dle harmonogramu v tabulce. </p>
+            <p>Zařazení do kategorie je určeno ročníkem narození, jednotlivé kategorie startují dle harmonogramu v tabulce.</p>
         </div>
 
         <div class="max-w-6xl mx-auto rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-10 border border-gray-200/60">
@@ -21,44 +20,48 @@
         padding-y="md"
         background="gray"
     >
-        <SectionHeader
-            title="Mapa okruhů"
-            :show-divider="false"
-        />
-        <div class="flex justify-center">
-            <Tabs
-                value="0"
-                class="transparent-tabs"
-            >
-                <TabList>
-                    <Tab value="0">
-                        Okruh 2,5 km
-                    </Tab>
-                    <Tab value="1">
-                        Okruh 5 km
-                    </Tab>
-                </TabList>
-                <TabPanels>
-                    <TabPanel value="0">
-                        <iframe
-                            style="border:none"
-                            src="https://mapy.com/s/dedabafaha"
-                            width="700"
-                            height="466"
-                            frameborder="0"
-                        ></iframe>
-                    </TabPanel>
-                    <TabPanel value="1">
-                        <iframe
-                            style="border:none"
-                            src="https://mapy.com/s/redogopahu"
-                            width="700"
-                            height="466"
-                            frameborder="0"
-                        ></iframe>
-                    </TabPanel>
-                </TabPanels>
-            </Tabs>
+        <div class="container">
+            <SectionHeader
+                title="Mapa okruhů"
+                :show-divider="false"
+            />
+            <div class="max-w-6xl mx-auto">
+                <Tabs
+                    value="0"
+                    class="transparent-tabs w-full"
+                >
+                    <TabList>
+                        <Tab value="0">
+                            Okruh 2,5 km
+                        </Tab>
+                        <Tab value="1">
+                            Okruh 5 km
+                        </Tab>
+                    </TabList>
+                    <TabPanels>
+                        <TabPanel value="0">
+                            <div class="rounded-2xl shadow-2xl overflow-hidden border border-white/50">
+                                <iframe
+                                    style="border:none"
+                                    src="https://mapy.com/s/dedabafaha"
+                                    frameborder="0"
+                                    class="w-full h-[20rem]"
+                                ></iframe>
+                            </div>
+                        </TabPanel>
+                        <TabPanel value="1">
+                            <div class="rounded-2xl shadow-2xl overflow-hidden border border-white/50">
+                                <iframe
+                                    style="border:none"
+                                    src="https://mapy.com/s/redogopahu"
+                                    frameborder="0"
+                                    class="w-full h-[20rem]"
+                                ></iframe>
+                            </div>
+                        </TabPanel>
+                    </TabPanels>
+                </Tabs>
+            </div>
         </div>
     </SectionWrapper>
 
@@ -77,7 +80,7 @@
                         Přihlášení a platba
                     </h4>
                     <p class="text-gray-600 mb-8">
-                        Výše startovného se liší podle data přihlášení a způsobu platby. Startovné lze platit bankovním převodem do 9. 10. 2026. V případě platby na účet je třeba uvést variabilní symbol, jež zjistíte v emailu po odeslání elektronické přihlášky (pokud vám nic nepřijde, zkontrolujte si adresář „Spam“, „Nevyžádaná pošta“ atd.). Vezměte si na prezenci kopii platebního dokladu, můžete tím předejít případným komplikacím..
+                        Výše startovného se liší podle data přihlášení a způsobu platby. Startovné lze platit bankovním převodem do 9. 10. 2026. V případě platby na účet je třeba uvést variabilní symbol, jež zjistíte v emailu po odeslání elektronické přihlášky (pokud vám nic nepřijde, zkontrolujte si adresář „Spam", „Nevyžádaná pošta" atd.). Vezměte si na prezenci kopii platebního dokladu, můžete tím předejít případným komplikacím.
                     </p>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -152,102 +155,124 @@
         padding-y="md"
         background="gray"
     >
-        <SectionHeader
-            title="Prezence závodníků"
-            :show-divider="false"
-        />
-        <div class="container flex justify-between items-center gap-10">
-            <div>
-                <p class="mb-5">
-                    Prezence závodníků je možná jen v den závodu v době (viz <a href="#categoryTable">tabulka</a>). Prezence proběhne na startovní a cílové louce (viz <a
-                        href="http://mapy.cz/s/lS2O"
-                        target="_blank"
-                    >mapa</a>), vedle vysoké červené budovy (Okružní 29a, červená budova s vysílačem), nedaleko konečné autobusu č. 46 a 57 - Haškova (příchod bude vyznačen).
-                </p>
-                <p>Závodník se nejprve zaregistruje (vyplní přihlášku - není-li přihlášen předem), zaplatí startovné, nebo ukáže doklad o zaplacení a převezme startovní číslo a tři plastové pásky. Na startovním čísle bude nalepen nevratný čip (záloha na čip nebude tedy vybírána). Závodník si startovní číslo co nejdříve připevní plastovými pásky na řídítka svého kola (bez startovního čísla nebude možné změřit čas). Start i cíl bude na téže louce.</p>
-            </div>
-            <div>
-                <iframe
-                    style="border:none"
-                    src="https://mapy.com/s/mabosuromu"
-                    width="700"
-                    height="350"
-                    frameborder="0"
-                    class="rounded-md"
-                ></iframe>
-            </div>
+        <div class="container">
+            <SectionHeader
+                title="Prezence závodníků"
+                :show-divider="false"
+            />
+            <ContentImageCard
+                image-src="https://mapy.com/s/mabosuromu"
+                image-position="left"
+            >
+                <template #default>
+                    <div class="space-y-4">
+                        <p>
+                            Prezence závodníků je možná jen v den závodu v době (viz <a href="#categoryTable">tabulka</a>). Prezence proběhne na startovní a cílové louce (viz <a
+                                href="http://mapy.cz/s/lS2O"
+                                target="_blank"
+                            >mapa</a>), vedle vysoké červené budovy (Okružní 29a, červená budova s vysílačem), nedaleko konečné autobusu č. 46 a 57 - Haškova (příchod bude vyznačen).
+                        </p>
+                        <p>Závodník se nejprve zaregistruje (vyplní přihlášku - není-li přihlášen předem), zaplatí startovné, nebo ukáže doklad o zaplacení a převezme startovní číslo a tři plastové pásky. Na startovním čísle bude nalepen <strong>nevratný čip</strong> (záloha na čip nebude tedy vybírána). Závodník si startovní číslo co nejdříve připevní plastovými pásky na řídítka svého kola (bez startovního čísla nebude možné změřit čas). Start i cíl bude na téže louce.</p>
+                    </div>
+                </template>
+            </ContentImageCard>
         </div>
     </SectionWrapper>
+
     <SectionWrapper
         padding-y="md"
+        class="container"
     >
         <SectionHeader
             title="Losované ceny"
             :show-divider="false"
-        >
-            <p class="text-gray-600 my-10 max-w-3xl mx-auto">
-                Ceny od sponzorů budou rozděleny formou losování startovních čísel počítačem. Celkem budou dvě losování, jedno pro mládež 10-17 let a jedno pro dospělé (18+ let, účastníci závodu na 15 km i 30 km). Seznam výherců bude vyvěšen na „nástěnku“ vedle prezence asi v 11:30 (pro mládež 10-17 let) a ve 14:30 (pro 18+ let). Vylosované ceny se budou vydávat po předložení startovního čísla u stolku poblíž prezence. Výdej vylosovaných cen bude ukončen v cca 16:45.
-            </p>
-        </SectionHeader>
+        />
+        <ContentImageCard image-src="/public/images/tombola.webp">
+            <template #default>
+                <p>
+                    Ceny od sponzorů budou rozděleny formou losování startovních čísel počítačem. Celkem budou dvě losování, jedno pro mládež 10-17 let a jedno pro dospělé (18+ let, účastníci závodu na 15 km i 30 km). Seznam výherců bude vyvěšen na „nástěnku" vedle prezence asi v 11:30 (pro mládež 10-17 let) a ve 14:30 (pro 18+ let). Vylosované ceny se budou vydávat po předložení startovního čísla u stolku poblíž prezence. Výdej vylosovaných cen bude ukončen v cca 16:45.
+                </p>
+            </template>
+        </ContentImageCard>
     </SectionWrapper>
+
     <SectionWrapper
         padding-y="md"
         background="gray"
     >
-        <SectionHeader
-            title="Ocenění a vyhlášení vítězů"
-            :show-divider="false"
-        >
-            <p class="text-gray-600 my-10 max-w-3xl mx-auto">
-                První tři v každé kategorii jednotlivců obdrží diplom, první tři v mládežnických kategoriích (10-17 let) dostanou navíc originální dřevěnou medaili. Časy vyhlášení individuálních medailistů uvádí tabulka výše.
-
-                Jedinečnou gravírovanou dřevěnou medaili dostane také absolutní vítěz závodu na 30 km, kterému bude navíc na rok zapůjčen putovní křišťálový pohár starosty ÚMČ Brno-sever.
-                86.jpg
-
-                Nejstarší úspěšná žena Muldy a nejstarší úspěšný muž Muldy dostanou originální dřevěnou medaili.
-
-                První tři rodinné týmy obdrží diplom, úspěšné rodinné týmy získají při odměnu od sponzorského cykloobchodu.
-            </p>
-        </SectionHeader>
+        <div class="container">
+            <SectionHeader
+                title="Ocenění a vyhlášení vítězů"
+                :show-divider="false"
+            />
+            <ContentImageCard
+                image-src="/public/images/pohar.webp"
+                image-position="left"
+            >
+                <template #default>
+                    <div class="space-y-4">
+                        <p>První tři v každé kategorii jednotlivců obdrží diplom, první tři v mládežnických kategoriích (10-17 let) dostanou navíc originální dřevěnou medaili. Časy vyhlášení individuálních medailistů uvádí tabulka výše.</p>
+                        <p>Jedinečnou gravírovanou dřevěnou medaili dostane také absolutní vítěz závodu na 30 km, kterému bude navíc na rok zapůjčen putovní křišťálový pohár starosty ÚMČ Brno-sever.</p>
+                        <p>Nejstarší úspěšná žena Muldy a nejstarší úspěšný muž Muldy dostanou originální dřevěnou medaili.</p>
+                        <p>První tři rodinné týmy obdrží diplom, úspěšné rodinné týmy získají při odměnu od sponzorského cykloobchodu.</p>
+                    </div>
+                </template>
+            </ContentImageCard>
+        </div>
     </SectionWrapper>
+
     <SectionWrapper
         padding-y="md"
+        class="container"
     >
         <SectionHeader
             title="Mytí"
             :show-divider="false"
+        />
+        <ContentImageCard
+            image-src="https://mapy.com/s/kenuramono"
+            image-width="600"
+            image-height="350"
+            image-position="right"
         >
-            <p class="text-gray-600 my-10 max-w-3xl mx-auto">
-                Mytí těl bude možné zdarma v době od 11:00 do 16:30 v budově Nadačního fondu Maják, Dusíkova 5, Brno - Lesná
-
-                Mytí kol bude možné zdarma u branky na severní straně plotu areálu Nadačního fondu Maják, Dusíkova 5, Brno - Lesná.
-            </p>
-        </SectionHeader>
+            <template #default>
+                <div class="space-y-4">
+                    <p>Mytí těl bude možné zdarma v době od 11:00 do 16:30 v budově Nadačního fondu Maják, Dusíkova 5, Brno - Lesná</p>
+                    <p>Mytí kol bude možné zdarma u branky na severní straně plotu areálu Nadačního fondu Maják, Dusíkova 5, Brno - Lesná.</p>
+                </div>
+            </template>
+        </ContentImageCard>
     </SectionWrapper>
+
     <SectionWrapper
         padding-y="md"
         background="gray"
     >
-        <SectionHeader
-            title="Parkování"
-            :show-divider="false"
-        >
-            <p class="text-gray-600 my-10 max-w-3xl mx-auto">
-                Parkujte na parkovišti u prodejny Billa a přilehlých zpevněných plochách. Startovní louka není parkoviště.
-            </p>
-        </SectionHeader>
+        <div class="container">
+            <SectionHeader
+                title="Parkování"
+                :show-divider="false"
+            />
+            <p>Parkujte na parkovišti u prodejny Billa a přilehlých zpevněných plochách. Startovní louka není parkoviště.</p>
+        </div>
     </SectionWrapper>
+
     <SectionWrapper
         padding-y="md"
+        class="container"
     >
         <SectionHeader
             title="Servis kol a nákup náhradních dílů"
             :show-divider="false"
+        />
+        <ContentImageCard
+            image-src="/public/images/cykloprodejna_fabianek.webp"
+            image-position="left"
         >
-            <p class="text-gray-600 my-10 max-w-3xl mx-auto">
-                Placený servis kol a nákup náhradních dílů bude možný v době od 9:00 do 13:00 v blízké cykloprodejně M. Fabiánka na Okružní 39 - asi 500 metrů vzdušnou čarou ze startovní louky. (mobil 773 145 656)
-            </p>
-        </SectionHeader>
+            <template #default>
+                <p>Placený servis kol a nákup náhradních dílů bude možný v době od 9:00 do 13:00 v blízké cykloprodejně M. Fabiánka na Okružní 39 - asi 500 metrů vzdušnou čarou ze startovní louky. (mobil 773 145 656)</p>
+            </template>
+        </ContentImageCard>
     </SectionWrapper>
 </template>
 
@@ -256,11 +281,11 @@ import SectionHeader from '@/components/SectionHeader.vue'
 import SectionWrapper from '@/components/SectionWrapper.vue'
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from 'primevue'
 import CategoryDataTable from './components/CategoryDataTable.vue'
-
+import ContentImageCard from './components/ContentImageCard.vue'
 </script>
 
 <style scoped>
-
+/* Původní PrimeVue styly pro Tabs */
 .p-tabpanels {
     --p-tabs-tabpanel-background: rgb(249 250 251 / var(--tw-bg-opacity, 1));
 }
@@ -271,16 +296,12 @@ import CategoryDataTable from './components/CategoryDataTable.vue'
 
 .p-tablist {
     --p-tabs-tablist-background: rgb(249 250 251 / var(--tw-bg-opacity, 1));
-}
 
+}
 ::v-deep .p-tablist-tab-list {
-    justify-content: center;
-    gap: 1.5rem;
-    --p-tabs-tablist-border-width: 0;
-    margin-bottom: 20px;
+    justify-content: center; gap: 1.5rem; --p-tabs-tablist-border-width: 0; margin-bottom: 20px;
 }
 
-/* Hide the active-bar */
 ::v-deep .p-tablist-active-bar,
 ::v-deep .p-tabview .p-tabview-ink-bar,
 ::v-deep .p-tabview .p-tabview-nav::after {
@@ -297,8 +318,8 @@ import CategoryDataTable from './components/CategoryDataTable.vue'
 
 .p-tab:not(.p-tab-active):not(.p-disabled):hover {
     --p-tabs-tab-hover-background: var(--p-button-secondary-hover-background);
-}
 
+}
 .p-tab[aria-selected="true"] {
     --p-tabs-tab-active-background: var(--p-button-primary-background);
     --p-tabs-tab-active-color: var(--p-button-primary-color);
