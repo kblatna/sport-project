@@ -27,17 +27,32 @@
     }
 }
 
+/* Global anchor styles */
+a {
+    @apply text-primary-500 font-semibold no-underline;
+}
+
+a:hover {
+    @apply text-primary-700 underline decoration-primary-700 decoration-1 underline-offset-2 transition-colors;
+}
+
+a:focus-visible {
+    @apply outline-none ring-2 ring-primary-300;
+}
+
 @layer components {
     .header {
         @apply bg-gradient-to-r from-primary-700 via-primary-600 to-primary-500;
     }
 
+    header a,
     .header a {
-        @apply transition-all duration-300;
+        @apply transition-all duration-300 font-normal text-white no-underline;
     }
 
+    header a:hover,
     .header a:hover {
-        @apply transition-all duration-300;
+        @apply transition-all duration-300 text-white no-underline;
     }
 
     .footer {
@@ -45,11 +60,11 @@
     }
 
     .footer a {
-        @apply transition-all duration-300;
+        @apply transition-all duration-300 text-white font-normal no-underline;
     }
 
     .footer a:hover {
-        @apply transition-all duration-300;
+        @apply transition-all duration-300 text-gray-300 no-underline;
     }
 
     .copyright {
