@@ -1,8 +1,5 @@
 <template>
-    <header
-        class="fixed top-0 left-0 right-0 z-50 h-20 bg-gradient-to-r from-primary-700 via-primary-600 to-primary-500 backdrop-blur-md transition-all duration-200"
-        :class="{ '-translate-y-full': isHidden }"
-    >
+    <header class="header">
         <nav class="w-full px-4">
             <div class="flex justify-between items-center h-20">
                 <div class="flex items-center">
@@ -23,7 +20,7 @@
                         v-for="item in mainNavLeft"
                         :key="item.label"
                         :to="item.to"
-                        link-class="text-white border-transparent border-b-2 hover:border-white px-3 py-2 text-lg font-medium"
+                        link-class="header-nav-link text-white border-transparent border-b-2 hover:border-white px-3 py-2 text-lg font-medium"
                         active-class="text-white border-b-2 border-white"
                     >
                         {{ item.label }}
@@ -46,7 +43,7 @@
                         <Transition name="dropdown">
                             <div
                                 v-if="isInfoDropdownOpen"
-                                class="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg overflow-hidden z-50"
+                                class="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg overflow-hidden z-50 dropdown-menu"
                             >
                                 <router-link
                                     v-for="item in infoItems"
@@ -65,7 +62,7 @@
                         v-for="item in mainNavRight"
                         :key="item.label"
                         :to="item.to"
-                        link-class="text-white border-transparent border-b-2 hover:border-white px-3 py-2 text-lg font-medium"
+                        link-class="header-nav-link text-white border-transparent border-b-2 hover:border-white px-3 py-2 text-lg font-medium"
                         active-class="text-white border-b-2 border-white"
                     >
                         {{ item.label }}
@@ -88,7 +85,7 @@
                         <Transition name="dropdown">
                             <div
                                 v-if="isAboutDropdownOpen"
-                                class="absolute top-full mt-2 w-48 right-0 left-auto origin-top-right bg-white rounded-lg shadow-lg overflow-hidden z-50"
+                                class="absolute top-full mt-2 w-48 right-0 left-auto origin-top-right bg-white rounded-lg shadow-lg overflow-hidden z-50 dropdown-menu"
                             >
                                 <router-link
                                     v-for="item in aboutMenuItems"
@@ -186,7 +183,7 @@
                             v-for="item in mainNavLeft"
                             :key="item.label"
                             :to="item.to"
-                            link-class="block px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
+                            link-class="header-nav-link block px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
                             exact-active-class="bg-white/20"
                             @click="isMobileMenuOpen = false"
                         >
@@ -229,7 +226,7 @@
                             v-for="item in mainNavRight"
                             :key="item.label"
                             :to="item.to"
-                            link-class="block px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
+                            link-class="header-nav-link block px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
                             exact-active-class="bg-white/20"
                             @click="isMobileMenuOpen = false"
                         >
@@ -275,7 +272,7 @@
 </template>
 
 <script setup lang="ts">
-import { useScrollHeader } from '@/composables/useScrollHeader'
+// import { useScrollHeader } from '@/composables/useScrollHeader'
 import { Button, Image } from 'primevue'
 import { computed, ref } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
@@ -290,7 +287,7 @@ const isMobileInfoDropdownOpen = ref(false)
 
 const route = useRoute()
 
-const { isHidden } = useScrollHeader()
+// const { isHidden } = useScrollHeader()
 
 const isAboutActive = computed(() => {
     return route.name === 'Organizer' || route.name === 'Links' || route.name === 'Contact'

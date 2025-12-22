@@ -45,13 +45,11 @@ a:focus-visible {
         @apply bg-gradient-to-r from-primary-700 via-primary-600 to-primary-500;
     }
 
-    header a,
-    .header a {
+    .header-nav-link {
         @apply transition-all duration-300 font-normal text-white no-underline;
     }
 
-    header a:hover,
-    .header a:hover {
+    .header-nav-link:hover {
         @apply transition-all duration-300 text-white no-underline;
     }
 
@@ -67,6 +65,16 @@ a:focus-visible {
         @apply transition-all duration-300 text-gray-300 no-underline;
     }
 
+    .header .dropdown-menu a,
+    header .dropdown-menu a {
+        @apply text-gray-700 no-underline;
+    }
+
+    .header .dropdown-menu a:hover,
+    header .dropdown-menu a:hover {
+        @apply bg-primary-50 no-underline;
+    }
+    
     .copyright {
         @apply bg-primary-800;
     }
