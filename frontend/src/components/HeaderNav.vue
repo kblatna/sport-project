@@ -7,7 +7,7 @@
             <div class="flex justify-between items-center h-20">
                 <div class="flex items-center">
                     <router-link
-                        to="/"
+                        :to="{ name: 'Home' }"
                         class="flex items-center space-x-2"
                     >
                         <Image
@@ -88,7 +88,7 @@
                         <Transition name="dropdown">
                             <div
                                 v-if="isAboutDropdownOpen"
-                                class="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg overflow-hidden z-50"
+                                class="absolute top-full mt-2 w-48 right-0 left-auto origin-top-right bg-white rounded-lg shadow-lg overflow-hidden z-50"
                             >
                                 <router-link
                                     v-for="item in aboutMenuItems"
@@ -287,6 +287,7 @@ const isAboutDropdownOpen = ref(false)
 const isMobileAboutDropdownOpen = ref(false)
 const isInfoDropdownOpen = ref(false)
 const isMobileInfoDropdownOpen = ref(false)
+
 const route = useRoute()
 
 const { isHidden } = useScrollHeader()
@@ -311,7 +312,6 @@ const infoItems: NavItem[] = [
 ]
 
 const navItems: NavItem[] = [
-    { to: { name: 'Home' }, label: 'Domů' },
     { to: { name: 'Signup' }, label: 'Registrace' },
     { to: { name: 'Results' }, label: 'Výsledky' }
 ]
