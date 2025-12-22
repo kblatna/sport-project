@@ -20,7 +20,49 @@
 
                 <div class="hidden md:flex items-center space-x-8">
                     <NavLink
-                        v-for="item in navItems"
+                        v-for="item in mainNavLeft"
+                        :key="item.label"
+                        :to="item.to"
+                        link-class="text-white border-transparent border-b-2 hover:border-white px-3 py-2 text-lg font-medium"
+                        active-class="text-white border-b-2 border-white"
+                    >
+                        {{ item.label }}
+                    </NavLink>
+
+                    <div class="relative">
+                        <button
+                            @click="isInfoDropdownOpen = !isInfoDropdownOpen"
+                            class="text-white border-transparent border-b-2 hover:border-white px-3 py-2 text-lg font-medium flex items-center gap-1"
+                            :class="{ 'border-white': isInfoDropdownOpen || isInfoActive }"
+                        >
+                            Informace
+                            <iconify-icon
+                                :inline="true"
+                                icon="mdi:chevron-down"
+                                class="transition-transform"
+                                :class="{ 'rotate-180': isInfoDropdownOpen }"
+                            />
+                        </button>
+                        <Transition name="dropdown">
+                            <div
+                                v-if="isInfoDropdownOpen"
+                                class="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg overflow-hidden z-50"
+                            >
+                                <router-link
+                                    v-for="item in infoItems"
+                                    :key="item.label"
+                                    :to="item.to"
+                                    class="block px-4 py-3 text-gray-700 hover:bg-primary-50 transition-colors"
+                                    @click="isInfoDropdownOpen = false"
+                                >
+                                    {{ item.label }}
+                                </router-link>
+                            </div>
+                        </Transition>
+                    </div>
+
+                    <NavLink
+                        v-for="item in mainNavRight"
                         :key="item.label"
                         :to="item.to"
                         link-class="text-white border-transparent border-b-2 hover:border-white px-3 py-2 text-lg font-medium"
@@ -141,7 +183,50 @@
 
                     <nav class="flex flex-col space-y-2 p-6 min-h-screen">
                         <NavLink
-                            v-for="item in navItems"
+                            v-for="item in mainNavLeft"
+                            :key="item.label"
+                            :to="item.to"
+                            link-class="block px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
+                            exact-active-class="bg-white/20"
+                            @click="isMobileMenuOpen = false"
+                        >
+                            {{ item.label }}
+                        </NavLink>
+
+                        <div>
+                            <button
+                                @click="isMobileInfoDropdownOpen = !isMobileInfoDropdownOpen"
+                                class="w-full flex justify-between items-center px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
+                                :class="{ 'bg-white/20': isMobileInfoDropdownOpen || isInfoActive }"
+                            >
+                                Informace
+                                <iconify-icon
+                                    :inline="true"
+                                    icon="mdi:chevron-down"
+                                    class="transition-transform"
+                                    :class="{ 'rotate-180': isMobileInfoDropdownOpen }"
+                                />
+                            </button>
+                            <Transition name="slide-down">
+                                <div
+                                    v-if="isMobileInfoDropdownOpen"
+                                    class="ml-4 mt-2 space-y-2"
+                                >
+                                    <router-link
+                                        v-for="item in infoItems"
+                                        :key="item.label"
+                                        :to="item.to"
+                                        class="block px-4 py-2 text-base text-white hover:bg-white/10 rounded-lg transition-all"
+                                        @click="isMobileMenuOpen = false; isMobileInfoDropdownOpen = false"
+                                    >
+                                        {{ item.label }}
+                                    </router-link>
+                                </div>
+                            </Transition>
+                        </div>
+
+                        <NavLink
+                            v-for="item in mainNavRight"
                             :key="item.label"
                             :to="item.to"
                             link-class="block px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
@@ -200,6 +285,8 @@ import NavLink from './NavLink.vue'
 const isMobileMenuOpen = ref(false)
 const isAboutDropdownOpen = ref(false)
 const isMobileAboutDropdownOpen = ref(false)
+const isInfoDropdownOpen = ref(false)
+const isMobileInfoDropdownOpen = ref(false)
 const route = useRoute()
 
 const { isHidden } = useScrollHeader()
@@ -208,17 +295,29 @@ const isAboutActive = computed(() => {
     return route.name === 'Organizer' || route.name === 'Links' || route.name === 'Contact'
 })
 
+const isInfoActive = computed(() => {
+    return route.name === 'Info'
+})
+
 interface NavItem {
     to: RouteLocationRaw
     label: string
 }
 
 // TODO: Prozatím ponechat zde, ale bylo by vhodné přesunout do databáze a načítat dynamicky
+const infoItems: NavItem[] = [
+    { to: { name: 'Info', hash: '#adults' }, label: 'Mulda pro dospělé' },
+    { to: { name: 'Info', hash: '#kids' }, label: 'Muldička pro děti' }
+]
+
 const navItems: NavItem[] = [
     { to: { name: 'Home' }, label: 'Domů' },
-    { to: { name: 'Results' }, label: 'Výsledky' },
-    { to: { name: 'Signup' }, label: 'Registrace' }
+    { to: { name: 'Signup' }, label: 'Registrace' },
+    { to: { name: 'Results' }, label: 'Výsledky' }
 ]
+
+const mainNavLeft = computed(() => navItems.slice(0, 1))
+const mainNavRight = computed(() => navItems.slice(1))
 
 const aboutMenuItems: NavItem[] = [
     { to: { name: 'Organizer' }, label: 'Pořadatel' },
