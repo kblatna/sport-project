@@ -80,6 +80,13 @@ Create `.env` file:
 VITE_API_BASE_URL=http://localhost:3001
 ```
 
+If you want to enable the Cloudflare Turnstile widget for the contact form, add the site key to your `.env`:
+```env
+VITE_TURNSTILE_SITE_KEY=your_turnstile_site_key_here
+```
+
+Note: The backend must have `TURNSTILE_SECRET` set for server-side verification to succeed.
+
 ### Proxy Configuration
 
 Proxy is configured in `vite.config.ts` to redirect API calls to backend.

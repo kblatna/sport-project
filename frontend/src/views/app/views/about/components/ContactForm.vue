@@ -1,89 +1,113 @@
 <template>
-    <div class="max-w-3xl mx-auto">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">
-            Kontaktní formulář
-        </h2>
-
-        <form
-            @submit.prevent="onSubmit"
-            :data-is-loading="isLoading"
-            class="space-y-6"
-        >
+    <form
+        @submit.prevent="onSubmit"
+        :data-is-loading="isLoading"
+    >
+        <div>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
-                    <FloatLabel>
-                        <InputText
-                            id="name"
-                            v-model="name"
-                            :invalid="validation.name.$invalid && validation.name.$dirty"
-                            class="w-full"
-                        />
-                        <label for="name">Jméno</label>
-                    </FloatLabel>
-                    <small
-                        v-if="validation.name.$invalid && validation.name.$dirty"
-                        class="text-red-500 text-sm mt-1 block"
+                    <label
+                        for="name"
+                        class="block my-2 font-medium"
                     >
-                        Jméno je povinné
-                    </small>
+                        Jméno
+                    </label>
+                    <InputText
+                        id="name"
+                        v-model="name"
+                        :validation="validation.name"
+                        class="w-full"
+                        @blur="validation.name.$touch()"
+                    />
+                    <div
+                        v-if="validation.name.$error"
+                        class="p-error text-red-600 text-sm mt-1"
+                    >
+                        {{ validation.name.$errors[0]?.$message || 'Pole je povinné' }}
+                    </div>
                 </div>
 
                 <div>
-                    <FloatLabel>
-                        <InputText
-                            id="email"
-                            v-model="email"
-                            type="email"
-                            :invalid="validation.email.$invalid && validation.email.$dirty"
-                            class="w-full"
-                        />
-                        <label for="email">Email</label>
-                    </FloatLabel>
-                    <small
-                        v-if="validation.email.$invalid && validation.email.$dirty"
-                        class="text-red-500 text-sm mt-1 block"
+                    <label
+                        for="email"
+                        class="block my-2 font-medium"
                     >
-                        Zadejte platný email
-                    </small>
+                        Email
+                    </label>
+                    <InputText
+                        id="email"
+                        v-model="email"
+                        type="email"
+                        :validation="validation.email"
+                        class="w-full"
+                        @blur="validation.email.$touch()"
+                    />
+                    <div
+                        v-if="validation.email.$error"
+                        class="p-error text-red-600 text-sm mt-1"
+                    >
+                        {{ validation.email.$errors[0]?.$message || 'Zadejte platný email' }}
+                    </div>
                 </div>
             </div>
 
             <div>
-                <FloatLabel>
-                    <InputText
-                        id="subject"
-                        v-model="subject"
-                        :invalid="validation.subject.$invalid && validation.subject.$dirty"
-                        class="w-full"
-                    />
-                    <label for="subject">Předmět</label>
-                </FloatLabel>
-                <small
-                    v-if="validation.subject.$invalid && validation.subject.$dirty"
-                    class="text-red-500 text-sm mt-1 block"
+                <label
+                    for="subject"
+                    class="block my-2 font-medium"
                 >
-                    Předmět je povinný
-                </small>
+                    Předmět
+                </label>
+                <InputText
+                    id="subject"
+                    v-model="subject"
+                    :validation="validation.subject"
+                    class="w-full"
+                    @blur="validation.subject.$touch()"
+                />
+                <div
+                    v-if="validation.subject.$error"
+                    class="p-error text-red-600 text-sm mt-1"
+                >
+                    {{ validation.subject.$errors[0]?.$message || 'Předmět je povinný' }}
+                </div>
             </div>
 
             <div>
-                <FloatLabel>
-                    <Textarea
-                        id="message"
-                        v-model="message"
-                        :invalid="validation.message.$invalid && validation.message.$dirty"
-                        class="w-full"
-                        rows="5"
-                    />
-                    <label for="message">Vaše zpráva</label>
-                </FloatLabel>
-                <small
-                    v-if="validation.message.$invalid && validation.message.$dirty"
-                    class="text-red-500 text-sm mt-1 block"
+                <label
+                    for="message"
+                    class="block my-2 font-medium"
                 >
-                    Zpráva je povinná
-                </small>
+                    Vaše zpráva
+                </label>
+                <Textarea
+                    id="message"
+                    v-model="message"
+                    :validation="validation.message"
+                    class="w-full"
+                    rows="5"
+                    @blur="validation.message.$touch()"
+                />
+                <div
+                    v-if="validation.message.$error"
+                    class="p-error text-red-600 text-sm mt-1"
+                >
+                    {{ validation.message.$errors[0]?.$message || 'Pole je povinné' }}
+                </div>
             </div>
+
+            <div class="hidden">
+                <input
+                    type="text"
+                    aria-hidden="true"
+                    v-model="honeypot"
+                />
+            </div>
+
+            <div
+                ref="turnstileEl"
+                class="cf-turnstile mt-5"
+            ></div>
 
             <div class="flex justify-end">
                 <Button
@@ -94,67 +118,152 @@
                     icon="pi pi-send"
                 />
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
+
+    <Message
+        v-if="error"
+        severity="error"
+        class="mt-6"
+        :closable="true"
+        @close="error = null"
+    >
+        {{ error }}
+    </Message>
+
+    <Message
+        v-if="success"
+        severity="success"
+        class="mt-6"
+        :closable="true"
+        @close="success = null"
+    >
+        {{ success }}
+    </Message>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
-import { required, email as emailValidator } from '@vuelidate/validators'
-
-// PrimeVue Components
-import InputText from 'primevue/inputtext'
-import Textarea from 'primevue/textarea'
+import { email as emailValidator, required } from '@vuelidate/validators'
 import Button from 'primevue/button'
-import FloatLabel from 'primevue/floatlabel'
+import InputText from 'primevue/inputtext'
+import Message from 'primevue/message'
+import Textarea from 'primevue/textarea'
+import { onMounted, ref } from 'vue'
 
 const name = ref('')
 const email = ref('')
 const subject = ref('')
 const message = ref('')
 const isLoading = ref(false)
+const error = ref<string | null>(null)
+const success = ref<string | null>(null)
+const honeypot = ref('')
+const cfResponse = ref<string>('')
+const turnstileToken = ref('')
+const turnstileEl = ref<HTMLElement | null>(null)
 
-const rules = {
-    name: { required },
-    email: { required, email: emailValidator },
-    subject: { required },
-    message: { required }
-}
+const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY
 
-const validation = useVuelidate(rules, { name, email, subject, message })
+const validation = useVuelidate(
+    {
+        name: {
+            required
+        },
+        email: {
+            required,
+            email: emailValidator
+        },
+        subject: {
+            required
+        },
+        message: {
+            required
+        }
+    },
+    {
+        name,
+        email,
+        subject,
+        message
+    }
+)
+
+onMounted(() => {
+    if ((window as any).turnstile && turnstileSiteKey) {
+        try {
+            (window as any).turnstile.render(turnstileEl.value, {
+                sitekey: turnstileSiteKey,
+                mode: 'light',
+                callback: (token: string) => {
+                    turnstileToken.value = token
+                }
+            })
+        } catch (err) {
+            console.error('Error rendering Turnstile:', err)
+        }
+    }
+})
 
 const onSubmit = async () => {
-    validation.value.$touch()
+    await validation.value.$validate()
 
     if (validation.value.$invalid) {
+        console.error('Validation failed', validation.value)
         return
     }
 
     isLoading.value = true
+    error.value = null
+    success.value = null
 
     try {
-        // Zde by bylo volání API
-        console.log('Odesílám kontaktní formulář:', {
-            name: name.value,
-            email: email.value,
-            subject: subject.value,
-            message: message.value
+        if (!turnstileToken.value) {
+            error.value = 'Turnstile ověření selhalo'
+            isLoading.value = false
+            return
+        }
+
+        cfResponse.value = turnstileToken.value
+
+        const payload = {
+            name: name.value.trim(),
+            email: email.value.trim(),
+            subject: subject.value.trim(),
+            message: message.value.trim(),
+            honeypot: honeypot.value,
+            token: cfResponse.value
+        }
+
+        const response = await fetch('api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
         })
 
-        // Simulace async operace
-        await new Promise(resolve => setTimeout(resolve, 1000))
+        if (!response.ok) {
+            const errorData = await response.json()
+            console.error('Backend error:', errorData)
+            throw new Error(errorData.message || 'Server returned an error')
+        }
 
-        // Reset formuláře
-        name.value = ''
-        email.value = ''
-        subject.value = ''
-        message.value = ''
-        validation.value.$reset()
-    } catch (error) {
-        console.error('Chyba při odesílání:', error)
+        success.value = 'Zpráva byla úspěšně odeslána.'
+        resetForm()
+    } catch (fetchError) {
+        console.error('Submit error:', fetchError)
+        error.value = 'Došlo k chybě při odesílání přihlášky. Zkuste to prosím znovu později.'
     } finally {
         isLoading.value = false
     }
+}
+
+function resetForm(): void {
+    name.value = ''
+    email.value = ''
+    subject.value = ''
+    message.value = ''
+    honeypot.value = ''
+    cfResponse.value = ''
+    validation.value.$reset()
 }
 </script>

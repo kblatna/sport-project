@@ -8,7 +8,9 @@
                 <label
                     for="firstName"
                     class="block mb-2 font-medium"
-                >Jméno</label>
+                >
+                    Jméno
+                </label>
                 <InputText
                     id="firstName"
                     v-model="firstName"
@@ -28,7 +30,9 @@
                 <label
                     for="lastName"
                     class="block mb-2 font-medium"
-                >Příjmení</label>
+                >
+                    Příjmení
+                </label>
                 <InputText
                     id="lastName"
                     v-model="lastName"
@@ -48,7 +52,9 @@
                 <label
                     for="email"
                     class="block mb-2 font-medium"
-                >Email</label>
+                >
+                    Email
+                </label>
                 <InputText
                     id="email"
                     v-model="email"
@@ -69,7 +75,9 @@
                 <label
                     for="dateOfBirth"
                     class="block mb-2 font-medium"
-                >Datum narození</label>
+                >
+                    Datum narození
+                </label>
                 <DatePicker
                     id="dateOfBirth"
                     v-model="dateOfBirth"
@@ -97,7 +105,9 @@
                 <label
                     for="category"
                     class="block mb-2 font-medium"
-                >Kategorie</label>
+                >
+                    Kategorie
+                </label>
                 <Select
                     id="category"
                     v-model="category"
@@ -130,7 +140,9 @@
                 <label
                     for="race"
                     class="block mb-2 font-medium"
-                >Vzdálenost</label>
+                >
+                    Vzdálenost
+                </label>
                 <Select
                     id="race"
                     v-model="race"
@@ -153,7 +165,9 @@
                 <label
                     for="note"
                     class="block mb-2 font-medium"
-                >Poznámka (nepovinné)</label>
+                >
+                    Poznámka (nepovinné)
+                </label>
                 <Textarea
                     id="note"
                     v-model="note"
@@ -184,7 +198,7 @@
 
             <div
                 ref="turnstileEl"
-                class="cf-turnstile"
+                class="cf-turnstile mb-5"
             ></div>
         </div>
 
@@ -383,7 +397,6 @@ onMounted(() => {
         try {
             (window as any).turnstile.render(turnstileEl.value, {
                 sitekey: turnstileSiteKey,
-                mode: 'invisible',
                 callback: (token: string) => {
                     turnstileToken.value = token
                 }

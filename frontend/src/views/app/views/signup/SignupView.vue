@@ -1,5 +1,5 @@
 <template>
-    <SectionWrapper class="container">
+    <SectionWrapper>
         <SectionHeader title="Přihláška na závod" />
 
         <div class="max-w-xl mx-auto mb-8 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-5 auto-rows-[8rem] place-items-center">
