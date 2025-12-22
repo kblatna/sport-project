@@ -1,8 +1,5 @@
 <template>
-    <header
-        class="fixed top-0 left-0 right-0 z-50 h-20 bg-gradient-to-r from-primary-700 via-primary-600 to-primary-500 backdrop-blur-md transition-all duration-200"
-        :class="{ '-translate-y-full': isHidden }"
-    >
+    <header class="header">
         <nav class="w-full px-4">
             <div class="flex justify-between items-center h-20">
                 <div class="flex items-center">
@@ -30,7 +27,7 @@
                     </NavLink>
 
                     <div class="relative">
-                        <button
+                        <Button
                             @click="isInfoDropdownOpen = !isInfoDropdownOpen"
                             class="text-white border-transparent border-b-2 hover:border-white px-3 py-2 text-lg font-medium flex items-center gap-1"
                             :class="{ 'border-white': isInfoDropdownOpen || isInfoActive }"
@@ -42,7 +39,7 @@
                                 class="transition-transform"
                                 :class="{ 'rotate-180': isInfoDropdownOpen }"
                             />
-                        </button>
+                        </Button>
                         <Transition name="dropdown">
                             <div
                                 v-if="isInfoDropdownOpen"
@@ -72,7 +69,7 @@
                     </NavLink>
 
                     <div class="relative">
-                        <button
+                        <Button
                             @click="isAboutDropdownOpen = !isAboutDropdownOpen"
                             class="text-white border-transparent border-b-2 hover:border-white px-3 py-2 text-lg font-medium flex items-center gap-1"
                             :class="{ 'border-white': isAboutDropdownOpen || isAboutActive }"
@@ -84,7 +81,7 @@
                                 class="transition-transform"
                                 :class="{ 'rotate-180': isAboutDropdownOpen }"
                             />
-                        </button>
+                        </Button>
                         <Transition name="dropdown">
                             <div
                                 v-if="isAboutDropdownOpen"
@@ -194,7 +191,7 @@
                         </NavLink>
 
                         <div>
-                            <button
+                            <Button
                                 @click="isMobileInfoDropdownOpen = !isMobileInfoDropdownOpen"
                                 class="w-full flex justify-between items-center px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
                                 :class="{ 'bg-white/20': isMobileInfoDropdownOpen || isInfoActive }"
@@ -206,7 +203,7 @@
                                     class="transition-transform"
                                     :class="{ 'rotate-180': isMobileInfoDropdownOpen }"
                                 />
-                            </button>
+                            </Button>
                             <Transition name="slide-down">
                                 <div
                                     v-if="isMobileInfoDropdownOpen"
@@ -237,7 +234,7 @@
                         </NavLink>
 
                         <div>
-                            <button
+                            <Button
                                 @click="isMobileAboutDropdownOpen = !isMobileAboutDropdownOpen"
                                 class="w-full flex justify-between items-center px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
                                 :class="{ 'bg-white/20': isMobileAboutDropdownOpen || isAboutActive }"
@@ -249,7 +246,7 @@
                                     class="transition-transform"
                                     :class="{ 'rotate-180': isMobileAboutDropdownOpen }"
                                 />
-                            </button>
+                            </Button>
                             <Transition name="slide-down">
                                 <div
                                     v-if="isMobileAboutDropdownOpen"
@@ -275,7 +272,8 @@
 </template>
 
 <script setup lang="ts">
-import { useScrollHeader } from '@/composables/useScrollHeader'
+// TODO:useScrollHeader pořešit
+// import { useScrollHeader } from '@/composables/useScrollHeader'
 import { Button, Image } from 'primevue'
 import { computed, ref } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
@@ -290,7 +288,7 @@ const isMobileInfoDropdownOpen = ref(false)
 
 const route = useRoute()
 
-const { isHidden } = useScrollHeader()
+// const { isHidden } = useScrollHeader()
 
 const isAboutActive = computed(() => {
     return route.name === 'Organizer' || route.name === 'Links' || route.name === 'Contact'
