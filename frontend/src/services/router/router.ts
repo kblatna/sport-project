@@ -16,8 +16,20 @@ const routes: RouteRecordRaw[] = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
-    scrollBehavior() {
-        return { top: 0, behavior: 'smooth' }
+    scrollBehavior(to, from, savedPosition) {
+        // If the user used browser back/forward, restore saved position
+        if (savedPosition) {
+            return savedPosition
+        }
+
+        // If the target route has a hash, scroll to the element
+        if (to.hash) {
+            // Vue Router supports returning an `el` to scroll to
+            return { el: to.hash, behavior: 'smooth' }
+        }
+
+        // Default: scroll to top
+        return { top: 0 }
     }
 })
 
