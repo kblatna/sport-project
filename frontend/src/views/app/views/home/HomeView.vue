@@ -45,59 +45,58 @@
                 title="Kategorie závodů"
                 :show-divider="false"
             />
-            <div class="container">
-                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 justify-items-center">
-                    <Card
-                        v-for="card in pageContent.raceCards"
-                        :key="card.title"
-                        class="equal-card w-full max-w-sm flex flex-col h-full"
-                    >
-                        <template #header>
-                            <div class="relative">
-                                <Image
-                                    :src="card.image"
-                                    :alt="card.title"
-                                    image-class="rounded-t-xl"
-                                />
-                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-6">
-                                    <h3 class="text-2xl font-bold text-white">
-                                        {{ card.title }}
-                                    </h3>
-                                </div>
+
+            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 justify-items-center">
+                <Card
+                    v-for="card in pageContent.raceCards"
+                    :key="card.title"
+                    class="equal-card w-full max-w-sm flex flex-col h-full"
+                >
+                    <template #header>
+                        <div class="relative">
+                            <Image
+                                :src="card.image"
+                                :alt="card.title"
+                                image-class="rounded-t-xl"
+                            />
+                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-6">
+                                <h3 class="text-2xl font-bold text-white">
+                                    {{ card.title }}
+                                </h3>
                             </div>
-                        </template>
+                        </div>
+                    </template>
 
-                        <template #subtitle>
-                            <span class="text-lg font-bold text-black">
-                                {{ card.subtitle }}
-                            </span>
-                        </template>
+                    <template #subtitle>
+                        <span class="text-lg font-bold text-black">
+                            {{ card.subtitle }}
+                        </span>
+                    </template>
 
-                        <template #content>
-                            <p
-                                class="m-0"
-                                v-html="card.description"
-                            ></p>
-                        </template>
+                    <template #content>
+                        <p
+                            class="m-0"
+                            v-html="card.description"
+                        ></p>
+                    </template>
 
-                        <template #footer>
-                            <div class="flex gap-4 mt-auto pt-4">
-                                <router-link
-                                    v-for="button in card.buttons || []"
-                                    :key="button.label"
-                                    :to="{ name: button.link }"
+                    <template #footer>
+                        <div class="flex gap-4 mt-auto pt-4">
+                            <router-link
+                                v-for="button in card.buttons || []"
+                                :key="button.label"
+                                :to="{ name: button.link }"
+                                class="w-full"
+                            >
+                                <Button
+                                    :severity="button.severity"
+                                    :label="button.label"
                                     class="w-full"
-                                >
-                                    <Button
-                                        :severity="button.severity"
-                                        :label="button.label"
-                                        class="w-full"
-                                    />
-                                </router-link>
-                            </div>
-                        </template>
-                    </Card>
-                </div>
+                                />
+                            </router-link>
+                        </div>
+                    </template>
+                </Card>
             </div>
         </SectionWrapper>
 
@@ -110,31 +109,29 @@
                 :overtitle="pageContent.info.overtitle"
             />
 
-            <div class="container">
-                <div class="max-w-4xl mx-auto">
-                    <ul class="grid md:grid-cols-2 gap-y-4 gap-x-10 text-left text-lg">
-                        <li
-                            v-for="feature in pageContent.info.features || []"
-                            :key="feature"
-                            class="flex items-start gap-3"
+            <div class="max-w-4xl mx-auto">
+                <ul class="grid md:grid-cols-2 gap-y-4 gap-x-10 text-left text-lg">
+                    <li
+                        v-for="feature in pageContent.info.features || []"
+                        :key="feature"
+                        class="flex items-start gap-3"
+                    >
+                        <svg
+                            class="w-6 h-6 text-primary-500 flex-shrink-0 mt-1"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
                         >
-                            <svg
-                                class="w-6 h-6 text-primary-500 flex-shrink-0 mt-1"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M9 5l7 7-7 7"
-                                />
-                            </svg>
-                            <span v-html="feature"></span>
-                        </li>
-                    </ul>
-                </div>
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 5l7 7-7 7"
+                            />
+                        </svg>
+                        <span v-html="feature"></span>
+                    </li>
+                </ul>
             </div>
         </SectionWrapper>
 
@@ -142,7 +139,7 @@
             v-if="pageContent.gallery && pageContent.gallery.length > 0"
             background="white"
         >
-            <div class="container">
+            <div>
                 <Galleria
                     v-model:active-index="activeIndex"
                     v-model:visible="displayCustom"
@@ -200,36 +197,32 @@
                 </div>
             </SectionHeader>
 
-            <div class="container">
-                <div class="max-w-6xl mx-auto">
-                    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-10 border border-gray-100">
-                        <h3 class="text-2xl md:text-3xl font-semibold mb-8 text-center text-primary-700">
-                            {{ pageContent.schedule.tableTitle }}
-                        </h3>
-                        <div class="overflow-x-auto -mx-6 md:-mx-10 px-6 md:px-10">
-                            <ScheduleDataTable :schedule-data="pageContent.schedule.scheduleTable" />
-                        </div>
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-10 border border-gray-100">
+                <h3 class="text-2xl md:text-3xl font-semibold mb-8 text-center text-primary-700">
+                    {{ pageContent.schedule.tableTitle }}
+                </h3>
+                <div class="overflow-x-auto -mx-6 md:-mx-10 px-6 md:px-10">
+                    <ScheduleDataTable :schedule-data="pageContent.schedule.scheduleTable" />
+                </div>
 
-                        <div class="pt-8">
-                            <h4 class="text-lg font-semibold mb-4 text-gray-800">
-                                Vysvětlivky:
-                            </h4>
-                            <dl class="space-y-3 text-sm md:text-base text-gray-700">
-                                <div
-                                    v-for="item in pageContent.schedule.legend"
-                                    :key="item.term"
-                                >
-                                    <dt class="font-semibold inline">
-                                        {{ item.term }}
-                                    </dt>
-                                    <dd
-                                        class="inline"
-                                        v-html="item.definition"
-                                    ></dd>
-                                </div>
-                            </dl>
+                <div class="pt-8">
+                    <h4 class="text-lg font-semibold mb-4 text-gray-800">
+                        Vysvětlivky:
+                    </h4>
+                    <dl class="space-y-3 text-sm md:text-base text-gray-700">
+                        <div
+                            v-for="item in pageContent.schedule.legend"
+                            :key="item.term"
+                        >
+                            <dt class="font-semibold inline">
+                                {{ item.term }}
+                            </dt>
+                            <dd
+                                class="inline"
+                                v-html="item.definition"
+                            ></dd>
                         </div>
-                    </div>
+                    </dl>
                 </div>
             </div>
         </SectionWrapper>
@@ -240,29 +233,26 @@
         >
             <SectionHeader :title="pageContent.video.title" />
 
-            <div class="container">
-                <div class="max-w-4xl mx-auto text-center">
-                    <div class="relative w-full aspect-video rounded-xl overflow-hidden shadow-lg">
-                        <iframe
-                            class="absolute inset-0 w-full h-full"
-                            :src="pageContent.video.videoUrl"
-                            :title="pageContent.video.title"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin"
-                            allowfullscreen
-                        ></iframe>
-                    </div>
-                </div>
+            <div class="relative w-full aspect-video rounded-xl overflow-hidden shadow-lg">
+                <iframe
+                    class="absolute inset-0 w-full h-full"
+                    :src="pageContent.video.videoUrl"
+                    :title="pageContent.video.title"
+                    frameborder="0"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                ></iframe>
             </div>
         </SectionWrapper>
     </div>
 </template>
 
 <script lang="ts" setup>
+import BannerHero from '@/components/BannerHero.vue'
+import ErrorMessage from '@/components/ErrorMessage.vue'
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import SectionHeader from '@/components/SectionHeader.vue'
 import SectionWrapper from '@/components/SectionWrapper.vue'
-import BannerHero from '@/components/BannerHero.vue'
 import type { MainPageContent } from '@/interface/MainPageContent.interface'
 import { mainPageContent } from '@/services/api/services'
 import { Button, Card, Galleria, Image } from 'primevue'
