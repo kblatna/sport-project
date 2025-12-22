@@ -14,7 +14,14 @@
                     v-model="firstName"
                     :validation="validation.firstName"
                     class="w-full"
+                    @blur="validation.firstName.$touch()"
                 />
+                <div
+                    v-if="validation.firstName.$error"
+                    class="p-error text-red-600 text-sm mt-1"
+                >
+                    {{ validation.firstName.$errors[0]?.$message || 'Pole je povinné' }}
+                </div>
             </div>
 
             <div>
@@ -27,7 +34,14 @@
                     v-model="lastName"
                     :validation="validation.lastName"
                     class="w-full"
+                    @blur="validation.lastName.$touch()"
                 />
+                <div
+                    v-if="validation.lastName.$error"
+                    class="p-error text-red-600 text-sm mt-1"
+                >
+                    {{ validation.lastName.$errors[0]?.$message || 'Pole je povinné' }}
+                </div>
             </div>
 
             <div>
@@ -39,8 +53,16 @@
                     id="email"
                     v-model="email"
                     type="email"
+                    :validation="validation.email"
                     class="w-full"
+                    @blur="validation.email.$touch()"
                 />
+                <div
+                    v-if="validation.email.$error"
+                    class="p-error text-red-600 text-sm mt-1"
+                >
+                    {{ validation.email.$errors[0]?.$message || 'Zadejte platný email' }}
+                </div>
             </div>
 
             <div>
@@ -51,19 +73,26 @@
                 <DatePicker
                     id="dateOfBirth"
                     v-model="dateOfBirth"
-                    :validation="validation?.dateOfBirth"
+                    :validation="validation.dateOfBirth"
                     class="w-full"
                     date-format="dd.mm.yy"
                     :max-date="new Date()"
                     show-icon
                     fluid
                     icon-display="input"
+                    @blur="validation.dateOfBirth.$touch()"
                 />
+                <div
+                    v-if="validation.dateOfBirth.$error"
+                    class="p-error text-red-600 text-sm mt-1"
+                >
+                    {{ validation.dateOfBirth.$errors[0]?.$message || 'Pole je povinné' }}
+                </div>
             </div>
 
             <div
                 class="md:col-span-2"
-                v-if="age !==null"
+                v-if="age !== null"
             >
                 <label
                     for="category"
@@ -77,7 +106,14 @@
                     option-value="value"
                     :validation="validation.category"
                     class="w-full"
+                    @blur="validation.category.$touch()"
                 />
+                <div
+                    v-if="validation.category.$error"
+                    class="p-error text-red-600 text-sm mt-1"
+                >
+                    {{ validation.category.$errors[0]?.$message || 'Vyberte kategorii' }}
+                </div>
             </div>
 
             <p
@@ -103,7 +139,14 @@
                     option-value="value"
                     :validation="validation.race"
                     class="w-full"
+                    @blur="validation.race.$touch()"
                 />
+                <div
+                    v-if="validation.race.$error"
+                    class="p-error text-red-600 text-sm mt-1"
+                >
+                    {{ validation.race.$errors[0]?.$message || 'Vyberte vzdálenost' }}
+                </div>
             </div>
 
             <div class="md:col-span-2">
@@ -118,10 +161,17 @@
                     rows="4"
                     maxlength="500"
                     class="w-full"
+                    @blur="validation.note.$touch()"
                 />
                 <small class="text-gray-600">
                     {{ note.length }}/500 znaků
                 </small>
+                <div
+                    v-if="validation.note.$error"
+                    class="p-error text-red-600 text-sm mt-1"
+                >
+                    {{ validation.note.$errors[0]?.$message || 'Poznámka je příliš dlouhá' }}
+                </div>
             </div>
 
             <div class="hidden">
@@ -404,7 +454,7 @@ function resetForm(): void {
     email.value = ''
     dateOfBirth.value = null
     category.value = ''
-    race.value = ''
+    race.value = null
     note.value = ''
     cfResponse.value = ''
     validation.value.$reset()
