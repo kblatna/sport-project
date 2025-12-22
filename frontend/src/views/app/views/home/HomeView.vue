@@ -8,7 +8,6 @@
 
     <div
         v-else-if="pageContent"
-        class="pt-20"
     >
         <BannerHero
             v-if="pageContent.hero"
@@ -39,7 +38,7 @@
 
         <SectionWrapper
             v-if="pageContent.raceCards && pageContent.raceCards.length > 0"
-            background="white"
+            class="container"
         >
             <SectionHeader
                 title="Kategorie závodů"
@@ -104,40 +103,42 @@
             v-if="pageContent.info"
             background="gray"
         >
-            <SectionHeader
-                :title="pageContent.info.title"
-                :overtitle="pageContent.info.overtitle"
-            />
+            <div class="container">
+                <SectionHeader
+                    :title="pageContent.info.title"
+                    :overtitle="pageContent.info.overtitle"
+                />
 
-            <div class="max-w-4xl mx-auto">
-                <ul class="grid md:grid-cols-2 gap-y-4 gap-x-10 text-left text-lg">
-                    <li
-                        v-for="feature in pageContent.info.features || []"
-                        :key="feature"
-                        class="flex items-start gap-3"
-                    >
-                        <svg
-                            class="w-6 h-6 text-primary-500 flex-shrink-0 mt-1"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
+                <div class="max-w-4xl mx-auto">
+                    <ul class="grid md:grid-cols-2 gap-y-4 gap-x-10 text-left text-lg">
+                        <li
+                            v-for="feature in pageContent.info.features || []"
+                            :key="feature"
+                            class="flex items-start gap-3"
                         >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M9 5l7 7-7 7"
-                            />
-                        </svg>
-                        <span v-html="feature"></span>
-                    </li>
-                </ul>
+                            <svg
+                                class="w-6 h-6 text-primary-500 flex-shrink-0 mt-1"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 5l7 7-7 7"
+                                />
+                            </svg>
+                            <span v-html="feature"></span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </SectionWrapper>
 
         <SectionWrapper
             v-if="pageContent.gallery && pageContent.gallery.length > 0"
-            background="white"
+            class="container"
         >
             <div>
                 <Galleria
@@ -187,49 +188,51 @@
             v-if="pageContent.schedule"
             background="gray"
         >
-            <SectionHeader :title="pageContent.schedule.title">
-                <div class="space-y-4 text-lg text-gray-700">
-                    <p
-                        v-for="(paragraph, index) in pageContent.schedule.description"
-                        :key="index"
-                        v-html="paragraph"
-                    ></p>
-                </div>
-            </SectionHeader>
+            <div class="container">
+                <SectionHeader :title="pageContent.schedule.title">
+                    <div class="space-y-4 text-lg text-gray-700">
+                        <p
+                            v-for="(paragraph, index) in pageContent.schedule.description"
+                            :key="index"
+                            v-html="paragraph"
+                        ></p>
+                    </div>
+                </SectionHeader>
 
-            <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-10 border border-gray-100">
-                <h3 class="text-2xl md:text-3xl font-semibold mb-8 text-center text-primary-700">
-                    {{ pageContent.schedule.tableTitle }}
-                </h3>
-                <div class="overflow-x-auto -mx-6 md:-mx-10 px-6 md:px-10">
-                    <ScheduleDataTable :schedule-data="pageContent.schedule.scheduleTable" />
-                </div>
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-10 border border-gray-100">
+                    <h3 class="text-2xl md:text-3xl font-semibold mb-8 text-center text-primary-700">
+                        {{ pageContent.schedule.tableTitle }}
+                    </h3>
+                    <div class="overflow-x-auto -mx-6 md:-mx-10 px-6 md:px-10">
+                        <ScheduleDataTable :schedule-data="pageContent.schedule.scheduleTable" />
+                    </div>
 
-                <div class="pt-8">
-                    <h4 class="text-lg font-semibold mb-4 text-gray-800">
-                        Vysvětlivky:
-                    </h4>
-                    <dl class="space-y-3 text-sm md:text-base text-gray-700">
-                        <div
-                            v-for="item in pageContent.schedule.legend"
-                            :key="item.term"
-                        >
-                            <dt class="font-semibold inline">
-                                {{ item.term }}
-                            </dt>
-                            <dd
-                                class="inline"
-                                v-html="item.definition"
-                            ></dd>
-                        </div>
-                    </dl>
+                    <div class="pt-8">
+                        <h4 class="text-lg font-semibold mb-4 text-gray-800">
+                            Vysvětlivky:
+                        </h4>
+                        <dl class="space-y-3 text-sm md:text-base text-gray-700">
+                            <div
+                                v-for="item in pageContent.schedule.legend"
+                                :key="item.term"
+                            >
+                                <dt class="font-semibold inline">
+                                    {{ item.term }}
+                                </dt>
+                                <dd
+                                    class="inline"
+                                    v-html="item.definition"
+                                ></dd>
+                            </div>
+                        </dl>
+                    </div>
                 </div>
             </div>
         </SectionWrapper>
 
         <SectionWrapper
             v-if="pageContent.video"
-            background="white"
+            class="container"
         >
             <SectionHeader :title="pageContent.video.title" />
 
