@@ -3,7 +3,7 @@
         class="fixed top-0 left-0 right-0 z-50 h-20 bg-gradient-to-r from-primary-700 via-primary-600 to-primary-500 backdrop-blur-md transition-all duration-200"
         :class="{ '-translate-y-full': isHidden }"
     >
-        <nav class="container">
+        <nav class="w-full px-4">
             <div class="flex justify-between items-center h-20">
                 <div class="flex items-center">
                     <router-link

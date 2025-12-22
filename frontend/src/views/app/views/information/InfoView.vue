@@ -1,6 +1,5 @@
 <template>
     <SectionWrapper
-        class="container"
         padding-y="md"
     >
         <SectionHeader title="Informace k závodu Mulda" />
@@ -11,7 +10,7 @@
             <p>Zařazení do kategorie je určeno ročníkem narození, jednotlivé kategorie startují dle harmonogramu v tabulce.</p>
         </div>
 
-        <div class="max-w-6xl mx-auto rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-10 border border-gray-200/60">
+        <div class="rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-10 border border-gray-200/60">
             <CategoryDataTable id="categoryTable" />
         </div>
     </SectionWrapper>
@@ -20,53 +19,49 @@
         padding-y="md"
         background="gray"
     >
-        <div class="container">
-            <SectionHeader
-                title="Mapa okruhů"
-                :show-divider="false"
-            />
-            <div class="max-w-6xl mx-auto">
-                <Tabs
-                    value="0"
-                    class="transparent-tabs w-full"
-                >
-                    <TabList>
-                        <Tab value="0">
-                            Okruh 2,5 km
-                        </Tab>
-                        <Tab value="1">
-                            Okruh 5 km
-                        </Tab>
-                    </TabList>
-                    <TabPanels>
-                        <TabPanel value="0">
-                            <div class="rounded-2xl shadow-2xl overflow-hidden border border-white/50">
-                                <iframe
-                                    style="border:none"
-                                    src="https://mapy.com/s/dedabafaha"
-                                    frameborder="0"
-                                    class="w-full h-[20rem]"
-                                ></iframe>
-                            </div>
-                        </TabPanel>
-                        <TabPanel value="1">
-                            <div class="rounded-2xl shadow-2xl overflow-hidden border border-white/50">
-                                <iframe
-                                    style="border:none"
-                                    src="https://mapy.com/s/redogopahu"
-                                    frameborder="0"
-                                    class="w-full h-[20rem]"
-                                ></iframe>
-                            </div>
-                        </TabPanel>
-                    </TabPanels>
-                </Tabs>
-            </div>
-        </div>
+        <SectionHeader
+            title="Mapa okruhů"
+            :show-divider="false"
+        />
+
+        <Tabs
+            value="0"
+            class="transparent-tabs w-full"
+        >
+            <TabList>
+                <Tab value="0">
+                    Okruh 2,5 km
+                </Tab>
+                <Tab value="1">
+                    Okruh 5 km
+                </Tab>
+            </TabList>
+            <TabPanels>
+                <TabPanel value="0">
+                    <div class="rounded-2xl shadow-2xl overflow-hidden border border-white/50">
+                        <iframe
+                            style="border:none"
+                            src="https://mapy.com/s/dedabafaha"
+                            frameborder="0"
+                            class="w-full h-[20rem]"
+                        ></iframe>
+                    </div>
+                </TabPanel>
+                <TabPanel value="1">
+                    <div class="rounded-2xl shadow-2xl overflow-hidden border border-white/50">
+                        <iframe
+                            style="border:none"
+                            src="https://mapy.com/s/redogopahu"
+                            frameborder="0"
+                            class="w-full h-[20rem]"
+                        ></iframe>
+                    </div>
+                </TabPanel>
+            </TabPanels>
+        </Tabs>
     </SectionWrapper>
 
     <SectionWrapper
-        class="container"
         padding-y="md"
     >
         <SectionHeader
@@ -155,7 +150,7 @@
         padding-y="md"
         background="gray"
     >
-        <div class="container">
+        <div>
             <SectionHeader
                 title="Prezence závodníků"
                 :show-divider="false"
@@ -181,7 +176,6 @@
 
     <SectionWrapper
         padding-y="md"
-        class="container"
     >
         <SectionHeader
             title="Losované ceny"
@@ -200,7 +194,7 @@
         padding-y="md"
         background="gray"
     >
-        <div class="container">
+        <div>
             <SectionHeader
                 title="Ocenění a vyhlášení vítězů"
                 :show-divider="false"
@@ -223,7 +217,6 @@
 
     <SectionWrapper
         padding-y="md"
-        class="container"
     >
         <SectionHeader
             title="Mytí"
@@ -248,7 +241,7 @@
         padding-y="md"
         background="gray"
     >
-        <div class="container">
+        <div>
             <SectionHeader
                 title="Parkování"
                 :show-divider="false"
@@ -259,7 +252,6 @@
 
     <SectionWrapper
         padding-y="md"
-        class="container"
     >
         <SectionHeader
             title="Servis kol a nákup náhradních dílů"

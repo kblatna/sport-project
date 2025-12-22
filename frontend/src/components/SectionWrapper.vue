@@ -1,6 +1,14 @@
 <template>
     <section :class="sectionClasses">
-        <slot></slot>
+        <div
+            v-if="constrain"
+            :class="innerClasses"
+        >
+            <slot></slot>
+        </div>
+        <template v-else>
+            <slot></slot>
+        </template>
     </section>
 </template>
 
@@ -11,12 +19,16 @@ interface Props {
     background?: 'white' | 'gray' | 'gradient' | 'none'
     paddingY?: 'none' | 'sm' | 'md' | 'lg'
     customClass?: string
+    constrain?: boolean
+    innerClass?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
     background: 'white',
     paddingY: 'lg',
-    customClass: ''
+    customClass: '',
+    constrain: true,
+    innerClass: 'max-w-content mx-auto px-4'
 })
 
 const backgroundMap = {
@@ -39,5 +51,7 @@ const sectionClasses = computed(() => {
         props.customClass
     ].filter(Boolean).join(' ')
 })
+
+const innerClasses = computed(() => props.innerClass)
 
 </script>
