@@ -149,7 +149,7 @@
             <Transition name="slide">
                 <div
                     v-if="isMobileMenuOpen"
-                    class="fixed top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-primary-700 via-primary-600 to-primary-500 z-50 md:hidden overflow-y-auto"
+                    class="fixed top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-primary-700 via-primary-600 to-primary-500 z-50 md:hidden overflow-y-auto mobile-menu"
                 >
                     <div class="flex justify-between items-center h-20 px-4 bg-primary-800/50 backdrop-blur-sm">
                         <span class="text-white text-xl font-semibold">Menu</span>

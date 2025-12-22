@@ -75,6 +75,17 @@ a:focus-visible {
         @apply bg-primary-50 no-underline;
     }
     
+    /* Mobile menu: ensure links remain white and not underlined on hover */
+    header .mobile-menu a,
+    .mobile-menu a {
+        @apply text-white font-normal no-underline;
+    }
+
+    header .mobile-menu a:hover,
+    .mobile-menu a:hover {
+        @apply bg-white/10 text-white no-underline;
+    }
+    
     .copyright {
         @apply bg-primary-800;
     }
