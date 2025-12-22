@@ -25,7 +25,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
     background: 'white',
-    paddingY: 'lg',
+    paddingY: 'md',
     customClass: '',
     constrain: true,
     innerClass: 'max-w-content mx-auto px-4'
