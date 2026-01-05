@@ -16,7 +16,10 @@
             :overlay="true"
         >
             <template #subtitle>
-                <span v-html="pageContent.hero.subtitle"></span>
+                <SafeHtml
+                    :content="pageContent.hero.subtitle"
+                    tag="span"
+                />
             </template>
 
             <template #actions>
@@ -73,10 +76,11 @@
                     </template>
 
                     <template #content>
-                        <p
+                        <SafeHtml
+                            :content="card.description"
+                            tag="p"
                             class="m-0"
-                            v-html="card.description"
-                        ></p>
+                        />
                     </template>
 
                     <template #footer>
@@ -129,7 +133,10 @@
                                     d="M9 5l7 7-7 7"
                                 />
                             </svg>
-                            <span v-html="feature"></span>
+                            <SafeHtml
+                                :content="feature"
+                                tag="span"
+                            />
                         </li>
                     </ul>
                 </div>
@@ -191,11 +198,12 @@
             <div class="container">
                 <SectionHeader :title="pageContent.schedule.title">
                     <div class="space-y-4 text-lg text-gray-700">
-                        <p
+                        <SafeHtml
                             v-for="(paragraph, index) in pageContent.schedule.description"
                             :key="index"
-                            v-html="paragraph"
-                        ></p>
+                            :content="paragraph"
+                            tag="p"
+                        />
                     </div>
                 </SectionHeader>
 
@@ -216,13 +224,14 @@
                                 v-for="item in pageContent.schedule.legend"
                                 :key="item.term"
                             >
-                                <dt class="font-semibold inline">
+                                <dt class="inline font-bold">
                                     {{ item.term }}
                                 </dt>
-                                <dd
+                                <SafeHtml
+                                    :content="item.definition"
+                                    tag="dd"
                                     class="inline"
-                                    v-html="item.definition"
-                                ></dd>
+                                />
                             </div>
                         </dl>
                     </div>
@@ -254,6 +263,7 @@
 import BannerHero from '@/components/BannerHero.vue'
 import ErrorMessage from '@/components/ErrorMessage.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import SafeHtml from '@/components/SafeHtml.vue'
 import SectionHeader from '@/components/SectionHeader.vue'
 import SectionWrapper from '@/components/SectionWrapper.vue'
 import type { MainPageContent } from '@/interface/MainPageContent.interface'

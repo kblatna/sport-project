@@ -20,12 +20,13 @@
                             />
                             {{ pageContent.association.title }}
                         </h3>
-                        <p
+                        <SafeHtml
                             v-for="(paragraph, index) in pageContent.association.description"
                             :key="index"
+                            :content="paragraph"
+                            tag="p"
                             class="mb-6 text-gray-700 leading-relaxed"
-                            v-html="paragraph"
-                        ></p>
+                        />
 
                         <figure
                             v-if="pageContent.association.image"
@@ -70,12 +71,13 @@
                             </li>
                         </ul>
 
-                        <p
+                        <SafeHtml
                             v-for="(paragraph, index) in pageContent.organizingTeam.description"
                             :key="index"
+                            :content="paragraph"
+                            tag="p"
                             class="mb-10 text-gray-700 leading-relaxed"
-                            v-html="paragraph"
-                        ></p>
+                        />
 
                         <figure
                             v-if="pageContent.organizingTeam.image"
@@ -101,11 +103,12 @@
                     <h3 class="text-xl font-semibold mb-4">
                         {{ pageContent.thanks.title }}
                     </h3>
-                    <p
+                    <SafeHtml
                         v-for="(paragraph, index) in pageContent.thanks.description"
                         :key="index"
-                        v-html="paragraph"
-                    ></p>
+                        :content="paragraph"
+                        tag="p"
+                    />
                 </div>
             </template>
         </SectionWrapper>
@@ -115,6 +118,7 @@
 <script lang="ts" setup>
 import ErrorMessage from '@/components/ErrorMessage.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import SafeHtml from '@/components/SafeHtml.vue'
 import SectionHeader from '@/components/SectionHeader.vue'
 import SectionWrapper from '@/components/SectionWrapper.vue'
 import type { OrganizersPageContent } from '@/interface/OrganizersPageContent.interface'

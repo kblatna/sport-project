@@ -8,8 +8,10 @@
             />
 
             <p :class="[textClass, 'text-gray-700']">
-                <!--TODO: v-html not ideal-->
-                <span v-html="message"></span>
+                <SafeHtml
+                    :content="message"
+                    tag="span"
+                />
                 <template v-if="ctaRouteName">
                     <router-link :to="{ name: ctaRouteName }">
                         <span :class="['font-bold hover:underline', ctaTextClass]"> {{ ctaText }} </span>
@@ -30,6 +32,8 @@
 </template>
 
 <script setup lang="ts">
+import SafeHtml from './SafeHtml.vue'
+
 withDefaults(defineProps<{
     icon?: string
     message?: string
