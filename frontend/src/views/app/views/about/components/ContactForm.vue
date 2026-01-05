@@ -3,58 +3,56 @@
         @submit.prevent="onSubmit"
         :data-is-loading="isLoading"
     >
-        <div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div>
-                    <label
-                        for="name"
-                        class="block my-2 font-medium"
-                    >
-                        Jméno
-                    </label>
-                    <InputText
-                        id="name"
-                        v-model="name"
-                        :validation="validation.name"
-                        class="w-full"
-                        @blur="validation.name.$touch()"
-                    />
-                    <div
-                        v-if="validation.name.$error"
-                        class="p-error text-red-600 text-sm mt-1"
-                    >
-                        {{ validation.name.$errors[0]?.$message }}
-                    </div>
-                </div>
-
-                <div>
-                    <label
-                        for="email"
-                        class="block my-2 font-medium"
-                    >
-                        Email
-                    </label>
-                    <InputText
-                        id="email"
-                        v-model="email"
-                        type="email"
-                        :validation="validation.email"
-                        class="w-full"
-                        @blur="validation.email.$touch()"
-                    />
-                    <div
-                        v-if="validation.email.$error"
-                        class="p-error text-red-600 text-sm mt-1"
-                    >
-                        {{ validation.email.$errors[0]?.$message }}
-                    </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div>
+                <label
+                    for="name"
+                    class="block mb-2 font-medium"
+                >
+                    Jméno
+                </label>
+                <InputText
+                    id="name"
+                    v-model="name"
+                    :validation="validation.name"
+                    class="w-full"
+                    @blur="validation.name.$touch()"
+                />
+                <div
+                    v-if="validation.name.$error"
+                    class="p-error text-red-600 text-sm mt-1"
+                >
+                    {{ validation.name.$errors[0]?.$message }}
                 </div>
             </div>
 
             <div>
                 <label
+                    for="email"
+                    class="block mb-2 font-medium"
+                >
+                    Email
+                </label>
+                <InputText
+                    id="email"
+                    v-model="email"
+                    type="email"
+                    :validation="validation.email"
+                    class="w-full"
+                    @blur="validation.email.$touch()"
+                />
+                <div
+                    v-if="validation.email.$error"
+                    class="p-error text-red-600 text-sm mt-1"
+                >
+                    {{ validation.email.$errors[0]?.$message }}
+                </div>
+            </div>
+
+            <div class="lg:col-span-2">
+                <label
                     for="subject"
-                    class="block my-2 font-medium"
+                    class="block mb-2 font-medium"
                 >
                     Předmět
                 </label>
@@ -73,10 +71,10 @@
                 </div>
             </div>
 
-            <div>
+            <div class="lg:col-span-2">
                 <label
                     for="message"
-                    class="block my-2 font-medium"
+                    class="block mb-2 font-medium"
                 >
                     Vaše zpráva
                 </label>
@@ -108,16 +106,16 @@
                 ref="turnstileEl"
                 class="cf-turnstile mt-5"
             ></div>
+        </div>
 
-            <div class="flex justify-end">
-                <Button
-                    type="submit"
-                    :disabled="isLoading"
-                    :loading="isLoading"
-                    label="Odeslat zprávu"
-                    icon="pi pi-send"
-                />
-            </div>
+        <div class="flex justify-end">
+            <Button
+                type="submit"
+                :disabled="isLoading"
+                :loading="isLoading"
+                label="Odeslat zprávu"
+                icon="pi pi-send"
+            />
         </div>
     </form>
 
