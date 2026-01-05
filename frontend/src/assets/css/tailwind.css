@@ -27,13 +27,13 @@
     }
 }
 
-/* Global anchor styles */
+/* Global anchor styles - no underline */
 a {
-    @apply text-primary-500 font-semibold no-underline;
+    @apply text-primary-500 no-underline transition-colors;
 }
 
 a:hover {
-    @apply text-primary-700 underline decoration-primary-700 decoration-1 underline-offset-2 transition-colors;
+    @apply text-primary-700;
 }
 
 a:focus-visible {
@@ -46,11 +46,11 @@ a:focus-visible {
     }
 
     .header-nav-link {
-        @apply transition-all duration-300 font-normal text-white no-underline;
+        @apply text-white font-normal transition-colors duration-300;
     }
 
     .header-nav-link:hover {
-        @apply transition-all duration-300 text-white no-underline;
+        @apply text-white;
     }
 
     .footer {
@@ -58,32 +58,29 @@ a:focus-visible {
     }
 
     .footer a {
-        @apply transition-all duration-300 text-white font-normal no-underline;
+        @apply text-white font-normal transition-colors;
     }
 
     .footer a:hover {
-        @apply transition-all duration-300 text-gray-300 no-underline;
+        @apply text-gray-300;
     }
 
-    .header .dropdown-menu a,
-    header .dropdown-menu a {
-        @apply text-gray-700 no-underline;
+    /* Dropdown menu in header */
+    .header .dropdown-menu a {
+        @apply text-gray-700 transition-colors;
     }
 
-    .header .dropdown-menu a:hover,
-    header .dropdown-menu a:hover {
-        @apply bg-primary-50 no-underline;
+    .header .dropdown-menu a:hover {
+        @apply bg-primary-50;
     }
     
-    /* Mobile menu: ensure links remain white and not underlined on hover */
-    header .mobile-menu a,
+    /* Mobile menu */
     .mobile-menu a {
-        @apply text-white font-normal no-underline;
+        @apply text-white font-normal;
     }
 
-    header .mobile-menu a:hover,
     .mobile-menu a:hover {
-        @apply bg-white/10 text-white no-underline;
+        @apply bg-white/10 text-white;
     }
     
     .copyright {
