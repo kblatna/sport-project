@@ -23,7 +23,7 @@
                         v-if="validation.name.$error"
                         class="p-error text-red-600 text-sm mt-1"
                     >
-                        {{ validation.name.$errors[0]?.$message || 'Pole je povinné' }}
+                        {{ validation.name.$errors[0]?.$message }}
                     </div>
                 </div>
 
@@ -46,7 +46,7 @@
                         v-if="validation.email.$error"
                         class="p-error text-red-600 text-sm mt-1"
                     >
-                        {{ validation.email.$errors[0]?.$message || 'Zadejte platný email' }}
+                        {{ validation.email.$errors[0]?.$message }}
                     </div>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                     v-if="validation.subject.$error"
                     class="p-error text-red-600 text-sm mt-1"
                 >
-                    {{ validation.subject.$errors[0]?.$message || 'Předmět je povinný' }}
+                    {{ validation.subject.$errors[0]?.$message }}
                 </div>
             </div>
 
@@ -92,7 +92,7 @@
                     v-if="validation.message.$error"
                     class="p-error text-red-600 text-sm mt-1"
                 >
-                    {{ validation.message.$errors[0]?.$message || 'Pole je povinné' }}
+                    {{ validation.message.$errors[0]?.$message }}
                 </div>
             </div>
 
@@ -144,7 +144,7 @@
 
 <script setup lang="ts">
 import { useVuelidate } from '@vuelidate/core'
-import { email as emailValidator, required } from '@vuelidate/validators'
+import { required, email as emailValidator } from '@/utils/validators'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Message from 'primevue/message'

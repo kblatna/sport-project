@@ -22,7 +22,7 @@
                     v-if="validation.firstName.$error"
                     class="p-error text-red-600 text-sm mt-1"
                 >
-                    {{ validation.firstName.$errors[0]?.$message || 'Pole je povinné' }}
+                    {{ validation.firstName.$errors[0]?.$message }}
                 </div>
             </div>
 
@@ -44,7 +44,7 @@
                     v-if="validation.lastName.$error"
                     class="p-error text-red-600 text-sm mt-1"
                 >
-                    {{ validation.lastName.$errors[0]?.$message || 'Pole je povinné' }}
+                    {{ validation.lastName.$errors[0]?.$message }}
                 </div>
             </div>
 
@@ -67,7 +67,7 @@
                     v-if="validation.email.$error"
                     class="p-error text-red-600 text-sm mt-1"
                 >
-                    {{ validation.email.$errors[0]?.$message || 'Zadejte platný email' }}
+                    {{ validation.email.$errors[0]?.$message }}
                 </div>
             </div>
 
@@ -94,7 +94,7 @@
                     v-if="validation.dateOfBirth.$error"
                     class="p-error text-red-600 text-sm mt-1"
                 >
-                    {{ validation.dateOfBirth.$errors[0]?.$message || 'Pole je povinné' }}
+                    {{ validation.dateOfBirth.$errors[0]?.$message }}
                 </div>
             </div>
 
@@ -122,7 +122,7 @@
                     v-if="validation.category.$error"
                     class="p-error text-red-600 text-sm mt-1"
                 >
-                    {{ validation.category.$errors[0]?.$message || 'Vyberte kategorii' }}
+                    {{ validation.category.$errors[0]?.$message }}
                 </div>
             </div>
 
@@ -157,7 +157,7 @@
                     v-if="validation.race.$error"
                     class="p-error text-red-600 text-sm mt-1"
                 >
-                    {{ validation.race.$errors[0]?.$message || 'Vyberte vzdálenost' }}
+                    {{ validation.race.$errors[0]?.$message }}
                 </div>
             </div>
 
@@ -184,7 +184,7 @@
                     v-if="validation.note.$error"
                     class="p-error text-red-600 text-sm mt-1"
                 >
-                    {{ validation.note.$errors[0]?.$message || 'Poznámka je příliš dlouhá' }}
+                    {{ validation.note.$errors[0]?.$message }}
                 </div>
             </div>
 
@@ -241,7 +241,7 @@
 
 <script setup lang="ts">
 import { useVuelidate } from '@vuelidate/core'
-import { email as emailValidator, maxLength, required } from '@vuelidate/validators'
+import { required, email as emailValidator, maxLength } from '@/utils/validators'
 import { Textarea } from 'primevue'
 import Button from 'primevue/button'
 import DatePicker from 'primevue/datepicker'
