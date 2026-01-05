@@ -1,5 +1,10 @@
 <template>
-    <header class="header">
+    <header
+        :class="[
+            'header sticky top-0 z-50 transform transition-transform duration-300',
+            { '-translate-y-full': isHidden && !isMobileMenuOpen }
+        ]"
+    >
         <nav class="w-full px-4">
             <div class="flex justify-between items-center h-20">
                 <div class="flex items-center">
@@ -136,143 +141,143 @@
                     </Button>
                 </div>
             </div>
-
-            <Transition name="fade">
-                <div
-                    v-if="isMobileMenuOpen"
-                    class="fixed inset-0 bg-black/70 z-40 md:hidden"
-                    @click="isMobileMenuOpen = false"
-                ></div>
-            </Transition>
-
-            <!-- Mobile Menu -->
-            <Transition name="slide">
-                <div
-                    v-if="isMobileMenuOpen"
-                    class="fixed top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-primary-700 via-primary-600 to-primary-500 z-50 md:hidden overflow-y-auto mobile-menu"
-                >
-                    <div class="flex justify-between items-center h-20 px-4 bg-primary-800/50 backdrop-blur-sm">
-                        <span class="text-white text-xl font-semibold">Menu</span>
-                        <Button
-                            @click="isMobileMenuOpen = false"
-                            text
-                            rounded
-                            class="menu-button text-white p-3 transition-all duration-300"
-                            aria-label="Zavřít menu"
-                        >
-                            <template #icon>
-                                <svg
-                                    class="h-7 w-7"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="2.5"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </template>
-                        </Button>
-                    </div>
-
-                    <nav class="flex flex-col space-y-2 p-6 min-h-screen">
-                        <NavLink
-                            v-for="item in mainNavLeft"
-                            :key="item.label"
-                            :to="item.to"
-                            link-class="header-nav-link block px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
-                            exact-active-class="bg-white/20"
-                            @click="isMobileMenuOpen = false"
-                        >
-                            {{ item.label }}
-                        </NavLink>
-
-                        <div>
-                            <button
-                                @click="isMobileInfoDropdownOpen = !isMobileInfoDropdownOpen"
-                                class="w-full flex justify-between items-center px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
-                                :class="{ 'bg-white/20': isMobileInfoDropdownOpen || isInfoActive }"
-                            >
-                                Informace
-                                <iconify-icon
-                                    :inline="true"
-                                    icon="mdi:chevron-down"
-                                    class="transition-transform"
-                                    :class="{ 'rotate-180': isMobileInfoDropdownOpen }"
-                                />
-                            </button>
-                            <Transition name="slide-down">
-                                <div
-                                    v-if="isMobileInfoDropdownOpen"
-                                    class="ml-4 mt-2 space-y-2"
-                                >
-                                    <router-link
-                                        v-for="item in infoItems"
-                                        :key="item.label"
-                                        :to="item.to"
-                                        class="block px-4 py-2 text-base text-white hover:bg-white/10 rounded-lg transition-all"
-                                        @click="isMobileMenuOpen = false; isMobileInfoDropdownOpen = false"
-                                    >
-                                        {{ item.label }}
-                                    </router-link>
-                                </div>
-                            </Transition>
-                        </div>
-
-                        <NavLink
-                            v-for="item in mainNavRight"
-                            :key="item.label"
-                            :to="item.to"
-                            link-class="header-nav-link block px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
-                            exact-active-class="bg-white/20"
-                            @click="isMobileMenuOpen = false"
-                        >
-                            {{ item.label }}
-                        </NavLink>
-
-                        <div>
-                            <button
-                                @click="isMobileAboutDropdownOpen = !isMobileAboutDropdownOpen"
-                                class="w-full flex justify-between items-center px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
-                                :class="{ 'bg-white/20': isMobileAboutDropdownOpen || isAboutActive }"
-                            >
-                                O nás
-                                <iconify-icon
-                                    :inline="true"
-                                    icon="mdi:chevron-down"
-                                    class="transition-transform"
-                                    :class="{ 'rotate-180': isMobileAboutDropdownOpen }"
-                                />
-                            </button>
-                            <Transition name="slide-down">
-                                <div
-                                    v-if="isMobileAboutDropdownOpen"
-                                    class="ml-4 mt-2 space-y-2"
-                                >
-                                    <router-link
-                                        v-for="item in aboutMenuItems"
-                                        :key="item.label"
-                                        :to="item.to"
-                                        class="block px-4 py-2 text-base text-white hover:bg-white/10 rounded-lg transition-all"
-                                        @click="isMobileMenuOpen = false; isMobileAboutDropdownOpen = false"
-                                    >
-                                        {{ item.label }}
-                                    </router-link>
-                                </div>
-                            </Transition>
-                        </div>
-                    </nav>
-                </div>
-            </Transition>
         </nav>
     </header>
+
+    <Transition name="fade">
+        <div
+            v-if="isMobileMenuOpen"
+            class="fixed inset-0 bg-black/70 z-40 md:hidden"
+            @click="isMobileMenuOpen = false"
+        ></div>
+    </Transition>
+
+    <!-- Mobile Menu (moved outside header so `position: fixed` is viewport-relative) -->
+    <Transition name="slide">
+        <div
+            v-if="isMobileMenuOpen"
+            class="fixed top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-primary-700 via-primary-600 to-primary-500 z-50 md:hidden overflow-y-auto mobile-menu"
+        >
+            <div class="flex justify-between items-center h-20 px-4 bg-primary-800/50 backdrop-blur-sm">
+                <span class="text-white text-xl font-semibold">Menu</span>
+                <Button
+                    @click="isMobileMenuOpen = false"
+                    text
+                    rounded
+                    class="menu-button text-white p-3 transition-all duration-300"
+                    aria-label="Zavřít menu"
+                >
+                    <template #icon>
+                        <svg
+                            class="h-7 w-7"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            stroke-width="2.5"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M6 18L18 6M6 6l12 12"
+                            />
+                        </svg>
+                    </template>
+                </Button>
+            </div>
+
+            <nav class="flex flex-col space-y-2 p-6 min-h-screen">
+                <NavLink
+                    v-for="item in mainNavLeft"
+                    :key="item.label"
+                    :to="item.to"
+                    link-class="header-nav-link block px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
+                    exact-active-class="bg-white/20"
+                    @click="isMobileMenuOpen = false"
+                >
+                    {{ item.label }}
+                </NavLink>
+
+                <div>
+                    <button
+                        @click="isMobileInfoDropdownOpen = !isMobileInfoDropdownOpen"
+                        class="w-full flex justify-between items-center px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
+                        :class="{ 'bg-white/20': isMobileInfoDropdownOpen || isInfoActive }"
+                    >
+                        Informace
+                        <iconify-icon
+                            :inline="true"
+                            icon="mdi:chevron-down"
+                            class="transition-transform"
+                            :class="{ 'rotate-180': isMobileInfoDropdownOpen }"
+                        />
+                    </button>
+                    <Transition name="slide-down">
+                        <div
+                            v-if="isMobileInfoDropdownOpen"
+                            class="ml-4 mt-2 space-y-2"
+                        >
+                            <router-link
+                                v-for="item in infoItems"
+                                :key="item.label"
+                                :to="item.to"
+                                class="block px-4 py-2 text-base text-white hover:bg-white/10 rounded-lg transition-all"
+                                @click="isMobileMenuOpen = false; isMobileInfoDropdownOpen = false"
+                            >
+                                {{ item.label }}
+                            </router-link>
+                        </div>
+                    </Transition>
+                </div>
+
+                <NavLink
+                    v-for="item in mainNavRight"
+                    :key="item.label"
+                    :to="item.to"
+                    link-class="header-nav-link block px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
+                    exact-active-class="bg-white/20"
+                    @click="isMobileMenuOpen = false"
+                >
+                    {{ item.label }}
+                </NavLink>
+
+                <div>
+                    <button
+                        @click="isMobileAboutDropdownOpen = !isMobileAboutDropdownOpen"
+                        class="w-full flex justify-between items-center px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
+                        :class="{ 'bg-white/20': isMobileAboutDropdownOpen || isAboutActive }"
+                    >
+                        O nás
+                        <iconify-icon
+                            :inline="true"
+                            icon="mdi:chevron-down"
+                            class="transition-transform"
+                            :class="{ 'rotate-180': isMobileAboutDropdownOpen }"
+                        />
+                    </button>
+                    <Transition name="slide-down">
+                        <div
+                            v-if="isMobileAboutDropdownOpen"
+                            class="ml-4 mt-2 space-y-2"
+                        >
+                            <router-link
+                                v-for="item in aboutMenuItems"
+                                :key="item.label"
+                                :to="item.to"
+                                class="block px-4 py-2 text-base text-white hover:bg-white/10 rounded-lg transition-all"
+                                @click="isMobileMenuOpen = false; isMobileAboutDropdownOpen = false"
+                            >
+                                {{ item.label }}
+                            </router-link>
+                        </div>
+                    </Transition>
+                </div>
+            </nav>
+        </div>
+    </Transition>
 </template>
 
 <script setup lang="ts">
-// import { useScrollHeader } from '@/composables/useScrollHeader'
+import { useScrollHeader } from '@/composables/useScrollHeader'
 import { Button, Image } from 'primevue'
 import { computed, ref, watch } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
@@ -296,7 +301,7 @@ watch(() => route.fullPath, () => {
     isMobileMenuOpen.value = false
 })
 
-// const { isHidden } = useScrollHeader()
+const { isHidden } = useScrollHeader()
 
 const isAboutActive = computed(() => {
     return route.name === 'Organizer' || route.name === 'Links' || route.name === 'Contact'
