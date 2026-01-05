@@ -40,24 +40,18 @@
                 </TabList>
                 <TabPanels>
                     <TabPanel value="0">
-                        <div class="rounded-2xl shadow-2xl overflow-hidden border border-white/50">
-                            <iframe
-                                style="border:none"
-                                src="https://mapy.com/s/dedabafaha"
-                                frameborder="0"
-                                class="w-full h-[20rem]"
-                            ></iframe>
-                        </div>
+                        <ImageLinkCard
+                            href="https://mapy.com/s/codupufobe"
+                            :src="YouthRound"
+                            alt="Mapa okruhu 2,5 km"
+                        />
                     </TabPanel>
                     <TabPanel value="1">
-                        <div class="rounded-2xl shadow-2xl overflow-hidden border border-white/50">
-                            <iframe
-                                style="border:none"
-                                src="https://mapy.com/s/redogopahu"
-                                frameborder="0"
-                                class="w-full h-[20rem]"
-                            ></iframe>
-                        </div>
+                        <ImageLinkCard
+                            href="https://mapy.com/s/nodomecoku"
+                            :src="AdultRound"
+                            alt="Mapa okruhu 5 km"
+                        />
                     </TabPanel>
                 </TabPanels>
             </Tabs>
@@ -279,8 +273,11 @@
 import SectionHeader from '@/components/SectionHeader.vue'
 import SectionWrapper from '@/components/SectionWrapper.vue'
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from 'primevue'
+import ImageLinkCard from '@/components/ImageLinkCard.vue'
 import CategoryDataTable from './components/CategoryDataTable.vue'
 import ContentImageCard from './components/ContentImageCard.vue'
+import AdultRound from '/public/images/okruh_dospeli.webp'
+import YouthRound from '/public/images/okruh_mladez.webp'
 </script>
 
 <style scoped>
