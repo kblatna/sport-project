@@ -26,7 +26,7 @@
                     v-else
                     :src="imageSrc"
                     :alt="alt || 'Obrázek'"
-                    :class="['w-full h-full']"
+                    :class="['w-full h-full cursor-default']"
                     :image-class="imageClass"
                 />
             </div>
