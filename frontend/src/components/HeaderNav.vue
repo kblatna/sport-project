@@ -274,7 +274,7 @@
 <script setup lang="ts">
 // import { useScrollHeader } from '@/composables/useScrollHeader'
 import { Button, Image } from 'primevue'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
 import { useRoute } from 'vue-router'
 import NavLink from './NavLink.vue'
@@ -286,6 +286,15 @@ const isInfoDropdownOpen = ref(false)
 const isMobileInfoDropdownOpen = ref(false)
 
 const route = useRoute()
+
+// Zavře všechny dropdowny při změně routy
+watch(() => route.fullPath, () => {
+    isInfoDropdownOpen.value = false
+    isAboutDropdownOpen.value = false
+    isMobileAboutDropdownOpen.value = false
+    isMobileInfoDropdownOpen.value = false
+    isMobileMenuOpen.value = false
+})
 
 // const { isHidden } = useScrollHeader()
 
