@@ -1,9 +1,9 @@
 export interface Result {
-    rank: string
-    startNumber: string
+    rank: number
+    startNumber: number
     name: string
-    dateOfBirth: string
+    dateOfBirth: number
     totalTime: string
     category: string
-    year: string
+    year: number
 }

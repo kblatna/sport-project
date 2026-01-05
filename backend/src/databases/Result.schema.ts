@@ -8,28 +8,28 @@ import mongoosePaginate from 'mongoose-paginate-v2'
 })
 export class Result {
     @Prop({
-        type: SchemaTypes.String,
+        type: SchemaTypes.Number,
         required: true
     })
-    rank: string
+    rank: number
 
     @Prop({
-        type: SchemaTypes.String,
+        type: SchemaTypes.Number,
         required: true
     })
-    startNumber: string
+    startNumber: number
+
+    @Prop({
+        type: SchemaTypes.Number,
+        required: true
+    })
+    dateOfBirth: number
 
     @Prop({
         type: SchemaTypes.String,
         required: true
     })
     name: string
-
-    @Prop({
-        type: SchemaTypes.String,
-        required: true
-    })
-    dateOfBirth: string
 
     @Prop({
         type: SchemaTypes.String,
@@ -44,10 +44,10 @@ export class Result {
     category: string
 
     @Prop({
-        type: SchemaTypes.String,
+        type: SchemaTypes.Number,
         required: true
     })
-    year: string
+    year: number
 }
 
 export type ResultDocument = HydratedDocument<Result>
