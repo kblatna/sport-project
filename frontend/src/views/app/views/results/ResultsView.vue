@@ -1,22 +1,31 @@
 <template>
     <SectionWrapper class="container">
-        <SectionHeader
-            :title="pageContent?.title || 'Výsledky závodu'"
-        >
-            <p class="text-gray-600 my-10">
-                {{ pageContent?.description || 'V tabulce níže si můžete filtrovat podle zvolených kritérií napříč jednotlivými ročníky závodu.' }}
-            </p>
-        </SectionHeader>
+        <LoadingSpinner v-if="loading" />
 
-        <div class="rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-10 border border-gray-200/60">
-            <ResultsDataTable
-                :results="result.docs"
-                :total-records="result.totalDocs"
-                :is-loading="isLoading"
-                :page-content="pageContent"
-                @on-lazy-load="loadData"
-            />
-        </div>
+        <template v-else-if="pageContent">
+            <SectionHeader
+                :title="pageContent?.title || 'Výsledky závodu'"
+            >
+                <p class="text-gray-600 my-10">
+                    {{ pageContent?.description || 'V tabulce níže si můžete filtrovat podle zvolených kritérií napříč jednotlivými ročníky závodu.' }}
+                </p>
+            </SectionHeader>
+
+            <div class="rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-10 border border-gray-200/60">
+                <ResultsDataTable
+                    :results="result.docs"
+                    :total-records="result.totalDocs"
+                    :is-loading="isLoading"
+                    :page-content="pageContent"
+                    @on-lazy-load="loadData"
+                />
+            </div>
+        </template>
+
+        <ErrorMessage
+            v-else-if="error"
+            :message="error"
+        />
     </SectionWrapper>
 </template>
 
@@ -29,6 +38,8 @@ import { onMounted, ref } from 'vue'
 import ResultsDataTable from './components/ResultsDataTable.vue'
 import SectionWrapper from '@/components/SectionWrapper.vue'
 import SectionHeader from '@/components/SectionHeader.vue'
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import ErrorMessage from '@/components/ErrorMessage.vue'
 
 const result = ref<PaginateResult<Result>>({
     docs: [],
@@ -46,11 +57,20 @@ const result = ref<PaginateResult<Result>>({
 
 const pageContent = ref<ResultPageContent | null>(null)
 const isLoading = ref(false)
+const loading = ref(true)
+const error = ref<string | null>(null)
 
 onMounted(async () => {
-    await loadPageContent()
-    const currentYear = new Date().getFullYear()
-    await loadDataWithFallback(currentYear)
+    try {
+        await loadPageContent()
+        const currentYear = new Date().getFullYear()
+        await loadDataWithFallback(currentYear)
+    } catch (err) {
+        console.error('Error loading page:', err)
+        error.value = 'Nepodařilo se načíst obsah stránky'
+    } finally {
+        loading.value = false
+    }
 })
 
 async function loadPageContent(): Promise<void> {

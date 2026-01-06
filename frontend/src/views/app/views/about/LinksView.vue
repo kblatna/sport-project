@@ -1,11 +1,8 @@
 <template>
     <SectionWrapper class="container">
-        <LoadingSpinner v-if="isLoading" />
-        <ErrorMessage
-            v-else-if="error"
-            :message="error"
-        />
-        <template v-else-if="!isLoading && !error && linksContent && linksContent.heroImage">
+        <LoadingSpinner v-if="loading" />
+
+        <template v-else-if="linksContent && linksContent.heroImage">
             <SectionHeader :title="linksContent?.titles?.main ?? 'Ohlasy a odkazy'" />
 
             <div
@@ -78,6 +75,11 @@
                 />
             </div>
         </template>
+
+        <ErrorMessage
+            v-else-if="error"
+            :message="error"
+        />
     </SectionWrapper>
 </template>
 
@@ -95,16 +97,16 @@ import { linksPageContent } from '@/services/api/services'
 import { onMounted, ref } from 'vue'
 
 const linksContent = ref<LinksPageContent | null>(null)
-const isLoading = ref<boolean>(false)
-const error = ref<string>('')
+const loading = ref(true)
+const error = ref<string | null>(null)
 
 onMounted(async () => {
     await loadlinksContentData()
 })
 
 async function loadlinksContentData(): Promise<void> {
-    isLoading.value = true
-    error.value = ''
+    loading.value = true
+    error.value = null
     try {
         const response = await linksPageContent.getAll()
         linksContent.value = response || null
@@ -112,7 +114,7 @@ async function loadlinksContentData(): Promise<void> {
         console.error('Failed to load organizer page links content:', err)
         error.value = 'Nepodařilo se načíst obsah stránky. Zkuste to prosím později.'
     } finally {
-        isLoading.value = false
+        loading.value = false
     }
 }
 

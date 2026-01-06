@@ -1,11 +1,6 @@
 <template>
     <LoadingSpinner v-if="isLoading" />
 
-    <ErrorMessage
-        v-else-if="error"
-        :message="error"
-    />
-
     <div
         v-else-if="pageContent"
     >
@@ -257,6 +252,11 @@
             </div>
         </SectionWrapper>
     </div>
+
+    <ErrorMessage
+        v-else-if="error"
+        :message="error"
+    />
 </template>
 
 <script lang="ts" setup>

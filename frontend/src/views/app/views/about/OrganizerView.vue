@@ -1,10 +1,6 @@
 <template>
     <SectionWrapper class="container">
-        <LoadingSpinner v-if="isLoading" />
-        <ErrorMessage
-            v-else-if="error"
-            :message="error"
-        />
+        <LoadingSpinner v-if="loading" />
 
         <template v-else-if="pageContent && pageContent.association && pageContent.organizingTeam && pageContent.thanks">
             <SectionHeader :title="pageContent.pageTitle" />
@@ -90,6 +86,11 @@
                 />
             </div>
         </template>
+
+        <ErrorMessage
+            v-else-if="error"
+            :message="error"
+        />
     </SectionWrapper>
 </template>
 
@@ -105,16 +106,16 @@ import { organizersPageContent } from '@/services/api/services'
 import { onMounted, ref } from 'vue'
 
 const pageContent = ref<OrganizersPageContent | null>(null)
-const isLoading = ref<boolean>(false)
-const error = ref<string>('')
+const loading = ref(true)
+const error = ref<string | null>(null)
 
 onMounted(async () => {
     await loadContentData()
 })
 
 async function loadContentData(): Promise<void> {
-    isLoading.value = true
-    error.value = ''
+    loading.value = true
+    error.value = null
 
     try {
         const response = await organizersPageContent.getAll()
@@ -123,7 +124,7 @@ async function loadContentData(): Promise<void> {
         console.error('Failed to load organizer page content:', err)
         error.value = 'Nepodařilo se načíst obsah stránky. Zkuste to prosím později.'
     } finally {
-        isLoading.value = false
+        loading.value = false
     }
 }
 </script>
