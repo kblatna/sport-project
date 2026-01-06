@@ -8,6 +8,7 @@ export const organizersPageContent = createService('organizer-page-content')
 export const linksPageContent = createService('links-page-content')
 export const signupPageContent = createService('signup-page-content')
 export const contactPageContent = createService('contact-page-content')
+export const infoPageContent = createService('info-page-content')
 
 export function listResults(query?: Record<string, unknown>) {
     return results.paginate(query)
