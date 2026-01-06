@@ -9,6 +9,7 @@ import { MainPageContentModule } from './modules/mainPageContent/MainPageContent
 import { ResultPageContentModule } from './modules/resultPageContent/ResultPageContent.module'
 import { OrganizerPageContentModule } from './modules/organizersPageContent/OrganizersPageContent.module'
 import { LinksPageContentModule } from './modules/linksPageContent/LinksPageContent.module'
+import { SignupPageContentModule } from './modules/signupPageContent/SignupPageContent.module'
 
 @Module({
     imports: [
@@ -21,7 +22,8 @@ import { LinksPageContentModule } from './modules/linksPageContent/LinksPageCont
         MainPageContentModule,
         ResultPageContentModule,
         OrganizerPageContentModule,
-        LinksPageContentModule
+        LinksPageContentModule,
+        SignupPageContentModule
     ],
     controllers: [],
     providers: []
