@@ -212,6 +212,11 @@ export class ScheduleSection {
         term: string
         definition: string
     }>
+
+    @Prop({
+        type: SchemaTypes.String
+    })
+    legendTitle: string
 }
 
 @Schema({ _id: false })
@@ -253,6 +258,11 @@ export class MainPageContent {
         default: true
     })
     published: boolean
+
+    @Prop({
+        type: SchemaTypes.String
+    })
+    raceSectionTitle: string
 
     @Prop({
         type: HeroSection,

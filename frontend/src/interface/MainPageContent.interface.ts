@@ -2,6 +2,7 @@ export interface MainPageContent {
     slug: string
     title: string
     published: boolean
+    raceSectionTitle: string
     hero?: {
         title: string
         subtitle: string
@@ -51,6 +52,7 @@ export interface MainPageContent {
             term: string
             definition: string
         }>
+        legendTitle: string
     }
     video?: {
         title: string

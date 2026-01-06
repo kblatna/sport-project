@@ -44,7 +44,7 @@
             class="container"
         >
             <SectionHeader
-                title="Kategorie závodů"
+                :title="pageContent.raceSectionTitle"
                 :show-divider="false"
             />
 
@@ -217,7 +217,7 @@
 
                     <div class="pt-8">
                         <h4 class="text-lg font-semibold mb-4 text-gray-800">
-                            Vysvětlivky:
+                            {{ pageContent.schedule.legendTitle }}
                         </h4>
                         <dl class="space-y-3 text-sm md:text-base text-gray-700">
                             <div
