@@ -11,6 +11,7 @@ import { OrganizerPageContentModule } from './modules/organizersPageContent/Orga
 import { LinksPageContentModule } from './modules/linksPageContent/LinksPageContent.module'
 import { SignupPageContentModule } from './modules/signupPageContent/SignupPageContent.module'
 import { ContactPageContentModule } from './modules/contactPageContent/ContactPageContent.module'
+import { InfoPageContentModule } from './modules/infoPageContent/InfoPageContent.module'
 
 @Module({
     imports: [
@@ -25,7 +26,8 @@ import { ContactPageContentModule } from './modules/contactPageContent/ContactPa
         OrganizerPageContentModule,
         LinksPageContentModule,
         SignupPageContentModule,
-        ContactPageContentModule
+        ContactPageContentModule,
+        InfoPageContentModule
     ],
     controllers: [],
     providers: []
