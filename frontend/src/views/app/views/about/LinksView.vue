@@ -59,30 +59,11 @@
                     :title="linksContent?.titles?.links ?? 'Užitečné odkazy'"
                 />
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <a
+                    <LinkCard
                         v-for="(link, index) in linksContent.links"
                         :key="index"
-                        :href="link.link"
-                        class="group bg-white rounded-lg shadow-md p-5 hover:shadow-xl hover:bg-primary-50 transition-all flex items-center gap-4"
-                    >
-                        <div class="w-10 h-10 flex items-center justify-center flex-shrink-0">
-                            <iconify-icon
-                                :icon="link.icon"
-                                :inline="true"
-                                class="text-primary text-2xl"
-                            />
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="text-gray-800 font-medium group-hover:text-primary transition-colors">
-                                {{ link.text }}
-                            </p>
-                        </div>
-                        <iconify-icon
-                            icon="mdi:chevron-right"
-                            :inline="true"
-                            class="text-gray-400 text-3xl group-hover:text-primary group-hover:translate-x-1 transition-all flex-shrink-0"
-                        />
-                    </a>
+                        :entry="link"
+                    />
                 </div>
                 <InfoBox
                     v-if="linksContent"
@@ -103,6 +84,7 @@
 <script setup lang="ts">
 import ErrorMessage from '@/components/ErrorMessage.vue'
 import InfoBox from '@/components/InfoBox.vue'
+import LinkCard from '@/components/LinkCard.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import MediaListCard from '@/components/MediaListCard.vue'
 import SectionHeader from '@/components/SectionHeader.vue'
