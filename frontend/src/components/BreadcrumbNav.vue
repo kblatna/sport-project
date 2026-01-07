@@ -65,31 +65,60 @@
 <script setup lang="ts">
 import { Breadcrumb } from 'primevue'
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
+const router = useRouter()
 
 const home = {
     icon: 'pi pi-home',
     label: 'Domů'
 }
 
-const items = computed(() => {
-    if (route.name === 'Home') {
-        return []
+const getHashLabel = (hash: string): string | null => {
+    const labels: Record<string, string> = {
+        kids: 'Muldička',
+        adults: 'Mulda'
     }
+    return labels[hash] || null
+}
 
-    return route.matched
+const items = computed(() => {
+    if (route.name === 'Home') return []
+
+    const breadcrumbs = route.matched
         .filter(r => r.meta.breadcrumb && r.name)
-        .map((r) => {
-            const target = typeof r.name === 'string'
+        .map(r => ({
+            label: r.meta.breadcrumb as string,
+            to: typeof r.name === 'string'
                 ? { name: r.name as string, params: route.params }
                 : r.path
+        }))
 
-            return {
-                label: r.meta.breadcrumb as string,
-                to: target
+    // Add dynamic breadcrumb for Info page based on hash
+    if (route.name === 'Info' && route.hash) {
+        const hash = route.hash.replace('#', '')
+        const hashLabel = getHashLabel(hash)
+
+        if (hashLabel) {
+            // Make parent "Informace" non-clickable
+            const lastBreadcrumb = breadcrumbs[breadcrumbs.length - 1]
+            if (lastBreadcrumb?.label === 'Informace') {
+                delete lastBreadcrumb.to
             }
-        })
+
+            const infoPath = router.resolve({
+                name: 'Info',
+                params: route.params
+            }).path
+
+            breadcrumbs.push({
+                label: hashLabel,
+                to: `${infoPath}#${hash}`
+            })
+        }
+    }
+
+    return breadcrumbs
 })
 </script>
