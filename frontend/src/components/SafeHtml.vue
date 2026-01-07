@@ -25,14 +25,12 @@ import { useSafeHtml } from '@/composables/useSafeHtml'
  * <SafeHtml :content="article.body" tag="article" />
  */
 
-interface Props {
+const props = withDefaults(defineProps<{
     /** HTML content to sanitize and render */
     content?: string | null
     /** HTML tag to wrap the content in */
     tag?: string
-}
-
-const props = withDefaults(defineProps<Props>(), {
+}>(), {
     content: '',
     tag: 'div'
 })

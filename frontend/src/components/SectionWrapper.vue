@@ -15,15 +15,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-interface Props {
+const props = withDefaults(defineProps<{
     background?: 'white' | 'gray' | 'gradient' | 'none'
     paddingY?: 'none' | 'sm' | 'md' | 'lg'
     customClass?: string
     constrain?: boolean
     innerClass?: string
-}
-
-const props = withDefaults(defineProps<Props>(), {
+}>(), {
     background: 'white',
     paddingY: 'md',
     customClass: '',

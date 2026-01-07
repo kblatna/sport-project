@@ -51,11 +51,9 @@ import Column from 'primevue/column'
 import DataTable from 'primevue/datatable'
 import { computed } from 'vue'
 
-interface Props {
+const props = withDefaults(defineProps<{
     data?: CategoryTableRow[]
-}
-
-const props = withDefaults(defineProps<Props>(), {
+}>(), {
     data: () => []
 })
 

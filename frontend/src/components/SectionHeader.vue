@@ -24,15 +24,14 @@
 </template>
 
 <script lang="ts" setup>
-withDefaults(
-    defineProps<{
-        title: string
-        overtitle?: string
-        showDivider?: boolean
-    }>(),
-    {
-        overtitle: '',
-        showDivider: true
-    }
-)
+
+withDefaults(defineProps<{
+    title: string
+    overtitle?: string
+    showDivider?: boolean
+}>(), {
+    overtitle: '',
+    showDivider: true
+})
+
 </script>

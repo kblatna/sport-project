@@ -160,11 +160,9 @@ import CategoryDataTable from './CategoryDataTable.vue'
 import ContentImageCard from './ContentImageCard.vue'
 import RegistrationPaymentInfo from './RegistrationPaymentInfo.vue'
 
-interface Props {
+defineProps<{
     content: InfoPageVariant
-}
-
-defineProps<Props>()
+}>()
 </script>
 
 <style scoped>

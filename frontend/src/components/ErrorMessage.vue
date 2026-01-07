@@ -22,11 +22,11 @@
 </template>
 
 <script setup lang="ts">
-interface Props {
-    message?: string
-}
 
-withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<{
+    message: string
+}>(), {
     message: 'Došlo k neočekávané chybě. Zkuste to prosím znovu.'
 })
+
 </script>
