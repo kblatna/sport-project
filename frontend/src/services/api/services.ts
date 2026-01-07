@@ -10,6 +10,7 @@ export const signupPageContent = createService('signup-page-content')
 export const contactPageContent = createService('contact-page-content')
 export const infoPageContent = createService('info-page-content')
 export const footerContent = createService('footer-content')
+export const navigation = createService('navigation')
 
 export function listResults(query?: Record<string, unknown>) {
     return results.paginate(query)
