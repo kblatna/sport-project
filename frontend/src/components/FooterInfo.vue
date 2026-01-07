@@ -4,8 +4,8 @@
             <div class="grid grid-cols-2 items-center mb-10">
                 <div class="flex items-center">
                     <Image
-                        :src="logo.src"
-                        :alt="logo.alt"
+                        src="/logo/mulda_logo.png"
+                        alt="Logo Soběšická Mulda"
                         image-class="h-10 w-auto"
                     />
                 </div>
@@ -36,5 +36,5 @@ import { Image } from 'primevue'
 import FooterSection from './footer/FooterSection.vue'
 import SocialLinks from './footer/SocialLinks.vue'
 
-const { logo, socialLinks, footerSections, copyright } = useFooterData()
+const { socialLinks, footerSections, copyright } = useFooterData()
 </script>
