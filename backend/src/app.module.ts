@@ -13,6 +13,7 @@ import { SignupPageContentModule } from './modules/signupPageContent/SignupPageC
 import { ContactPageContentModule } from './modules/contactPageContent/ContactPageContent.module'
 import { InfoPageContentModule } from './modules/infoPageContent/InfoPageContent.module'
 import { FooterContentModule } from './modules/footerContent/FooterContent.module'
+import { NavigationModule } from './modules/navigation/Navigation.module'
 
 @Module({
     imports: [
@@ -29,7 +30,8 @@ import { FooterContentModule } from './modules/footerContent/FooterContent.modul
         SignupPageContentModule,
         ContactPageContentModule,
         InfoPageContentModule,
-        FooterContentModule
+        FooterContentModule,
+        NavigationModule
     ],
     controllers: [],
     providers: []
