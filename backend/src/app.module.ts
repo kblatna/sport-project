@@ -12,6 +12,7 @@ import { LinksPageContentModule } from './modules/linksPageContent/LinksPageCont
 import { SignupPageContentModule } from './modules/signupPageContent/SignupPageContent.module'
 import { ContactPageContentModule } from './modules/contactPageContent/ContactPageContent.module'
 import { InfoPageContentModule } from './modules/infoPageContent/InfoPageContent.module'
+import { FooterContentModule } from './modules/footerContent/FooterContent.module'
 
 @Module({
     imports: [
@@ -27,7 +28,8 @@ import { InfoPageContentModule } from './modules/infoPageContent/InfoPageContent
         LinksPageContentModule,
         SignupPageContentModule,
         ContactPageContentModule,
-        InfoPageContentModule
+        InfoPageContentModule,
+        FooterContentModule
     ],
     controllers: [],
     providers: []
