@@ -11,6 +11,7 @@
   "dependencies": {
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
+    "@vueuse/core": "^14.1.0",
     "axios": "^1.13.2",
     "dompurify": "^3.3.1",
     "iconify-icon": "^3.0.2",
