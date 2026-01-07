@@ -12,7 +12,7 @@
 <script setup lang="ts">
 
 withDefaults(defineProps<{
-    message: string
+    message?: string
 }>(), {
     message: 'Načítání obsahu...'
 })
