@@ -33,7 +33,7 @@ export interface RegistrationPaymentSection {
 export interface AttendanceSection {
     title: string
     imageSrc: string
-    imagePosition: string
+    imagePosition: 'left' | 'right'
     content: string[]
 }
 
@@ -46,7 +46,7 @@ export interface PrizesSection {
 export interface AwardsSection {
     title: string
     imageSrc: string
-    imagePosition: string
+    imagePosition: 'left' | 'right'
     content: string[]
 }
 
@@ -71,9 +71,37 @@ export interface InfoPageVariant {
     awards: AwardsSection
 }
 
+export interface WashingSection {
+    title: string
+    imageSrc: string
+    imageWidth?: string
+    imageHeight?: string
+    imagePosition: 'left' | 'right'
+    content: string[]
+}
+
+export interface ParkingSection {
+    title: string
+    content: string
+}
+
+export interface BikeServiceSection {
+    title: string
+    imageSrc: string
+    imagePosition: 'left' | 'right'
+    content: string
+}
+
+export interface CommonSections {
+    washing: WashingSection
+    parking: ParkingSection
+    bikeService: BikeServiceSection
+}
+
 export interface InfoPageContent {
     kids: InfoPageVariant
     adults: InfoPageVariant
+    commonSections: CommonSections
     createdAt: string
     updatedAt: string
 }
