@@ -1,4 +1,5 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common'
+import { Throttle } from '@nestjs/throttler'
 import { ContactService } from './Contact.service'
 import { CreateContactDto } from './dto/CreateContact.dto'
 import { ContactDocument } from '../../databases/Contact.schema'
@@ -11,6 +12,7 @@ export class ContactController {
 
     @Post()
     @HttpCode(HttpStatus.CREATED)
+    @Throttle({ default: { limit: 3, ttl: 60000 } })
     async createContact(
         @Body() createContactDto: CreateContactDto
     ): Promise<ContactDocument> {

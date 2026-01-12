@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
 import { ConfigModule } from '@nestjs/config'
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler'
+import { APP_GUARD } from '@nestjs/core'
+import * as Joi from 'joi'
 import { UserModule } from './modules/user/User.module'
 import { ContactModule } from './modules/contact/Contact.module'
 import { RaceApplicationModule } from './modules/raceApplication/RaceApplication.module'
@@ -17,8 +20,25 @@ import { NavigationModule } from './modules/navigation/Navigation.module'
 
 @Module({
     imports: [
-        ConfigModule.forRoot(),
-        MongooseModule.forRoot(process.env.MONGODB_URI ?? 'mongodb://root:defekt2025@mongodb:27017/mulda?authSource=admin'),
+        ConfigModule.forRoot({
+            isGlobal: true,
+            validationSchema: Joi.object({
+                NODE_ENV: Joi.string()
+                    .valid('development', 'production', 'test')
+                    .default('development'),
+                PORT: Joi.number().default(3001),
+                MONGODB_URI: Joi.string().required(),
+                TURNSTILE_SECRET: Joi.string().allow('').optional(),
+                MAILGUN_API_KEY: Joi.string().optional(),
+                MAILGUN_DOMAIN: Joi.string().optional(),
+                MAILGUN_FROM: Joi.string().optional()
+            })
+        }),
+        ThrottlerModule.forRoot([{
+            ttl: 60000,
+            limit: 100
+        }]),
+        MongooseModule.forRoot(process.env.MONGODB_URI!),
         UserModule,
         ContactModule,
         RaceApplicationModule,
@@ -34,6 +54,11 @@ import { NavigationModule } from './modules/navigation/Navigation.module'
         NavigationModule
     ],
     controllers: [],
-    providers: []
+    providers: [
+        {
+            provide: APP_GUARD,
+            useClass: ThrottlerGuard
+        }
+    ]
 })
 export class AppModule { }

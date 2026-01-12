@@ -55,3 +55,5 @@ export type ResultLeanDocument = LeanDocument<ResultDocument>
 
 export const ResultSchema = SchemaFactory.createForClass(Result)
 ResultSchema.plugin(mongoosePaginate)
+ResultSchema.index({ year: 1, category: 1 })
+ResultSchema.index({ name: 1 })

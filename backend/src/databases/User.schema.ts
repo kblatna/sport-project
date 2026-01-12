@@ -21,7 +21,8 @@ export class User {
 
     @Prop({
         type: SchemaTypes.String,
-        required: true
+        required: true,
+        unique: true
     })
     email: string
 

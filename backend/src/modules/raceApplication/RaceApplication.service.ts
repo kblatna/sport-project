@@ -5,29 +5,23 @@ import {
     Logger
 } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import axios from 'axios'
 import { Model } from 'mongoose'
 import { RaceApplication, RaceApplicationDocument } from '../../databases/RaceApplication.schema'
 import { CreateRaceApplication } from './interface/CreateRaceApplication.interface'
+import { TurnstileService } from '../../integrations/turnstile/Turnstile.service'
 
 @Injectable()
 export class RaceApplicationService {
-    protected readonly logger = new Logger(RaceApplicationService.name)
+    private readonly logger = new Logger(RaceApplicationService.name)
 
     constructor(
         @InjectModel(RaceApplication.name)
-        private readonly raceApplicationModel: Model<RaceApplicationDocument>
+        private readonly raceApplicationModel: Model<RaceApplicationDocument>,
+        private readonly turnstileService: TurnstileService
     ) { }
 
     async createRaceApplication(data: CreateRaceApplication): Promise<RaceApplicationDocument> {
-        if (!data.firstName || !data.email || !data.category || !data.token) { // TODO: doplnit
-            throw new HttpException(
-                'Missing required fields',
-                HttpStatus.BAD_REQUEST
-            )
-        }
-
-        const isValid = await this.validateTurnstileToken(data.token)
+        const isValid = await this.turnstileService.validateToken(data.token)
         if (!isValid) {
             throw new HttpException('Invalid Turnstile token', HttpStatus.BAD_REQUEST)
         }
@@ -50,38 +44,5 @@ export class RaceApplicationService {
         })
 
         return await raceApplication.save()
-    }
-
-    private async validateTurnstileToken(token: string): Promise<boolean> {
-        try {
-            const secret = process.env.TURNSTILE_SECRET || ''
-            if (!secret) {
-                this.logger.error('TURNSTILE_SECRET not set in env variables')
-                return false
-            }
-
-            const params = new URLSearchParams()
-            params.append('secret', secret)
-            params.append('response', token)
-
-            const { data } = await axios.post(
-                'https://challenges.cloudflare.com/turnstile/v0/siteverify',
-                params.toString(),
-                {
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
-                }
-            )
-
-            if (!data.success) {
-                this.logger.warn('Turnstile validation failed', data)
-            }
-
-            return data.success === true
-        } catch (error) {
-            this.logger.error('Turnstile validation error', error)
-            return false
-        }
     }
 }

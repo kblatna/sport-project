@@ -3,6 +3,7 @@ import { ContactService } from './Contact.service'
 import { ContactController } from './Contact.controller'
 import { MongooseModule } from '@nestjs/mongoose'
 import { Contact, ContactSchema } from '../../databases/Contact.schema'
+import { TurnstileModule } from '../../integrations/turnstile/Turnstile.module'
 
 @Module({
     imports: [
@@ -11,7 +12,8 @@ import { Contact, ContactSchema } from '../../databases/Contact.schema'
                 name: Contact.name,
                 schema: ContactSchema
             }
-        ])
+        ]),
+        TurnstileModule
     ],
     providers: [
         ContactService

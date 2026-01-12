@@ -14,8 +14,6 @@ export class ResultController {
     async paginateResults(
     @Query() query: ListResultsQueryDto
     ): Promise<PaginateResult<ResultDocument>> {
-        const paginateOptions = query.toPaginateOptions()
-        console.log('PaginateOptions:', paginateOptions)
         return await this.resultService.paginateResults(query)
     }
 

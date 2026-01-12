@@ -7,10 +7,10 @@ import { UpdateUserDto } from './dto/UpdateUser.dto'
 
 @Controller('users')
 export class UserController {
-    protected readonly logger = new Logger(UserController.name)
+    private readonly logger = new Logger(UserController.name)
 
     constructor(
-        protected readonly userService: UserService
+        private readonly userService: UserService
     ) { }
 
     @Get()
@@ -34,10 +34,6 @@ export class UserController {
         @Body() body: CreateUserDto
     ): Promise<UserDocument> {
         try {
-            const existingUser = await this.userService.getUserByUsername(body.username)
-            if (existingUser) {
-                throw new ErrorException('User already exists', 422)
-            }
             return await this.userService.createUser(body)
         } catch (error) {
             if (error instanceof ErrorException) {

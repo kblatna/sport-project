@@ -46,5 +46,6 @@ export class Contact {
 }
 
 export const ContactSchema = SchemaFactory.createForClass(Contact)
+ContactSchema.index({ createdAt: -1 })
 export type ContactDocument = HydratedDocument<Contact>
 export type ContactLeanDocument = LeanDocument<ContactDocument>

@@ -1,5 +1,5 @@
 import { Exclude, Expose } from 'class-transformer'
-import { IsOptional, IsString } from 'class-validator'
+import { IsEmail, IsOptional, IsString } from 'class-validator'
 
 @Exclude()
 export class UpdateUserDto {
@@ -9,7 +9,7 @@ export class UpdateUserDto {
     name?: string
 
     @IsOptional()
-    @IsString()
+    @IsEmail()
     @Expose()
     email?: string
 }

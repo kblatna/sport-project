@@ -71,5 +71,8 @@ export class RaceApplication {
 }
 
 export const RaceApplicationSchema = SchemaFactory.createForClass(RaceApplication)
+RaceApplicationSchema.index({ createdAt: -1 })
+RaceApplicationSchema.index({ email: 1 })
+RaceApplicationSchema.index({ race: 1, category: 1 })
 export type RaceApplicationDocument = HydratedDocument<RaceApplication>
 export type RaceApplicationLeanDocument = LeanDocument<RaceApplicationDocument>

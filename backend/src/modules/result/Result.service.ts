@@ -6,7 +6,7 @@ import { ListResultsQueryDto } from './dto/ListResultsQuery.dto'
 
 @Injectable()
 export class ResultService {
-    protected readonly logger = new Logger(ResultService.name)
+    private readonly logger = new Logger(ResultService.name)
 
     constructor(
     @InjectModel(Result.name)

@@ -14,10 +14,10 @@ export interface LocalUser {
 
 @Injectable()
 export class UserService {
-    protected readonly logger = new Logger(UserService.name)
+    private readonly logger = new Logger(UserService.name)
     constructor(
         @InjectModel(User.name)
-        protected readonly UserModel: Model<User>
+        private readonly UserModel: Model<User>
     ) { }
 
     async getAllUsers(): Promise<UserLeanDocument[]> {
@@ -33,10 +33,11 @@ export class UserService {
     }
 
     async createUser(data: CreateUser): Promise<UserDocument> {
-        // TODO: zkontrolovat, jestli je to správně
         const existingUser = await this.UserModel.findOne({
-            email: data.email,
-            username: data.username
+            $or: [
+                { email: data.email },
+                { username: data.username }
+            ]
         })
 
         if (existingUser) {
