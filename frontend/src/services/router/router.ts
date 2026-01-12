@@ -4,13 +4,19 @@ import signup from './routes/signup'
 import home from './routes/home'
 import results from './routes/results'
 import information from './routes/information'
+import organizer from './routes/organizer'
+import links from './routes/links'
+import contact from './routes/contact'
 
 const routes: RouteRecordRaw[] = [
     about,
     signup,
     home,
     results,
-    information
+    information,
+    organizer,
+    links,
+    contact
 ]
 
 const router = createRouter({
