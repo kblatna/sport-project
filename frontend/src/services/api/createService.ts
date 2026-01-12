@@ -1,36 +1,51 @@
 import axios from 'axios'
 
+// TODO: Add axios interceptors for:
+// - Automatic token refresh
+// - Global error handling
+// - Request/response logging (dev only)
+// Example:
+// axios.interceptors.response.use(
+//     response => response,
+//     error => {
+//         if (error.response?.status === 401) {
+//             // Handle unauthorized
+//         }
+//         return Promise.reject(error)
+//     }
+// )
+
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
 
-export function createService(resource: string) {
+export function createService<T = unknown>(resource: string) {
     return {
-        async getAll(params?: Record<string, unknown>) {
-            const response = await axios.get(`${BASE_URL}/${resource}`, { params })
+        async getAll(params?: Record<string, unknown>): Promise<T> {
+            const response = await axios.get<T>(`${BASE_URL}/${resource}`, { params })
             return response.data
         },
 
-        async getById(id: string | number) {
-            const response = await axios.get(`${BASE_URL}/${resource}/${id}`)
+        async getById(id: string | number): Promise<T> {
+            const response = await axios.get<T>(`${BASE_URL}/${resource}/${id}`)
             return response.data
         },
 
-        async create(data: any) {
-            const response = await axios.post(`${BASE_URL}/${resource}`, data)
+        async create(data: Partial<T>): Promise<T> {
+            const response = await axios.post<T>(`${BASE_URL}/${resource}`, data)
             return response.data
         },
 
-        async update(id: string | number, data: any) {
-            const response = await axios.put(`${BASE_URL}/${resource}/${id}`, data)
+        async update(id: string | number, data: Partial<T>): Promise<T> {
+            const response = await axios.put<T>(`${BASE_URL}/${resource}/${id}`, data)
             return response.data
         },
 
-        async delete(id: string | number) {
+        async delete(id: string | number): Promise<void> {
             const response = await axios.delete(`${BASE_URL}/${resource}/${id}`)
             return response.data
         },
 
-        async paginate(params?: Record<string, unknown>) {
-            const response = await axios.get(`${BASE_URL}/${resource}/paginate`, { params })
+        async paginate(params?: Record<string, unknown>): Promise<T> {
+            const response = await axios.get<T>(`${BASE_URL}/${resource}/paginate`, { params })
             return response.data
         }
     }
