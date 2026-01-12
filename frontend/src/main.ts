@@ -47,6 +47,28 @@ const MyPreset = definePreset(Aura, {
 
 const app = createApp(App)
 
+// Global error handler for better error tracking and user experience
+app.config.errorHandler = (err, instance, info) => {
+    // Log error details in development
+    if (import.meta.env.DEV) {
+        console.error('Global Vue error:', err)
+        console.error('Component:', instance)
+        console.error('Error info:', info)
+    }
+
+    // TODO: Send to error tracking service in production (Sentry, etc.)
+    // Example: Sentry.captureException(err, { contexts: { vue: { componentName: instance?.$options.name, info } } })
+}
+
+// Handle unhandled promise rejections
+window.addEventListener('unhandledrejection', (event) => {
+    if (import.meta.env.DEV) {
+        console.error('Unhandled promise rejection:', event.reason)
+    }
+    // TODO: Send to error tracking service
+    event.preventDefault()
+})
+
 app.use(router)
 app.use(VueSecureHTML)
 

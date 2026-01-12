@@ -1,5 +1,6 @@
 import { footerContent } from '@/services/api/services'
 import { computed, onMounted, ref } from 'vue'
+import { logger } from '@/utils/logger'
 
 export interface FooterLink {
     label: string
@@ -51,13 +52,13 @@ export function useFooterData() {
         loading.value = true
         error.value = null
         try {
-            const response = await footerContent.getAll()
+            const response = await footerContent.getAll() as FooterContent
             if (response) {
                 data.value = response
             }
         } catch (e) {
             error.value = e as Error
-            console.error('Failed to fetch footer content:', e)
+            logger.error('Failed to fetch footer content', e, { context: 'useFooterData' })
         } finally {
             loading.value = false
         }

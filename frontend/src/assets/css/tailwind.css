@@ -86,6 +86,54 @@ a:focus-visible {
     .copyright {
         @apply bg-primary-800;
     }
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.3s ease;
+    }
+
+    .fade-enter-from,
+    .fade-leave-to {
+        opacity: 0;
+    }
+
+    .slide-enter-active,
+    .slide-leave-active {
+        transition: transform 0.3s ease;
+    }
+
+    .slide-enter-from,
+    .slide-leave-to {
+        transform: translateX(100%);
+    }
+
+    .dropdown-enter-active,
+    .dropdown-leave-active {
+        transition: all 0.2s ease;
+    }
+
+    .dropdown-enter-from,
+    .dropdown-leave-to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    .slide-down-enter-active,
+    .slide-down-leave-active {
+        transition: all 0.3s ease;
+    }
+
+    .slide-down-enter-from,
+    .slide-down-leave-to {
+        opacity: 0;
+        max-height: 0;
+        overflow: hidden;
+    }
+
+    .slide-down-enter-to,
+    .slide-down-leave-from {
+        max-height: 500px;
+    }
 }
 
 .p-button-outlined.p-button-secondary {

@@ -1,11 +1,16 @@
 import { navigation as navigationService } from '@/services/api/services'
 import { computed, onMounted, ref } from 'vue'
+import { logger } from '@/utils/logger'
 
 export interface NavItem {
     label: string
     to: string // Backend always returns string paths
     children?: NavItem[]
     visible?: boolean
+}
+
+interface NavigationResponse {
+    items: NavItem[]
 }
 
 export function useNavigation() {
@@ -17,10 +22,10 @@ export function useNavigation() {
         isLoading.value = true
         error.value = null
         try {
-            const response = await navigationService.getAll()
+            const response = await navigationService.getAll() as NavigationResponse | NavItem[]
             // Backend returns Navigation object with 'items' array property
-            if (response && Array.isArray(response.items)) {
-                data.value = response.items as NavItem[]
+            if (response && 'items' in response && Array.isArray(response.items)) {
+                data.value = response.items
             } else if (Array.isArray(response)) {
                 // Fallback if API returns array directly
                 data.value = response as NavItem[]
@@ -29,7 +34,7 @@ export function useNavigation() {
             }
         } catch (e) {
             error.value = e as Error
-            console.error('Failed to fetch navigation:', e)
+            logger.error('Failed to fetch navigation', e, { context: 'useNavigation' })
             data.value = []
         } finally {
             isLoading.value = false

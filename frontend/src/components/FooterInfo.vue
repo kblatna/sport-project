@@ -14,8 +14,8 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <FooterSection
-                    v-for="(section, index) in footerSections"
-                    :key="index"
+                    v-for="section in footerSections"
+                    :key="section.title"
                     :title="section.title"
                     :links="section.links"
                 />

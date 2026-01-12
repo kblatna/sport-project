@@ -242,6 +242,8 @@
 <script setup lang="ts">
 import { useVuelidate } from '@vuelidate/core'
 import { required, email as emailValidator, maxLength } from '@/utils/validators'
+import { logger } from '@/utils/logger'
+import { getCategoryOptions, getRaceOptions, requiresRaceSelection } from '@/config/raceCategories'
 import { Textarea } from 'primevue'
 import Button from 'primevue/button'
 import DatePicker from 'primevue/datepicker'
@@ -322,65 +324,13 @@ const age = computed(() => {
     return age
 })
 
-const categoryOptions = computed(() => {
-    if (dateOfBirth.value && age.value <= 17) {
-        return [
-            { label: 'Dívka', value: 'girl' },
-            { label: 'Chlapec', value: 'boy' }
-        ]
-    } else if (dateOfBirth.value && age.value >= 18) {
-        return [
-            { label: 'Žena', value: 'female' },
-            { label: 'Muž', value: 'male' }
-        ]
-    }
-    return []
-})
+const categoryOptions = computed(() => getCategoryOptions(age.value))
 
-const raceRules = {
-    female: [
-        { min: 18, max: 39, options: [{ label: '15 km (3 kola) - Z15', value: 'Z15' }] },
-        { min: 40, max: 49, options: [{ label: '15 km (3 kola) - ZV15', value: 'ZV15' }] },
-        { min: 50, max: Infinity, options: [{ label: '15 km (3 kola) - ZW15', value: 'ZW15' }] }
-    ],
-    male: [
-        { min: 18, max: 39, options: [{ label: '15 km (3 kola) - M15', value: 'M15' }, { label: '30 km (6 kol) - M30', value: 'M30' }] },
-        { min: 40, max: 49, options: [{ label: '15 km (3 kola) - V15', value: 'V15' }, { label: '30 km (6 kol) - V30', value: 'V30' }] },
-        { min: 50, max: 59, options: [{ label: '15 km (3 kola) - W15', value: 'W15' }, { label: '30 km (6 kol) - W30', value: 'W30' }] },
-        { min: 60, max: Infinity, options: [{ label: '15 km (3 kola) - WV15', value: 'WV15' }, { label: '30 km - WV30', value: 'WV30' }] }
-    ],
-    girl: [
-        { min: 0, max: 5, options: [{ label: '140 m - Z1', value: 'Z1' }] },
-        { min: 6, max: 7, options: [{ label: '350 m - Z2', value: 'Z2' }] },
-        { min: 8, max: 9, options: [{ label: '700 m - Z3', value: 'Z3' }] },
-        { min: 10, max: 12, options: [{ label: '5 km (2 kola) - Z5', value: 'Z5' }] },
-        { min: 13, max: 14, options: [{ label: '7,5 km (3 kola) - Z7', value: 'Z7' }] },
-        { min: 15, max: 17, options: [{ label: '10 km (4 kola) - Z10', value: 'Z10' }] }
-    ],
-    boy: [
-        { min: 0, max: 5, options: [{ label: '140 m - M1', value: 'M1' }] },
-        { min: 6, max: 7, options: [{ label: '350 m - M2', value: 'M2' }] },
-        { min: 8, max: 9, options: [{ label: '700 m - M3', value: 'M3' }] },
-        { min: 10, max: 12, options: [{ label: '5 km (2 kola) - M5', value: 'M5' }] },
-        { min: 13, max: 14, options: [{ label: '7,5 km (3 kola) - M7', value: 'M7' }] },
-        { min: 15, max: 17, options: [{ label: '10 km (4 kola) - M10', value: 'M10' }] }
-    ]
-}
-
-const raceOptions = computed(() => {
-    const c = category.value
-    const a = age.value
-
-    if (!c || a === null || a === undefined || !raceRules[c]) {
-        return []
-    }
-
-    const rule = raceRules[c].find(({ min, max }) => a >= min && a <= max)
-    return rule ? rule.options : []
-})
+const raceOptions = computed(() => getRaceOptions(category.value, age.value))
 
 watch([category, raceOptions], ([newCategory, newRaceOptions]) => {
-    if (newCategory !== 'male' && newRaceOptions.length > 0) {
+    // Auto-select race for categories with single option
+    if (!requiresRaceSelection(newCategory) && newRaceOptions.length > 0) {
         race.value = newRaceOptions[0].value
     }
 })
@@ -393,16 +343,16 @@ watch(age, (newAge) => {
 })
 
 onMounted(() => {
-    if ((window as any).turnstile && turnstileSiteKey) {
+    if (window.turnstile && turnstileSiteKey) {
         try {
-            (window as any).turnstile.render(turnstileEl.value, {
+            window.turnstile.render(turnstileEl.value, {
                 sitekey: turnstileSiteKey,
                 callback: (token: string) => {
                     turnstileToken.value = token
                 }
             })
         } catch (err) {
-            console.error('Error rendering Turnstile:', err)
+            logger.error('Error rendering Turnstile', err, { context: 'SignupForm' })
         }
     }
 })
@@ -410,7 +360,7 @@ onMounted(() => {
 async function onSubmit() {
     await validation.value.$validate()
     if (validation.value.$invalid) {
-        console.error('Validation failed', validation.value)
+        logger.error('Validation failed', validation.value.$errors, { context: 'SignupForm' })
         return
     }
 
@@ -447,14 +397,14 @@ async function onSubmit() {
 
         if (!response.ok) {
             const errorData = await response.json()
-            console.error('Backend error:', errorData)
+            logger.error('Backend error', errorData, { context: 'SignupForm' })
             throw new Error(errorData.message || 'Server returned an error')
         }
 
         success.value = 'Přihláška byla úspěšně odeslána.'
         resetForm()
     } catch (fetchError) {
-        console.error('Submit error:', fetchError)
+        logger.error('Submit error', fetchError, { context: 'SignupForm' })
         error.value = 'Došlo k chybě při odesílání přihlášky. Zkuste to prosím znovu později.'
     } finally {
         isLoading.value = false

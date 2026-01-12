@@ -143,6 +143,7 @@
 <script setup lang="ts">
 import { useVuelidate } from '@vuelidate/core'
 import { required, email as emailValidator } from '@/utils/validators'
+import { logger } from '@/utils/logger'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Message from 'primevue/message'
@@ -188,9 +189,9 @@ const validation = useVuelidate(
 )
 
 onMounted(() => {
-    if ((window as any).turnstile && turnstileSiteKey) {
+    if (window.turnstile && turnstileSiteKey) {
         try {
-            (window as any).turnstile.render(turnstileEl.value, {
+            window.turnstile.render(turnstileEl.value, {
                 sitekey: turnstileSiteKey,
                 mode: 'light',
                 callback: (token: string) => {
@@ -198,7 +199,7 @@ onMounted(() => {
                 }
             })
         } catch (err) {
-            console.error('Error rendering Turnstile:', err)
+            logger.error('Error rendering Turnstile', err, { context: 'ContactForm' })
         }
     }
 })
@@ -207,7 +208,7 @@ const onSubmit = async () => {
     await validation.value.$validate()
 
     if (validation.value.$invalid) {
-        console.error('Validation failed', validation.value)
+        logger.error('Validation failed', validation.value.$errors, { context: 'ContactForm' })
         return
     }
 
@@ -241,14 +242,14 @@ const onSubmit = async () => {
 
         if (!response.ok) {
             const errorData = await response.json()
-            console.error('Backend error:', errorData)
+            logger.error('Backend error', errorData, { context: 'ContactForm' })
             throw new Error(errorData.message || 'Server returned an error')
         }
 
         success.value = 'Zpráva byla úspěšně odeslána.'
         resetForm()
     } catch (fetchError) {
-        console.error('Submit error:', fetchError)
+        logger.error('Submit error', fetchError, { context: 'ContactForm' })
         error.value = 'Došlo k chybě při odesílání přihlášky. Zkuste to prosím znovu později.'
     } finally {
         isLoading.value = false

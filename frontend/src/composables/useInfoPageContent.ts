@@ -1,6 +1,7 @@
 import type { InfoPageContent, InfoPageVariant } from '@/interface/InfoPageContent'
 import { infoPageContent } from '@/services/api/services'
 import { computed, ref } from 'vue'
+import { logger } from '@/utils/logger'
 import { useRoute } from 'vue-router'
 
 export function useInfoPageContent() {
@@ -27,11 +28,11 @@ export function useInfoPageContent() {
         loading.value = true
         error.value = null
         try {
-            const response = await infoPageContent.getAll()
+            const response = await infoPageContent.getAll() as InfoPageContent
             content.value = response
         } catch (e) {
             error.value = e as Error
-            console.error('Failed to fetch info page content:', e)
+            logger.error('Failed to fetch info page content', e, { context: 'useInfoPageContent' })
         } finally {
             loading.value = false
         }
