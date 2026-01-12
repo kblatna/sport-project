@@ -7,7 +7,12 @@ async function bootstrap(): Promise<void> {
 
     // Povolení CORS
     app.enableCors({
-        origin: ['http://localhost:8080', 'http://localhost:5173'], // frontend porty
+        origin: [
+            'http://localhost:8080',
+            'http://localhost:5173',
+            'https://mulda.netlify.app',
+            /\.netlify\.app$/  // Povolí všechny Netlify subdomény
+        ],
         credentials: true
     })
 
@@ -23,8 +28,10 @@ async function bootstrap(): Promise<void> {
         })
     )
 
-    // Start
-    await app.listen(process.env.PORT ?? 3001)
+    // Start - musí naslouchat na 0.0.0.0 pro Render.com
+    const port = process.env.PORT ?? 3001
+    await app.listen(port, '0.0.0.0')
+    console.log(`Application is running on: http://0.0.0.0:${port}`)
 }
 bootstrap().catch((error) => {
     console.error('Error during application bootstrap:', error)
