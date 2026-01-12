@@ -16,8 +16,10 @@ async function bootstrap(): Promise<void> {
         credentials: true
     })
 
-    // Globální prefix pro API
-    app.setGlobalPrefix('api')
+    // Globální prefix pro API (kromě health endpointů)
+    app.setGlobalPrefix('api', {
+        exclude: ['health', 'api']
+    })
 
     // Globální validace DTOs
     app.useGlobalPipes(
