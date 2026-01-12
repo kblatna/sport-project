@@ -3,7 +3,7 @@ import about from './routes/about'
 import signup from './routes/signup'
 import home from './routes/home'
 import results from './routes/results'
-import information from './routes/information'
+import info from './routes/info'
 import organizer from './routes/organizer'
 import links from './routes/links'
 import contact from './routes/contact'
@@ -13,7 +13,7 @@ const routes: RouteRecordRaw[] = [
     signup,
     home,
     results,
-    information,
+    info,
     organizer,
     links,
     contact
@@ -30,8 +30,17 @@ const router = createRouter({
 
         // If the target route has a hash, scroll to the element
         if (to.hash) {
-            // Vue Router supports returning an `el` to scroll to
-            return { el: to.hash, behavior: 'smooth' }
+            // Wait for the DOM to be ready and check if element exists
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const element = document.querySelector(to.hash)
+                    if (element) {
+                        resolve({ el: to.hash, behavior: 'smooth' })
+                    } else {
+                        resolve({ top: 0 })
+                    }
+                }, 100)
+            })
         }
 
         // Default: scroll to top
