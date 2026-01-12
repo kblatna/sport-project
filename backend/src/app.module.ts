@@ -17,6 +17,7 @@ import { ContactPageContentModule } from './modules/contactPageContent/ContactPa
 import { InfoPageContentModule } from './modules/infoPageContent/InfoPageContent.module'
 import { FooterContentModule } from './modules/footerContent/FooterContent.module'
 import { NavigationModule } from './modules/navigation/Navigation.module'
+import { HealthModule } from './health/health.module'
 
 @Module({
     imports: [
@@ -51,7 +52,8 @@ import { NavigationModule } from './modules/navigation/Navigation.module'
         ContactPageContentModule,
         InfoPageContentModule,
         FooterContentModule,
-        NavigationModule
+        NavigationModule,
+        HealthModule
     ],
     controllers: [],
     providers: [
