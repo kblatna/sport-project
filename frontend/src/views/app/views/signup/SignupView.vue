@@ -7,14 +7,14 @@
 
             <div
                 v-if="pageContent.logos && pageContent.logos.length > 0"
-                class="max-w-xl mx-auto mb-8 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-5 auto-rows-[8rem] place-items-center"
+                class="max-w-xl mx-auto mb-8 grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-[8rem] place-items-center"
             >
                 <img
                     v-for="(logo, index) in pageContent.logos"
                     :key="index"
                     :src="logo.src"
                     :alt="logo.alt || `Logo ${index + 1}`"
-                    class="h-full object-contain"
+                    class="max-w-40 h-full object-contain w-max-full"
                 />
             </div>
 

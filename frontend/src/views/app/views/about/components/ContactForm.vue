@@ -104,7 +104,7 @@
 
             <div
                 ref="turnstileEl"
-                class="cf-turnstile mt-5"
+                class="cf-turnstile mb-5"
             ></div>
         </div>
 
