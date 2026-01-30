@@ -1,5 +1,6 @@
 <template>
     <SectionWrapper
+        id="kids"
         padding-y="md"
         class="container"
     >

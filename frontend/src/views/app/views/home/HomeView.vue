@@ -21,7 +21,7 @@
                 <router-link
                     v-for="button in pageContent.hero.buttons || []"
                     :key="button.label"
-                    :to="{ name: button.link }"
+                    :to="{ name: button.link, hash: button.hash ? `#${button.hash}` : undefined }"
                     class="inline-block"
                 >
                     <Button
@@ -83,7 +83,7 @@
                             <router-link
                                 v-for="button in card.buttons || []"
                                 :key="button.label"
-                                :to="{ name: button.link }"
+                                :to="{ name: button.link, hash: button.hash ? `#${button.hash}` : undefined }"
                                 class="w-full"
                             >
                                 <Button

@@ -10,6 +10,7 @@ export interface MainPageContent {
         buttons?: Array<{
             label: string
             link: string
+            hash?: string
             severity: 'primary' | 'secondary'
         }>
     }
@@ -21,6 +22,7 @@ export interface MainPageContent {
         buttons?: Array<{
             label: string
             link: string
+            hash?: string
             severity: 'primary' | 'secondary'
         }>
     }>
