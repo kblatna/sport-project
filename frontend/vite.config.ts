@@ -23,6 +23,18 @@ export default defineConfig({
             '@': fileURLToPath(new URL('./src', import.meta.url))
         }
     },
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    'vendor-vue': ['vue', 'vue-router'],
+                    'vendor-prime': ['primevue'],
+                    'vendor-forms': ['@vuelidate/core', '@vuelidate/validators'],
+                    'vendor-utils': ['axios', 'dompurify']
+                }
+            }
+        }
+    },
     server: {
         proxy: {
             '/api': {
