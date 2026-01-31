@@ -240,15 +240,17 @@
         >
             <SectionHeader :title="pageContent.video.title" />
 
-            <div class="relative w-full aspect-video rounded-xl overflow-hidden shadow-lg">
-                <iframe
-                    class="absolute inset-0 w-full h-full"
-                    :src="pageContent.video.videoUrl"
-                    :title="pageContent.video.title"
-                    frameborder="0"
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    allowfullscreen
-                ></iframe>
+            <div class="max-w-4xl mx-auto">
+                <div class="relative w-full aspect-video rounded-xl overflow-hidden shadow-lg">
+                    <iframe
+                        class="absolute inset-0 w-full h-full"
+                        :src="pageContent.video.videoUrl"
+                        :title="pageContent.video.title"
+                        frameborder="0"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen
+                    ></iframe>
+                </div>
             </div>
         </SectionWrapper>
     </div>
@@ -291,7 +293,7 @@ async function loadContentData(): Promise<void> {
     isLoading.value = true
     try {
         const response = await mainPageContent.getAll()
-        pageContent.value = response || null
+        pageContent.value = response as MainPageContent || null
     } catch (err) {
         console.error('Error fetching page content:', err)
         // TODO: doplnit komponentu na error notifier
