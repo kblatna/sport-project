@@ -41,8 +41,8 @@ export function useNavigation() {
         }
     }
 
-    onMounted(() => {
-        fetchNavigation()
+    onMounted(async () => {
+        await fetchNavigation()
     })
 
     const items = computed(() => data.value)

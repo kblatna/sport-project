@@ -88,7 +88,7 @@ import KidsInfo from './components/KidsInfo.vue'
 
 const { content, currentContent, variant, loading, error, fetchContent } = useInfoPageContent()
 
-onMounted(() => {
-    fetchContent()
+onMounted(async () => {
+    await fetchContent()
 })
 </script>

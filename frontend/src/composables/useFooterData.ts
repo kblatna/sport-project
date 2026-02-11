@@ -64,8 +64,8 @@ export function useFooterData() {
         }
     }
 
-    onMounted(() => {
-        fetchFooterData()
+    onMounted(async () => {
+        await fetchFooterData()
     })
 
     return {
