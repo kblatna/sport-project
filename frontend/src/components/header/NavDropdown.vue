@@ -48,7 +48,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
-import type { NavItem } from '@/composables/useNavigation'
+import type { NavItem } from '@/interface/Navigation.interface'
 
 const props = defineProps<{
     label: string

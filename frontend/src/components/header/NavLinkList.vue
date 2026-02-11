@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import NavLink from '@/components/NavLink.vue'
-import type { NavItem } from '@/composables/useNavigation'
+import type { NavItem } from '@/interface/Navigation.interface'
 
 defineProps<{
     items: NavItem[]

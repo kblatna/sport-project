@@ -1,17 +1,7 @@
 import { navigation as navigationService } from '@/services/api/services'
 import { computed, onMounted, ref } from 'vue'
 import { logger } from '@/utils/logger'
-
-export interface NavItem {
-    label: string
-    to: string // Backend always returns string paths
-    children?: NavItem[]
-    visible?: boolean
-}
-
-interface NavigationResponse {
-    items: NavItem[]
-}
+import type { NavItem } from '@/interface/Navigation.interface'
 
 export function useNavigation() {
     const data = ref<NavItem[]>([])
@@ -22,7 +12,7 @@ export function useNavigation() {
         isLoading.value = true
         error.value = null
         try {
-            const response = await navigationService.getAll() as NavigationResponse | NavItem[]
+            const response = await navigationService.getAll()
             // Backend returns Navigation object with 'items' array property
             if (response && 'items' in response && Array.isArray(response.items)) {
                 data.value = response.items

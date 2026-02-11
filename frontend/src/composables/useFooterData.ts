@@ -1,34 +1,7 @@
 import { footerContent } from '@/services/api/services'
 import { computed, onMounted, ref } from 'vue'
 import { logger } from '@/utils/logger'
-
-export interface FooterLink {
-    label: string
-    to: string
-}
-
-export interface FooterSection {
-    title: string
-    links: FooterLink[]
-}
-
-export interface SocialLink {
-    icon: string
-    url: string
-    label: string
-}
-
-export interface Logo {
-    src: string
-    alt: string
-}
-
-export interface FooterContent {
-    logo: Logo
-    socialLinks: SocialLink[]
-    sections: FooterSection[]
-    copyright: string
-}
+import type { FooterContent } from '@/interface/FooterContent.interface'
 
 export function useFooterData() {
     const data = ref<FooterContent | null>(null)
@@ -52,7 +25,7 @@ export function useFooterData() {
         loading.value = true
         error.value = null
         try {
-            const response = await footerContent.getAll() as FooterContent
+            const response = await footerContent.getAll()
             if (response) {
                 data.value = response
             }

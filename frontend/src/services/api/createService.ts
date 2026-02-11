@@ -1,4 +1,5 @@
 import axios from 'axios'
+import type { PaginateResult } from '@/interface/PaginateResult.interface'
 
 // TODO: Add axios interceptors for:
 // - Automatic token refresh
@@ -44,8 +45,8 @@ export function createService<T = unknown>(resource: string) {
             return response.data
         },
 
-        async paginate(params?: Record<string, unknown>): Promise<T> {
-            const response = await axios.get<T>(`${BASE_URL}/${resource}/paginate`, { params })
+        async paginate(params?: Record<string, unknown>): Promise<PaginateResult<T>> {
+            const response = await axios.get<PaginateResult<T>>(`${BASE_URL}/${resource}/paginate`, { params })
             return response.data
         }
     }

@@ -293,7 +293,7 @@ async function loadContentData(): Promise<void> {
     isLoading.value = true
     try {
         const response = await mainPageContent.getAll()
-        pageContent.value = response as MainPageContent || null
+        pageContent.value = response || null
     } catch (err) {
         console.error('Error fetching page content:', err)
         // TODO: doplnit komponentu na error notifier

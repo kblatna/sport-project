@@ -28,7 +28,7 @@ export function useInfoPageContent() {
         loading.value = true
         error.value = null
         try {
-            const response = await infoPageContent.getAll() as InfoPageContent
+            const response = await infoPageContent.getAll()
             content.value = response
         } catch (e) {
             error.value = e as Error

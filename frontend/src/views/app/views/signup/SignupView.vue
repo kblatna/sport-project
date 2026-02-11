@@ -66,7 +66,7 @@ const error = ref<string | null>(null)
 onMounted(async () => {
     try {
         const response = await signupPageContent.getAll()
-        pageContent.value = response as SignupPageContent
+        pageContent.value = response
     } catch (err) {
         console.error('Error loading signup page content:', err)
         error.value = 'Nepodařilo se načíst obsah stránky'
