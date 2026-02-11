@@ -1,6 +1,7 @@
 import {
     Controller,
-    Get
+    Get,
+    NotFoundException
 } from '@nestjs/common'
 import { OrganizerPageContentService } from './OrganizersPageContent.service'
 import { OrganizerPageContentLeanDocument } from '../../databases/OrganizersPageContent.schema'
@@ -12,7 +13,11 @@ export class OrganizerPageContentController {
     ) {}
 
     @Get()
-    async getContent(): Promise<OrganizerPageContentLeanDocument | null> {
-        return await this.organizerPageContentService.getContent()
+    async getContent(): Promise<OrganizerPageContentLeanDocument> {
+        const content = await this.organizerPageContentService.getContent()
+        if (!content) {
+            throw new NotFoundException('Organizer page content not found')
+        }
+        return content
     }
 }

@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common'
+import { Controller, Get, NotFoundException } from '@nestjs/common'
 import { ContactPageContentService } from './ContactPageContent.service'
 import { ContactPageContentLeanDocument } from '../../databases/ContactPageContent.schema'
 
@@ -7,7 +7,11 @@ export class ContactPageContentController {
     constructor(private readonly service: ContactPageContentService) {}
 
     @Get()
-    async getContent(): Promise<ContactPageContentLeanDocument | null> {
-        return await this.service.getContent()
+    async getContent(): Promise<ContactPageContentLeanDocument> {
+        const content = await this.service.getContent()
+        if (!content) {
+            throw new NotFoundException('Contact page content not found')
+        }
+        return content
     }
 }

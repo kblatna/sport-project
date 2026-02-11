@@ -1,6 +1,7 @@
 import {
     Controller,
-    Get
+    Get,
+    NotFoundException
 } from '@nestjs/common'
 import { ResultPageContentService } from './ResultPageContent.service'
 import { ResultPageContent } from '../../databases/ResultPageContent.schema'
@@ -12,7 +13,11 @@ export class ResultPageContentController {
     ) {}
 
     @Get()
-    async getContent(): Promise<ResultPageContent | null> {
-        return await this.resultPageContentService.getContent()
+    async getContent(): Promise<ResultPageContent> {
+        const content = await this.resultPageContentService.getContent()
+        if (!content) {
+            throw new NotFoundException('Result page content not found')
+        }
+        return content
     }
 }

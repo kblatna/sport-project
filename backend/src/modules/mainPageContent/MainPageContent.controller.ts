@@ -1,6 +1,7 @@
 import {
     Controller,
-    Get
+    Get,
+    NotFoundException
 } from '@nestjs/common'
 import { MainPageContentService } from './MainPageContent.service'
 import { MainPageContentLeanDocument } from '../../databases/MainPageContent.schema'
@@ -12,7 +13,11 @@ export class MainPageContentController {
     ) {}
 
     @Get()
-    async getAllContent(): Promise<MainPageContentLeanDocument | null> {
-        return await this.mainPageContentService.getAllContent()
+    async getAllContent(): Promise<MainPageContentLeanDocument> {
+        const content = await this.mainPageContentService.getAllContent()
+        if (!content) {
+            throw new NotFoundException('Main page content not found')
+        }
+        return content
     }
 }

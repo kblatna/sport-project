@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common'
+import { Controller, Get, NotFoundException } from '@nestjs/common'
 import { FooterContentService } from './FooterContent.service'
 import { FooterContentLeanDocument } from '../../databases/FooterContent.schema'
 
@@ -9,7 +9,11 @@ export class FooterContentController {
     ) {}
 
     @Get()
-    async getContent(): Promise<FooterContentLeanDocument | null> {
-        return await this.footerContentService.getContent()
+    async getContent(): Promise<FooterContentLeanDocument> {
+        const content = await this.footerContentService.getContent()
+        if (!content) {
+            throw new NotFoundException('Footer content not found')
+        }
+        return content
     }
 }

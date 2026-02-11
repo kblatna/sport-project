@@ -1,6 +1,7 @@
 import {
     Controller,
-    Get
+    Get,
+    NotFoundException
 } from '@nestjs/common'
 import { InfoPageContentService } from './InfoPageContent.service'
 import { InfoPageContentLeanDocument } from '../../databases/InfoPageContent.schema'
@@ -12,7 +13,11 @@ export class InfoPageContentController {
     ) {}
 
     @Get()
-    async getContent(): Promise<InfoPageContentLeanDocument | null> {
-        return await this.infoPageContentService.getContent()
+    async getContent(): Promise<InfoPageContentLeanDocument> {
+        const content = await this.infoPageContentService.getContent()
+        if (!content) {
+            throw new NotFoundException('Info page content not found')
+        }
+        return content
     }
 }
