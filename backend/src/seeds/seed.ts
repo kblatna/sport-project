@@ -12,8 +12,6 @@ import { LinksPageContent } from '../databases/LinksPageContent.schema'
 import { OrganizerPageContent } from '../databases/OrganizersPageContent.schema'
 import { ResultPageContent } from '../databases/ResultPageContent.schema'
 import { Result } from '../databases/Result.schema'
-
-// Import data from separate files
 import { mainPageData } from './data/main-page.data'
 import { navigationData } from './data/navigation.data'
 import { footerData } from './data/footer.data'
@@ -25,7 +23,7 @@ import { organizerPageData } from './data/organizer-page.data'
 import { resultPageData } from './data/result-page.data'
 import { resultsData } from './data/results.data'
 
-async function bootstrap() {
+async function bootstrap(): Promise<void> {
     const app = await NestFactory.createApplicationContext(AppModule)
 
     const mainPageContentModel = app.get<Model<MainPageContent>>(getModelToken(MainPageContent.name))
@@ -39,10 +37,6 @@ async function bootstrap() {
     const resultPageContentModel = app.get<Model<ResultPageContent>>(getModelToken(ResultPageContent.name))
     const resultModel = app.get<Model<Result>>(getModelToken(Result.name))
 
-    console.log('🌱 Starting database seed...')
-
-    // Clear existing data
-    console.log('🗑️  Clearing existing data...')
     await Promise.all([
         mainPageContentModel.deleteMany({}),
         navigationModel.deleteMany({}),
@@ -56,61 +50,22 @@ async function bootstrap() {
         resultModel.deleteMany({})
     ])
 
-    // Seed Navigation
-    console.log('📍 Seeding Navigation...')
     await navigationModel.create(navigationData)
-
-    // Seed Footer Content
-    console.log('🦶 Seeding Footer Content...')
     await footerContentModel.create(footerData)
-
-    // Seed Main Page Content
-    console.log('🏠 Seeding Main Page Content...')
     await mainPageContentModel.create(mainPageData)
-
-    // Seed Contact Page Content
-    console.log('📧 Seeding Contact Page Content...')
     await contactPageContentModel.create(contactPageData)
-
-    // Seed Signup Page Content
-    console.log('✍️ Seeding Signup Page Content...')
     await signupPageContentModel.create(signupPageData)
-
-    // Seed Links Page Content
-    console.log('🔗 Seeding Links Page Content...')
     await linksPageContentModel.create(linksPageData)
-
-    // Seed Organizer Page Content
-    console.log('👥 Seeding Organizer Page Content...')
     await organizerPageContentModel.create(organizerPageData)
-
-    // Seed Result Page Content
-    console.log('🏆 Seeding Result Page Content...')
     await resultPageContentModel.create(resultPageData)
-
-    // Seed Info Page Content
-    console.log('ℹ️ Seeding Info Page Content...')
     await infoPageContentModel.create(infoPageData)
-
-    // Seed Results (sample data)
-    console.log('🏁 Seeding Results...')
     await resultModel.insertMany(resultsData)
 
-    console.log('✅ Database seeding completed successfully!')
-    console.log('\nSeeded collections:')
-    console.log('  ✓ Navigation')
-    console.log('  ✓ Footer Content')
-    console.log('  ✓ Main Page Content')
-    console.log('  ✓ Contact Page Content')
-    console.log('  ✓ Signup Page Content')
-    console.log('  ✓ Links Page Content')
-    console.log('  ✓ Organizer Page Content')
-    console.log('  ✓ Result Page Content')
-    console.log('  ✓ Info Page Content')
-    console.log(`  ✓ Results (${resultsData.length} entries)`)
-
-    console.log('\n🎉 Seed process finished!')
     await app.close()
 }
 
-bootstrap()
+bootstrap().catch((error) => {
+    console.error('Database seeding failed')
+    console.error(error)
+    process.exit(1)
+})
