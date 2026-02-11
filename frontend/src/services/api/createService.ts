@@ -1,22 +1,40 @@
 import axios from 'axios'
 import type { PaginateResult } from '@/interface/PaginateResult.interface'
-
-// TODO: Add axios interceptors for:
-// - Automatic token refresh
-// - Global error handling
-// - Request/response logging (dev only)
-// Example:
-// axios.interceptors.response.use(
-//     response => response,
-//     error => {
-//         if (error.response?.status === 401) {
-//             // Handle unauthorized
-//         }
-//         return Promise.reject(error)
-//     }
-// )
+import router from '@/services/router/router'
 
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
+
+// Setup axios interceptors for global error handling
+axios.interceptors.response.use(
+    response => response,
+    (error) => {
+        // Handle 404 errors - let component handle these (might be expected)
+        if (error.response?.status === 404) {
+            // Don't redirect automatically, let component decide
+            return Promise.reject(error)
+        }
+
+        // Handle 500+ server errors - redirect to error page
+        if (error.response?.status >= 500) {
+            router.push('/500')
+            return Promise.reject(error)
+        }
+
+        // Handle network errors (no response from server)
+        if (!error.response) {
+            console.error('Network error:', error.message)
+            router.push('/500')
+            return Promise.reject(error)
+        }
+
+        // Log other errors in development
+        if (import.meta.env.DEV) {
+            console.error('API Error:', error.response?.status, error.response?.data)
+        }
+
+        return Promise.reject(error)
+    }
+)
 
 export function createService<T = unknown>(resource: string) {
     return {

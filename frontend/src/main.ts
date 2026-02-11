@@ -47,6 +47,8 @@ const MyPreset = definePreset(Aura, {
 
 const app = createApp(App)
 
+const criticalContexts = ['render', 'setup']
+
 // Global error handler for better error tracking and user experience
 app.config.errorHandler = (err, instance, info) => {
     // Log error details in development
@@ -58,6 +60,12 @@ app.config.errorHandler = (err, instance, info) => {
 
     // TODO: Send to error tracking service in production (Sentry, etc.)
     // Example: Sentry.captureException(err, { contexts: { vue: { componentName: instance?.$options.name, info } } })
+
+    const isCritical = criticalContexts.some(ctx => info?.includes(ctx)) || !instance
+
+    if (isCritical) {
+        router.push('/500')
+    }
 }
 
 // Handle unhandled promise rejections

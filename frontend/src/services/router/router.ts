@@ -7,6 +7,7 @@ import info from './routes/info'
 import organizer from './routes/organizer'
 import links from './routes/links'
 import contact from './routes/contact'
+import errors from './routes/errors'
 
 const routes: RouteRecordRaw[] = [
     about,
@@ -16,7 +17,8 @@ const routes: RouteRecordRaw[] = [
     info,
     organizer,
     links,
-    contact
+    contact,
+    ...errors
 ]
 
 const router = createRouter({
