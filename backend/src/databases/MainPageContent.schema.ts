@@ -159,9 +159,9 @@ export class ScheduleSection {
 
     @Prop({
         type: SchemaTypes.String,
-        required: true
+        required: false
     })
-    tableTitle: string
+    tableTitle?: string
 
     @Prop([{
         category: {

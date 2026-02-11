@@ -265,12 +265,72 @@ export class InfoPageVariant {
     awards: AwardsSection
 }
 
+@Schema({ _id: false })
+export class WashingSection {
+    @Prop({ type: SchemaTypes.String, required: true })
+    title: string
+
+    @Prop({ type: SchemaTypes.String, required: true })
+    imageSrc: string
+
+    @Prop({ type: SchemaTypes.String, required: true })
+    imageWidth: string
+
+    @Prop({ type: SchemaTypes.String, required: true })
+    imageHeight: string
+
+    @Prop({ type: SchemaTypes.String, required: true })
+    imagePosition: string
+
+    @Prop({ type: [SchemaTypes.String], required: true })
+    content: string[]
+}
+
+@Schema({ _id: false })
+export class ParkingSection {
+    @Prop({ type: SchemaTypes.String, required: true })
+    title: string
+
+    @Prop({ type: SchemaTypes.String, required: true })
+    content: string
+}
+
+@Schema({ _id: false })
+export class BikeServiceSection {
+    @Prop({ type: SchemaTypes.String, required: true })
+    title: string
+
+    @Prop({ type: SchemaTypes.String, required: true })
+    imageSrc: string
+
+    @Prop({ type: SchemaTypes.String, required: true })
+    imagePosition: string
+
+    @Prop({ type: SchemaTypes.String, required: true })
+    content: string
+}
+
+@Schema({ _id: false })
+export class CommonSections {
+    @Prop({ type: WashingSection, required: true })
+    washing: WashingSection
+
+    @Prop({ type: ParkingSection, required: true })
+    parking: ParkingSection
+
+    @Prop({ type: BikeServiceSection, required: true })
+    bikeService: BikeServiceSection
+}
+
 @Schema({
     collection: 'infopagecontents',
     minimize: false,
     versionKey: false
 })
 export class InfoPageContent {
+    @Prop({ type: CommonSections, required: true })
+    commonSections: CommonSections
+
     @Prop({
         type: InfoPageVariant,
         required: true
@@ -303,6 +363,10 @@ export const RegistrationPaymentSectionSchema = SchemaFactory.createForClass(Reg
 export const AttendanceSectionSchema = SchemaFactory.createForClass(AttendanceSection)
 export const PrizesSectionSchema = SchemaFactory.createForClass(PrizesSection)
 export const AwardsSectionSchema = SchemaFactory.createForClass(AwardsSection)
+export const WashingSectionSchema = SchemaFactory.createForClass(WashingSection)
+export const ParkingSectionSchema = SchemaFactory.createForClass(ParkingSection)
+export const BikeServiceSectionSchema = SchemaFactory.createForClass(BikeServiceSection)
+export const CommonSectionsSchema = SchemaFactory.createForClass(CommonSections)
 export const InfoPageVariantSchema = SchemaFactory.createForClass(InfoPageVariant)
 export const InfoPageContentSchema = SchemaFactory.createForClass(InfoPageContent)
 
