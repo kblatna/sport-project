@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config'
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler'
 import { APP_GUARD } from '@nestjs/core'
-import * as Joi from 'joi'
+import configuration from './config/configuration'
+import { validationSchema, validationOptions } from './config/validation.schema'
 import { UserModule } from './modules/user/User.module'
 import { ContactModule } from './modules/contact/Contact.module'
 import { RaceApplicationModule } from './modules/raceApplication/RaceApplication.module'
@@ -23,23 +24,20 @@ import { HealthModule } from './health/health.module'
     imports: [
         ConfigModule.forRoot({
             isGlobal: true,
-            validationSchema: Joi.object({
-                NODE_ENV: Joi.string()
-                    .valid('development', 'production', 'test')
-                    .default('development'),
-                PORT: Joi.number().default(3001),
-                MONGODB_URI: Joi.string().required(),
-                TURNSTILE_SECRET: Joi.string().allow('').optional(),
-                MAILGUN_API_KEY: Joi.string().optional(),
-                MAILGUN_DOMAIN: Joi.string().optional(),
-                MAILGUN_FROM: Joi.string().optional()
-            })
+            load: [configuration],
+            validationSchema,
+            validationOptions
         }),
         ThrottlerModule.forRoot([{
             ttl: 60000,
             limit: 100
         }]),
-        MongooseModule.forRoot(process.env.MONGODB_URI!),
+        MongooseModule.forRootAsync({
+            useFactory: (configService: ConfigService) => ({
+                uri: configService.get<string>('database.uri', { infer: true })!
+            }),
+            inject: [ConfigService]
+        }),
         UserModule,
         ContactModule,
         RaceApplicationModule,
