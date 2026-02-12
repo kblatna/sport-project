@@ -1,7 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { HydratedDocument, SchemaTypes } from 'mongoose'
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class MediaItem {
     @Prop({
         type: SchemaTypes.String,
@@ -15,7 +17,9 @@ export class MediaItem {
     link?: string
 }
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class UsefulLink {
     @Prop({
         type: SchemaTypes.String,
@@ -36,7 +40,9 @@ export class UsefulLink {
     link: string
 }
 
-@Schema()
+@Schema({
+    minimize: false
+})
 export class LinksPageContent {
     @Prop({
         type: SchemaTypes.String,

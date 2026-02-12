@@ -1,7 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { SchemaTypes, type HydratedDocument } from 'mongoose'
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class Address {
     @Prop({
         type: SchemaTypes.String,
@@ -34,7 +36,9 @@ export class Address {
     mapLink?: string
 }
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class ContactInfo {
     @Prop({
         type: SchemaTypes.String,

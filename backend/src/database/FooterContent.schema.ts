@@ -1,7 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { SchemaTypes, type HydratedDocument } from 'mongoose'
 
-class Logo {
+@Schema({
+    _id: false
+})
+export class Logo {
     @Prop({
         type: SchemaTypes.String,
         required: true
@@ -15,7 +18,10 @@ class Logo {
     alt: string
 }
 
-class SocialLink {
+@Schema({
+    _id: false
+})
+export class SocialLink {
     @Prop({
         type: SchemaTypes.String,
         required: true
@@ -35,7 +41,10 @@ class SocialLink {
     label: string
 }
 
-class FooterLink {
+@Schema({
+    _id: false
+})
+export class FooterLink {
     @Prop({
         type: SchemaTypes.String,
         required: true
@@ -49,7 +58,10 @@ class FooterLink {
     to: string
 }
 
-class FooterSection {
+@Schema({
+    _id: false
+})
+export class FooterSection {
     @Prop({
         type: SchemaTypes.String,
         required: true
@@ -63,7 +75,9 @@ class FooterSection {
     links: FooterLink[]
 }
 
-@Schema({ timestamps: true })
+@Schema({
+    timestamps: true
+})
 export class FooterContent {
     @Prop({
         type: Logo,

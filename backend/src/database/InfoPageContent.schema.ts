@@ -1,7 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { SchemaTypes, type HydratedDocument } from 'mongoose'
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class CategoryTableRow {
     @Prop({
         type: SchemaTypes.String,
@@ -40,7 +42,9 @@ export class CategoryTableRow {
     start: string
 }
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class MapTab {
     @Prop({
         type: SchemaTypes.String,
@@ -67,7 +71,9 @@ export class MapTab {
     alt: string
 }
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class FeeCategory {
     @Prop({
         type: SchemaTypes.String,
@@ -94,7 +100,9 @@ export class FeeCategory {
     note: string
 }
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class RegistrationPaymentSection {
     @Prop({
         type: SchemaTypes.String,
@@ -127,7 +135,9 @@ export class RegistrationPaymentSection {
     variableSymbolNote: string
 }
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class AttendanceSection {
     @Prop({
         type: SchemaTypes.String,
@@ -154,7 +164,9 @@ export class AttendanceSection {
     content: string[]
 }
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class PrizesSection {
     @Prop({
         type: SchemaTypes.String,
@@ -175,7 +187,9 @@ export class PrizesSection {
     content: string
 }
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class AwardsSection {
     @Prop({
         type: SchemaTypes.String,
@@ -202,7 +216,9 @@ export class AwardsSection {
     content: string[]
 }
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class InfoPageVariant {
     @Prop({
         type: SchemaTypes.String,
@@ -265,7 +281,9 @@ export class InfoPageVariant {
     awards: AwardsSection
 }
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class WashingSection {
     @Prop({ type: SchemaTypes.String, required: true })
     title: string
@@ -286,7 +304,9 @@ export class WashingSection {
     content: string[]
 }
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class ParkingSection {
     @Prop({ type: SchemaTypes.String, required: true })
     title: string
@@ -295,7 +315,9 @@ export class ParkingSection {
     content: string
 }
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class BikeServiceSection {
     @Prop({ type: SchemaTypes.String, required: true })
     title: string
@@ -310,7 +332,9 @@ export class BikeServiceSection {
     content: string
 }
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class CommonSections {
     @Prop({ type: WashingSection, required: true })
     washing: WashingSection

@@ -1,7 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { SchemaTypes, type HydratedDocument } from 'mongoose'
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class HeroSection {
     @Prop({
         type: SchemaTypes.String,
@@ -48,7 +50,9 @@ export class HeroSection {
     }>
 }
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class RaceCard {
     @Prop({
         type: SchemaTypes.String,
@@ -101,7 +105,9 @@ export class RaceCard {
     }>
 }
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class InfoSection {
     @Prop({
         type: SchemaTypes.String,
@@ -122,7 +128,9 @@ export class InfoSection {
     features: string[]
 }
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class GalleryImage {
     @Prop({
         type: SchemaTypes.String,
@@ -143,7 +151,9 @@ export class GalleryImage {
     title: string
 }
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class ScheduleSection {
     @Prop({
         type: SchemaTypes.String,
@@ -229,7 +239,9 @@ export class ScheduleSection {
     legendTitle: string
 }
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class VideoSection {
     @Prop({
         type: SchemaTypes.String,

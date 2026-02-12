@@ -1,7 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { SchemaTypes, type HydratedDocument } from 'mongoose'
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class LogoImage {
     @Prop({
         type: SchemaTypes.String,

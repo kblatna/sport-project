@@ -1,7 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { SchemaTypes, type HydratedDocument } from 'mongoose'
 
-class NavItem {
+@Schema({
+    _id: false
+})
+export class NavItem {
     @Prop({
         type: SchemaTypes.String,
         required: true

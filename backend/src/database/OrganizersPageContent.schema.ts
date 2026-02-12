@@ -1,7 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { SchemaTypes, type HydratedDocument } from 'mongoose'
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class AssociationSection {
     @Prop({
         type: SchemaTypes.String,
@@ -34,7 +36,9 @@ export class AssociationSection {
     imageCaption?: string
 }
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class OrganizingTeamSection {
     @Prop({
         type: SchemaTypes.String,
@@ -88,7 +92,9 @@ export class OrganizingTeamSection {
     }>
 }
 
-@Schema({ _id: false })
+@Schema({
+    _id: false
+})
 export class ThanksSection {
     @Prop({
         type: SchemaTypes.String,
