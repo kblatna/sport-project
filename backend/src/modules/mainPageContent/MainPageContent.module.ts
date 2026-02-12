@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
-import { MainPageContent, MainPageContentSchema } from '../../databases/MainPageContent.schema'
+import { MainPageContent, MainPageContentSchema } from '../../database/MainPageContent.schema'
 import { MainPageContentController } from './MainPageContent.controller'
 import { MainPageContentService } from './MainPageContent.service'
 

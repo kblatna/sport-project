@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
-import { ResultPageContent, ResultPageContentSchema } from '../../databases/ResultPageContent.schema'
+import { ResultPageContent, ResultPageContentSchema } from '../../database/ResultPageContent.schema'
 import { ResultPageContentController } from './ResultPageContent.controller'
 import { ResultPageContentService } from './ResultPageContent.service'
 

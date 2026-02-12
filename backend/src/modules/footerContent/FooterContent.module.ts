@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
-import { FooterContent, FooterContentSchema } from '../../databases/FooterContent.schema'
+import { FooterContent, FooterContentSchema } from '../../database/FooterContent.schema'
 import { FooterContentController } from './FooterContent.controller'
 import { FooterContentService } from './FooterContent.service'
 

@@ -5,7 +5,7 @@ import {
     ContactPageContent,
     ContactPageContentDocument,
     ContactPageContentLeanDocument
-} from '../../databases/ContactPageContent.schema'
+} from '../../database/ContactPageContent.schema'
 
 @Injectable()
 export class ContactPageContentService {

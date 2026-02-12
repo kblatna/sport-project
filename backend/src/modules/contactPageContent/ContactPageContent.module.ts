@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
-import { ContactPageContent, ContactPageContentSchema } from '../../databases/ContactPageContent.schema'
+import { ContactPageContent, ContactPageContentSchema } from '../../database/ContactPageContent.schema'
 import { ContactPageContentController } from './ContactPageContent.controller'
 import { ContactPageContentService } from './ContactPageContent.service'
 

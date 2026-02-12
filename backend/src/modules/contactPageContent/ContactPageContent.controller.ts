@@ -1,6 +1,6 @@
 import { Controller, Get, NotFoundException } from '@nestjs/common'
 import { ContactPageContentService } from './ContactPageContent.service'
-import { ContactPageContentLeanDocument } from '../../databases/ContactPageContent.schema'
+import { ContactPageContentLeanDocument } from '../../database/ContactPageContent.schema'
 
 @Controller('contact-page-content')
 export class ContactPageContentController {

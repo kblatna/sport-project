@@ -1,6 +1,6 @@
 import { Controller, Get, Query } from '@nestjs/common'
 import { ResultService } from './Result.service'
-import type { ResultLeanDocument, ResultDocument } from '../../databases/Result.schema'
+import type { ResultLeanDocument, ResultDocument } from '../../database/Result.schema'
 import { ListResultsQueryDto } from './dto/ListResultsQuery.dto'
 import { PaginateResult } from 'mongoose'
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
-import { FooterContent, FooterContentDocument, FooterContentLeanDocument } from '../../databases/FooterContent.schema'
+import { FooterContent, FooterContentDocument, FooterContentLeanDocument } from '../../database/FooterContent.schema'
 
 @Injectable()
 export class FooterContentService {

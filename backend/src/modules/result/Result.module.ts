@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
 import { ResultService } from './Result.service'
 import { ResultController } from './Result.controller'
-import { Result, ResultSchema } from '../../databases/Result.schema'
+import { Result, ResultSchema } from '../../database/Result.schema'
 
 @Module({
     imports: [

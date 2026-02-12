@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
-import { Contact, ContactDocument } from '../../databases/Contact.schema'
+import { Contact, ContactDocument } from '../../database/Contact.schema'
 import { CreateContact } from './interface/CreateContact.interface'
 import { TurnstileService } from '../../integrations/turnstile/Turnstile.service'
 

@@ -1,6 +1,6 @@
 import { Controller, Get, NotFoundException } from '@nestjs/common'
 import { FooterContentService } from './FooterContent.service'
-import { FooterContentLeanDocument } from '../../databases/FooterContent.schema'
+import { FooterContentLeanDocument } from '../../database/FooterContent.schema'
 
 @Controller('footer-content')
 export class FooterContentController {

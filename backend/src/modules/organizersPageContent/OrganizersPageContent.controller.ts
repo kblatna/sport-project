@@ -4,7 +4,7 @@ import {
     NotFoundException
 } from '@nestjs/common'
 import { OrganizerPageContentService } from './OrganizersPageContent.service'
-import { OrganizerPageContentLeanDocument } from '../../databases/OrganizersPageContent.schema'
+import { OrganizerPageContentLeanDocument } from '../../database/OrganizersPageContent.schema'
 
 @Controller('organizer-page-content')
 export class OrganizerPageContentController {

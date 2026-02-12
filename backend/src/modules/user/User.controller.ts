@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpException, Logger, NotFoundException, Param, Patch, Post } from '@nestjs/common'
 import { UserService } from './User.service'
-import { UserDocument, UserLeanDocument } from '../../databases/User.schema'
+import { UserDocument, UserLeanDocument } from '../../database/User.schema'
 import { CreateUserDto } from './dto/CreateUser.dto'
 import { ErrorException } from '../../global/Error.exception'
 import { UpdateUserDto } from './dto/UpdateUser.dto'

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
-import { OrganizerPageContent, OrganizerPageContentSchema } from '../../databases/OrganizersPageContent.schema'
+import { OrganizerPageContent, OrganizerPageContentSchema } from '../../database/OrganizersPageContent.schema'
 import { OrganizerPageContentController } from './OrganizersPageContent.controller'
 import { OrganizerPageContentService } from './OrganizersPageContent.service'
 

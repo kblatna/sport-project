@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
-import { SignupPageContent, SignupPageContentDocument, SignupPageContentLeanDocument } from '../../databases/SignupPageContent.schema'
+import { SignupPageContent, SignupPageContentDocument, SignupPageContentLeanDocument } from '../../database/SignupPageContent.schema'
 
 @Injectable()
 export class SignupPageContentService {

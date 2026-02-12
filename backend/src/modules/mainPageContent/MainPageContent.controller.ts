@@ -4,7 +4,7 @@ import {
     NotFoundException
 } from '@nestjs/common'
 import { MainPageContentService } from './MainPageContent.service'
-import { MainPageContentLeanDocument } from '../../databases/MainPageContent.schema'
+import { MainPageContentLeanDocument } from '../../database/MainPageContent.schema'
 
 @Controller('main-page-content')
 export class MainPageContentController {

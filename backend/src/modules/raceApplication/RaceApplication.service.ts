@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
-import { RaceApplication, RaceApplicationDocument } from '../../databases/RaceApplication.schema'
+import { RaceApplication, RaceApplicationDocument } from '../../database/RaceApplication.schema'
 import { CreateRaceApplication } from './interface/CreateRaceApplication.interface'
 import { TurnstileService } from '../../integrations/turnstile/Turnstile.service'
 

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
-import { LinksPageContent, LinksPageContentSchema } from '../../databases/LinksPageContent.schema'
+import { LinksPageContent, LinksPageContentSchema } from '../../database/LinksPageContent.schema'
 import { LinksPageContentService } from './LinksPageContent.service'
 import { LinksPageContentController } from './LinksPageContent.controller'
 

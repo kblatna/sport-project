@@ -1,6 +1,6 @@
 import { Controller, Get, NotFoundException } from '@nestjs/common'
 import { LinksPageContentService } from './LinksPageContent.service'
-import { LinksPageContentLeanDocument } from '../../databases/LinksPageContent.schema'
+import { LinksPageContentLeanDocument } from '../../database/LinksPageContent.schema'
 
 @Controller('links-page-content')
 export class LinksPageContentController {

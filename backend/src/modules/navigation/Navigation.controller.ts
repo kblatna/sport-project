@@ -1,6 +1,6 @@
 import { Controller, Get, NotFoundException } from '@nestjs/common'
 import { NavigationService } from './Navigation.service'
-import { NavigationLeanDocument } from '../../databases/Navigation.schema'
+import { NavigationLeanDocument } from '../../database/Navigation.schema'
 
 @Controller('navigation')
 export class NavigationController {

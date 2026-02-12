@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
-import { User, UserDocument, UserLeanDocument } from '../../databases/User.schema'
+import { User, UserDocument, UserLeanDocument } from '../../database/User.schema'
 import { CreateUser } from './interface/CreateUser.interface'
 import { ErrorException } from '../../global/Error.exception'
 import { UpdateUser } from './interface/UpdateUser.interface'

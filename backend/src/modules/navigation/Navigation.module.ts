@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
-import { Navigation, NavigationSchema } from '../../databases/Navigation.schema'
+import { Navigation, NavigationSchema } from '../../database/Navigation.schema'
 import { NavigationController } from './Navigation.controller'
 import { NavigationService } from './Navigation.service'
 

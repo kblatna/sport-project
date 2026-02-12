@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
-import { InfoPageContent, InfoPageContentSchema } from '../../databases/InfoPageContent.schema'
+import { InfoPageContent, InfoPageContentSchema } from '../../database/InfoPageContent.schema'
 import { InfoPageContentController } from './InfoPageContent.controller'
 import { InfoPageContentService } from './InfoPageContent.service'
 

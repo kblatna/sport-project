@@ -2,7 +2,7 @@ import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common'
 import { Throttle } from '@nestjs/throttler'
 import { ContactService } from './Contact.service'
 import { CreateContactDto } from './dto/CreateContact.dto'
-import { ContactDocument } from '../../databases/Contact.schema'
+import { ContactDocument } from '../../database/Contact.schema'
 
 @Controller('contact')
 export class ContactController {

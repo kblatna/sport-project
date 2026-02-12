@@ -1,6 +1,6 @@
 import { Controller, Get, NotFoundException } from '@nestjs/common'
 import { SignupPageContentService } from './SignupPageContent.service'
-import { SignupPageContentLeanDocument } from '../../databases/SignupPageContent.schema'
+import { SignupPageContentLeanDocument } from '../../database/SignupPageContent.schema'
 
 @Controller('signup-page-content')
 export class SignupPageContentController {

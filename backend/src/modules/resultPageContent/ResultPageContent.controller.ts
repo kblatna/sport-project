@@ -4,7 +4,7 @@ import {
     NotFoundException
 } from '@nestjs/common'
 import { ResultPageContentService } from './ResultPageContent.service'
-import { ResultPageContent } from '../../databases/ResultPageContent.schema'
+import { ResultPageContent } from '../../database/ResultPageContent.schema'
 
 @Controller('result-page-content')
 export class ResultPageContentController {

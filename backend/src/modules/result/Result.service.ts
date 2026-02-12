@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { type FilterQuery, type PaginateModel, type PaginateResult } from 'mongoose'
-import { Result, ResultDocument, ResultLeanDocument } from '../../databases/Result.schema'
+import { Result, ResultDocument, ResultLeanDocument } from '../../database/Result.schema'
 import { ListResultsQueryDto } from './dto/ListResultsQuery.dto'
 
 @Injectable()

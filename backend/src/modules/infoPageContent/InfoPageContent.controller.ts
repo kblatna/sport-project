@@ -4,7 +4,7 @@ import {
     NotFoundException
 } from '@nestjs/common'
 import { InfoPageContentService } from './InfoPageContent.service'
-import { InfoPageContentLeanDocument } from '../../databases/InfoPageContent.schema'
+import { InfoPageContentLeanDocument } from '../../database/InfoPageContent.schema'
 
 @Controller('info-page-content')
 export class InfoPageContentController {

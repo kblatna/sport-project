@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
-import { SignupPageContent, SignupPageContentSchema } from '../../databases/SignupPageContent.schema'
+import { SignupPageContent, SignupPageContentSchema } from '../../database/SignupPageContent.schema'
 import { SignupPageContentController } from './SignupPageContent.controller'
 import { SignupPageContentService } from './SignupPageContent.service'
 
