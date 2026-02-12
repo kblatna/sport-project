@@ -62,7 +62,6 @@ export class ContactInfo {
 }
 
 @Schema({
-    collection: 'contactpagecontents',
     minimize: false
 })
 export class ContactPageContent {

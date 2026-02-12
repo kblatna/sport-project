@@ -28,8 +28,7 @@ class NavItem {
 }
 
 @Schema({
-    timestamps: true,
-    collection: 'navigation'
+    timestamps: true
 })
 export class Navigation {
     @Prop({

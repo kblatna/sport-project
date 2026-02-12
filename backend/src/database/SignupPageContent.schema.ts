@@ -17,7 +17,6 @@ export class LogoImage {
 }
 
 @Schema({
-    collection: 'signuppagecontents',
     minimize: false
 })
 export class SignupPageContent {

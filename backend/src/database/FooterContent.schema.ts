@@ -63,7 +63,7 @@ class FooterSection {
     links: FooterLink[]
 }
 
-@Schema({ timestamps: true, collection: 'footer-content' })
+@Schema({ timestamps: true })
 export class FooterContent {
     @Prop({
         type: Logo,

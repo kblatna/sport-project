@@ -245,7 +245,6 @@ export class VideoSection {
 }
 
 @Schema({
-    collection: 'mainpagecontents',
     minimize: false
 })
 export class MainPageContent {

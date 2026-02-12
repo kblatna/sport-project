@@ -104,7 +104,6 @@ export class ThanksSection {
 }
 
 @Schema({
-    collection: 'organizerpagecontents',
     minimize: false
 })
 export class OrganizerPageContent {

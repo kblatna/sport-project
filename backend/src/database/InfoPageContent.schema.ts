@@ -323,7 +323,6 @@ export class CommonSections {
 }
 
 @Schema({
-    collection: 'infopagecontents',
     minimize: false
 })
 export class InfoPageContent {
