@@ -4,6 +4,36 @@ import { SchemaTypes, type HydratedDocument } from 'mongoose'
 @Schema({
     _id: false
 })
+export class ButtonItem {
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    label: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    link: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: false
+    })
+    hash?: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        enum: ['primary', 'secondary'],
+        default: 'primary'
+    })
+    severity: 'primary' | 'secondary'
+}
+
+@Schema({
+    _id: false
+})
 export class HeroSection {
     @Prop({
         type: SchemaTypes.String,
@@ -24,30 +54,10 @@ export class HeroSection {
     backgroundImage: string
 
     @Prop([{
-        label: {
-            type: SchemaTypes.String,
-            required: true
-        },
-        link: {
-            type: SchemaTypes.String,
-            required: true
-        },
-        hash: {
-            type: SchemaTypes.String,
-            required: false
-        },
-        severity: {
-            type: SchemaTypes.String,
-            enum: ['primary', 'secondary'],
-            default: 'primary'
-        }
+        type: ButtonItem,
+        required: false
     }])
-    buttons: Array<{
-        label: string
-        link: string
-        hash?: string
-        severity: 'primary' | 'secondary'
-    }>
+    buttons: ButtonItem[]
 }
 
 @Schema({
@@ -79,30 +89,10 @@ export class RaceCard {
     image: string
 
     @Prop([{
-        label: {
-            type: SchemaTypes.String,
-            required: true
-        },
-        link: {
-            type: SchemaTypes.String,
-            required: true
-        },
-        hash: {
-            type: SchemaTypes.String,
-            required: false
-        },
-        severity: {
-            type: SchemaTypes.String,
-            enum: ['primary', 'secondary'],
-            default: 'primary'
-        }
+        type: ButtonItem,
+        required: false
     }])
-    buttons: Array<{
-        label: string
-        link: string
-        hash?: string
-        severity: 'primary' | 'secondary'
-    }>
+    buttons: ButtonItem[]
 }
 
 @Schema({
@@ -154,6 +144,76 @@ export class GalleryImage {
 @Schema({
     _id: false
 })
+export class ScheduleTableRow {
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    category: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    attendance: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    training: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    restrictedTraining: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    start: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    limit: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    announcement: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    drawing: string
+}
+
+@Schema({
+    _id: false
+})
+export class LegendItem {
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    term: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    definition: string
+}
+
+@Schema({
+    _id: false
+})
 export class ScheduleSection {
     @Prop({
         type: SchemaTypes.String,
@@ -174,64 +234,16 @@ export class ScheduleSection {
     tableTitle?: string
 
     @Prop([{
-        category: {
-            type: SchemaTypes.String,
-            required: true
-        },
-        attendance: {
-            type: SchemaTypes.String,
-            required: true
-        },
-        training: {
-            type: SchemaTypes.String,
-            required: true
-        },
-        restrictedTraining: {
-            type: SchemaTypes.String,
-            required: true
-        },
-        start: {
-            type: SchemaTypes.String,
-            required: true
-        },
-        limit: {
-            type: SchemaTypes.String,
-            required: true
-        },
-        announcement: {
-            type: SchemaTypes.String,
-            required: true
-        },
-        drawing: {
-            type: SchemaTypes.String,
-            required: true
-        }
+        type: ScheduleTableRow,
+        required: false
     }])
-    scheduleTable: Array<{
-        category: string
-        attendance: string
-        training: string
-        restrictedTraining: string
-        start: string
-        limit: string
-        announcement: string
-        drawing: string
-    }>
+    scheduleTable: ScheduleTableRow[]
 
     @Prop([{
-        term: {
-            type: SchemaTypes.String,
-            required: true
-        },
-        definition: {
-            type: SchemaTypes.String,
-            required: true
-        }
+        type: LegendItem,
+        required: false
     }])
-    legend: Array<{
-        term: string
-        definition: string
-    }>
+    legend: LegendItem[]
 
     @Prop({
         type: SchemaTypes.String
@@ -327,10 +339,13 @@ export class MainPageContent {
     updatedAt: Date
 }
 
+export const ButtonItemSchema = SchemaFactory.createForClass(ButtonItem)
 export const HeroSectionSchema = SchemaFactory.createForClass(HeroSection)
 export const RaceCardSchema = SchemaFactory.createForClass(RaceCard)
 export const InfoSectionSchema = SchemaFactory.createForClass(InfoSection)
 export const GalleryImageSchema = SchemaFactory.createForClass(GalleryImage)
+export const ScheduleTableRowSchema = SchemaFactory.createForClass(ScheduleTableRow)
+export const LegendItemSchema = SchemaFactory.createForClass(LegendItem)
 export const ScheduleSectionSchema = SchemaFactory.createForClass(ScheduleSection)
 export const VideoSectionSchema = SchemaFactory.createForClass(VideoSection)
 export const MainPageContentSchema = SchemaFactory.createForClass(MainPageContent)

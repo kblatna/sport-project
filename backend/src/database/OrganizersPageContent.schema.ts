@@ -4,6 +4,23 @@ import { SchemaTypes, type HydratedDocument } from 'mongoose'
 @Schema({
     _id: false
 })
+export class LinkItem {
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    label: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    url: string
+}
+
+@Schema({
+    _id: false
+})
 export class AssociationSection {
     @Prop({
         type: SchemaTypes.String,
@@ -77,19 +94,10 @@ export class OrganizingTeamSection {
     imageCaption?: string
 
     @Prop([{
-        label: {
-            type: SchemaTypes.String,
-            required: true
-        },
-        url: {
-            type: SchemaTypes.String,
-            required: true
-        }
+        type: LinkItem,
+        required: false
     }])
-    links?: Array<{
-        label: string
-        url: string
-    }>
+    links?: LinkItem[]
 }
 
 @Schema({
@@ -150,6 +158,7 @@ export class OrganizerPageContent {
     updatedAt: Date
 }
 
+export const LinkItemSchema = SchemaFactory.createForClass(LinkItem)
 export const AssociationSectionSchema = SchemaFactory.createForClass(AssociationSection)
 export const OrganizingTeamSectionSchema = SchemaFactory.createForClass(OrganizingTeamSection)
 export const ThanksSectionSchema = SchemaFactory.createForClass(ThanksSection)
