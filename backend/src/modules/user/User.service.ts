@@ -6,7 +6,7 @@ import { CreateUser } from './interface/CreateUser.interface'
 import { ErrorException } from '../../global/Error.exception'
 import { UpdateUser } from './interface/UpdateUser.interface'
 
-// TODO: udělat interface pro User
+// TODO: create interface for User
 export interface LocalUser {
     name: string
     email: string

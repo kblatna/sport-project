@@ -9,8 +9,8 @@ export class ResultService {
     private readonly logger = new Logger(ResultService.name)
 
     constructor(
-    @InjectModel(Result.name)
-    private readonly ResultModel: PaginateModel<ResultDocument>
+        @InjectModel(Result.name)
+        private readonly ResultModel: PaginateModel<ResultDocument>
     ) {}
 
     async getAllResults(): Promise<ResultLeanDocument[]> {
@@ -22,7 +22,7 @@ export class ResultService {
     ): Promise<PaginateResult<ResultDocument>> {
         const filterQuery: FilterQuery<Result> = {}
 
-        // Stringové filtry
+        // String filters
         if (pagingQuery.name) {
             filterQuery.name = { $regex: pagingQuery.name, $options: 'i' }
         }
@@ -33,7 +33,7 @@ export class ResultService {
             filterQuery.category = { $regex: pagingQuery.category, $options: 'i' }
         }
 
-        // Číselné filtry - použijeme $expr s $toString
+        // Number filters - usage $expr with $toString
         if (pagingQuery.rank) {
             filterQuery.$expr = {
                 ...filterQuery.$expr,

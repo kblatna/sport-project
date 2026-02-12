@@ -34,4 +34,4 @@ export default {
     ]
 }
 
-// TODO: přidat stránku O nás
+// TODO: add About Us page

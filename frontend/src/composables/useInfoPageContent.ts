@@ -10,13 +10,13 @@ export function useInfoPageContent() {
     const loading = ref(false)
     const error = ref<Error | null>(null)
 
-    // Určí, která varianta se má zobrazit na základě hash fragmentu (#kids nebo #adults)
+    // Determines which variant to display based on hash fragment (#kids or #adults)
     const variant = computed<'kids' | 'adults'>(() => {
         const hash = route.hash.replace('#', '')
         return hash === 'kids' ? 'kids' : 'adults'
     })
 
-    // Vrátí data pro aktuální variantu
+    // Returns data for current variant
     const currentContent = computed<InfoPageVariant | null>(() => {
         if (!content.value) {
             return null

@@ -194,12 +194,12 @@ const isMobileInfoDropdownOpen = ref(false)
 const route = useRoute()
 const { isHidden } = useScrollHeader()
 
-// Zavře všechny dropdowny při změně routy
+// Close all dropdowns on route change
 watch(() => route.fullPath, () => {
     closeAllDropdowns()
 })
 
-// Helper funkce pro zavírání dropdown menu
+// Helper function for closing dropdown menus
 const closeAllDropdowns = () => {
     isMobileAboutDropdownOpen.value = false
     isMobileInfoDropdownOpen.value = false
@@ -276,7 +276,7 @@ const mainNavRight = computed(() => topLevel.value.slice(1))
 </script>
 
 <style scoped>
-/* Přepsání PrimeVue Button stylů pro hamburger a close ikony */
+/* Override PrimeVue Button styles for hamburger and close icons */
 :deep(.menu-button.p-button) {
     color: white;
 }

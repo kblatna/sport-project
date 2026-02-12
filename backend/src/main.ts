@@ -7,23 +7,23 @@ async function bootstrap(): Promise<void> {
     const app = await NestFactory.create(AppModule)
     const configService = app.get(ConfigService)
 
-    // Povolení CORS
+    // Enable CORS
     app.enableCors({
         origin: [
             'http://localhost:8080',
             'http://localhost:5173',
             'https://mulda.netlify.app',
-            /\.netlify\.app$/ // Povolí všechny Netlify subdomény
+            /\.netlify\.app$/ // Allow all Netlify subdomains
         ],
         credentials: true
     })
 
-    // Globální prefix pro API (kromě health endpointů)
+    // Global API prefix (excluding health endpoints)
     app.setGlobalPrefix('api', {
         exclude: ['health', 'api']
     })
 
-    // Globální validace DTOs
+    // Global DTO validation
     app.useGlobalPipes(
         new ValidationPipe({
             whitelist: true,
@@ -32,7 +32,7 @@ async function bootstrap(): Promise<void> {
         })
     )
 
-    // Start - musí naslouchat na 0.0.0.0 pro Render.com
+    // Start - must listen on 0.0.0.0 for Render.com
     const port = configService.get<number>('port')!
     await app.listen(port, '0.0.0.0')
     console.log(`Application is running on: http://0.0.0.0:${port}`)

@@ -137,7 +137,7 @@ onMounted(() => {
     }
 })
 
-// TODO: doladit tuto funkci - hlášky, validace, odesílání
+// TODO: refine this function - messages, validation, submission
 async function onSubmit() {
     await validation.value.$validate()
     if (validation.value.$invalid) {
