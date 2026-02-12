@@ -12,7 +12,7 @@ export class ResultController {
 
     @Get('paginate')
     async paginateResults(
-    @Query() query: ListResultsQueryDto
+        @Query() query: ListResultsQueryDto
     ): Promise<PaginateResult<ResultDocument>> {
         return await this.resultService.paginateResults(query)
     }
