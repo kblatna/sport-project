@@ -30,9 +30,7 @@ export class NavItem {
     visible?: boolean
 }
 
-@Schema({
-    timestamps: true
-})
+@Schema()
 export class Navigation {
     @Prop({
         type: SchemaTypes.String,

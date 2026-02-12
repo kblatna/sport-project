@@ -75,9 +75,7 @@ export class FooterSection {
     links: FooterLink[]
 }
 
-@Schema({
-    timestamps: true
-})
+@Schema()
 export class FooterContent {
     @Prop({
         type: Logo,
