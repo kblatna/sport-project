@@ -51,12 +51,6 @@ export class User {
     createdAt: Date
 
     @Prop({
-        type: SchemaTypes.Boolean,
-        default: false
-    })
-    emailVerified: boolean
-
-    @Prop({
         type: SchemaTypes.Date,
         default: null
     })
@@ -67,12 +61,6 @@ export class User {
         default: () => new Date()
     })
     updatedAt: Date
-
-    @Prop({
-        type: SchemaTypes.Date,
-        default: null
-    })
-    deletedAt: Date | null
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
