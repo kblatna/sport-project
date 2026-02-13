@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common'
 import * as mjml2html from 'mjml'
-import { CreateRaceSignup } from './interface/CreateRaceSignup.interface'
-import { EmailService } from './Email.service'
+import { CreateRaceSignup } from '../../integrations/mail/interface/CreateRaceSignup.interface'
+import { MailService } from '../../integrations/mail/Mail.service'
 
 @Injectable()
 export class RaceConfirmationService {
-    constructor(private readonly emailService: EmailService) {}
+    constructor(private readonly mailService: MailService) {}
 
     async sendRaceConfirmationEmail(data: CreateRaceSignup): Promise<void> {
         const html = this.generateMjml(data)
 
-        await this.emailService.sendEmail({
+        await this.mailService.sendEmail({
             to: [data.email],
             subject: 'Potvrzení přihlášky na závod',
             html
