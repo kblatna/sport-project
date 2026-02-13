@@ -26,16 +26,53 @@ export class User {
     email: string
 
     @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    password: string
+
+    @Prop({
+        type: SchemaTypes.Boolean,
+        default: true
+    })
+    isActive: boolean
+
+    @Prop({
+        type: SchemaTypes.String,
+        enum: ['editor', 'admin'],
+        default: 'editor'
+    })
+    role: string
+
+    @Prop({
         type: SchemaTypes.Date,
         default: () => new Date()
     })
     createdAt: Date
 
     @Prop({
+        type: SchemaTypes.Boolean,
+        default: false
+    })
+    emailVerified: boolean
+
+    @Prop({
         type: SchemaTypes.Date,
         default: null
     })
-    updatedAt: Date | null
+    lastLogin: Date | null
+
+    @Prop({
+        type: SchemaTypes.Date,
+        default: () => new Date()
+    })
+    updatedAt: Date
+
+    @Prop({
+        type: SchemaTypes.Date,
+        default: null
+    })
+    deletedAt: Date | null
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
