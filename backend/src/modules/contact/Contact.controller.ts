@@ -1,8 +1,9 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common'
+import { BadRequestException, Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common'
 import { Throttle } from '@nestjs/throttler'
 import { ContactService } from './Contact.service'
 import { CreateContactDto } from './dto/CreateContact.dto'
 import { ContactDocument } from '../../database/Contact.schema'
+import { ErrorException } from '../../global/Error.exception'
 
 @Controller('contact')
 export class ContactController {
@@ -16,6 +17,13 @@ export class ContactController {
     async createContact(
         @Body() createContactDto: CreateContactDto
     ): Promise<ContactDocument> {
-        return this.contactService.createContact(createContactDto)
+        try {
+            return await this.contactService.createContact(createContactDto)
+        } catch (error) {
+            if (error instanceof ErrorException) {
+                throw new BadRequestException(error.message)
+            }
+            throw error
+        }
     }
 }

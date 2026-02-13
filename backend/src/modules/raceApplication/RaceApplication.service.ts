@@ -1,6 +1,4 @@
 import {
-    HttpException,
-    HttpStatus,
     Injectable,
     Logger
 } from '@nestjs/common'
@@ -9,6 +7,7 @@ import { Model } from 'mongoose'
 import { RaceApplication, RaceApplicationDocument } from '../../database/RaceApplication.schema'
 import { CreateRaceApplication } from './interface/CreateRaceApplication.interface'
 import { TurnstileService } from '../../integrations/turnstile/Turnstile.service'
+import { ErrorException } from '../../global/Error.exception'
 
 @Injectable()
 export class RaceApplicationService {
@@ -23,12 +22,12 @@ export class RaceApplicationService {
     async createRaceApplication(data: CreateRaceApplication): Promise<RaceApplicationDocument> {
         const isValid = await this.turnstileService.validateToken(data.token)
         if (!isValid) {
-            throw new HttpException('Invalid Turnstile token', HttpStatus.BAD_REQUEST)
+            throw new ErrorException('Invalid Turnstile token', 400)
         }
 
         if (data.honeypot && data.honeypot.trim() !== '') {
             this.logger.warn(`Spam detected via honeypot. Email: ${data.email}`)
-            throw new HttpException('Spam detected', HttpStatus.BAD_REQUEST)
+            throw new ErrorException('Spam detected', 400)
         }
 
         const raceApplication = new this.raceApplicationModel({
