@@ -31,5 +31,5 @@ export class CreateRaceSignupDto {
 
     @IsOptional()
     @IsString()
-    honeypot?: string
+    honeypot?: string | null
 }

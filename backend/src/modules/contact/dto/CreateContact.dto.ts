@@ -26,5 +26,5 @@ export class CreateContactDto {
     @IsOptional()
     @IsString()
     @Expose()
-    honeypot?: string
+    honeypot?: string | null
 }
