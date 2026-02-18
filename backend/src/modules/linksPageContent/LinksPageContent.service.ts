@@ -6,11 +6,13 @@ import { LinksPageContent, LinksPageContentLeanDocument } from '../../database/L
 @Injectable()
 export class LinksPageContentService {
     constructor(
-    @InjectModel(LinksPageContent.name)
-    private readonly linksPageContentModel: Model<LinksPageContent>
+        @InjectModel(LinksPageContent.name)
+        private readonly linksPageContentModel: Model<LinksPageContent>
     ) {}
 
     async getContent(): Promise<LinksPageContentLeanDocument | null> {
-        return this.linksPageContentModel.findOne().lean()
+        return this.linksPageContentModel
+            .findOne()
+            .lean<LinksPageContentLeanDocument>()
     }
 }

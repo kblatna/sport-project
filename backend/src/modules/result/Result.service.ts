@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import { type FilterQuery, type PaginateModel, type PaginateResult } from 'mongoose'
+import { type PaginateModel, type PaginateResult } from 'mongoose'
 import { Result, ResultDocument, ResultLeanDocument } from '../../database/Result.schema'
 import { ListResultsQueryDto } from './dto/ListResultsQuery.dto'
 
@@ -14,82 +14,73 @@ export class ResultService {
     ) {}
 
     async getAllResults(): Promise<ResultLeanDocument[]> {
-        return await this.ResultModel.find().lean()
+        return await this.ResultModel
+            .find()
+            .lean<ResultLeanDocument[]>()
+    }
+
+    private buildStringFilter(field: string, value: string): Record<string, any> {
+        return { [field]: { $regex: value, $options: 'i' } }
+    }
+
+    private buildNumberRegexFilter(field: string, value: string): Record<string, any> {
+        return {
+            $expr: {
+                $regexMatch: {
+                    input: { $toString: `$${field}` },
+                    regex: value,
+                    options: 'i'
+                }
+            }
+        }
+    }
+
+    private mergeExprFilters(...exprFilters: Record<string, any>[]): Record<string, any> {
+        const validFilters = exprFilters.filter(f => Object.keys(f).length > 0)
+        if (validFilters.length === 0) return {}
+
+        if (validFilters.length === 1) return validFilters[0]
+
+        return {
+            $expr: {
+                $and: validFilters.map(f => f.$expr || f)
+            }
+        }
     }
 
     async paginateResults(
         pagingQuery: ListResultsQueryDto
     ): Promise<PaginateResult<ResultDocument>> {
-        const filterQuery: FilterQuery<Result> = {}
+        const filterQuery: Record<string, any> = {}
 
-        // String filters
         if (pagingQuery.name) {
-            filterQuery.name = { $regex: pagingQuery.name, $options: 'i' }
+            Object.assign(filterQuery, this.buildStringFilter('name', pagingQuery.name))
         }
         if (pagingQuery.totalTime) {
-            filterQuery.totalTime = { $regex: pagingQuery.totalTime, $options: 'i' }
+            Object.assign(filterQuery, this.buildStringFilter('totalTime', pagingQuery.totalTime))
         }
         if (pagingQuery.category) {
-            filterQuery.category = { $regex: pagingQuery.category, $options: 'i' }
+            Object.assign(filterQuery, this.buildStringFilter('category', pagingQuery.category))
         }
 
-        // Number filters - usage $expr with $toString
+        const numberFilters: Record<string, any>[] = []
+
         if (pagingQuery.rank) {
-            filterQuery.$expr = {
-                ...filterQuery.$expr,
-                $regexMatch: {
-                    input: { $toString: '$rank' },
-                    regex: pagingQuery.rank,
-                    options: 'i'
-                }
-            }
+            numberFilters.push(this.buildNumberRegexFilter('rank', pagingQuery.rank))
         }
         if (pagingQuery.startNumber) {
-            const expr = filterQuery.$expr || {}
-            filterQuery.$expr = {
-                $and: [
-                    ...(expr.$and || [expr].filter(e => Object.keys(e).length > 0)),
-                    {
-                        $regexMatch: {
-                            input: { $toString: '$startNumber' },
-                            regex: pagingQuery.startNumber,
-                            options: 'i'
-                        }
-                    }
-                ]
-            }
+            numberFilters.push(this.buildNumberRegexFilter('startNumber', pagingQuery.startNumber))
         }
         if (pagingQuery.dateOfBirth) {
-            const expr = filterQuery.$expr || {}
-            const existing = expr.$and || [expr].filter(e => Object.keys(e).length > 0)
-            filterQuery.$expr = {
-                $and: [
-                    ...existing,
-                    {
-                        $regexMatch: {
-                            input: { $toString: '$dateOfBirth' },
-                            regex: pagingQuery.dateOfBirth,
-                            options: 'i'
-                        }
-                    }
-                ]
-            }
+            numberFilters.push(this.buildNumberRegexFilter('dateOfBirth', pagingQuery.dateOfBirth))
         }
         if (pagingQuery.year) {
-            const expr = filterQuery.$expr || {}
-            const existing = expr.$and || [expr].filter(e => Object.keys(e).length > 0)
-            filterQuery.$expr = {
-                $and: [
-                    ...existing,
-                    {
-                        $regexMatch: {
-                            input: { $toString: '$year' },
-                            regex: pagingQuery.year,
-                            options: 'i'
-                        }
-                    }
-                ]
-            }
+            numberFilters.push(this.buildNumberRegexFilter('year', pagingQuery.year))
+        }
+
+        if (numberFilters.length > 0) {
+            const mergedNumberFilter = this.mergeExprFilters(...numberFilters)
+            Object.assign(filterQuery, mergedNumberFilter)
         }
 
         const options = pagingQuery.toPaginateOptions()

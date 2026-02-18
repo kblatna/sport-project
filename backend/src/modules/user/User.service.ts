@@ -21,7 +21,9 @@ export class UserService {
     ) { }
 
     async getAllUsers(): Promise<UserLeanDocument[]> {
-        return await this.UserModel.find().lean()
+        return await this.UserModel
+            .find()
+            .lean<UserLeanDocument[]>()
     }
 
     async getUserById(id: string): Promise<UserDocument | null> {

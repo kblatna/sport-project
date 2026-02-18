@@ -1,5 +1,3 @@
-import { FilterQuery } from 'mongoose'
-
 export type FilterConfig<T> = {
     [K in keyof Partial<T>]?: {
         type: 'exact' | 'regex'
@@ -13,8 +11,8 @@ export function escapeRegExp(str: string): string {
 export function buildFilterQuery<T>(
     dto: Partial<T>,
     config: FilterConfig<T>
-): FilterQuery<T> {
-    const filter: FilterQuery<T> = {}
+): Record<string, unknown> {
+    const filter: Record<string, unknown> = {}
 
     for (const key in config) {
         const filterType = config[key]?.type
@@ -23,9 +21,9 @@ export function buildFilterQuery<T>(
         if (value === undefined || value === null) continue
 
         if (filterType === 'regex' && typeof value === 'string') {
-            filter[key as keyof T] = { $regex: escapeRegExp(value), $options: 'i' } as any
+            filter[key as string] = { $regex: escapeRegExp(value), $options: 'i' }
         } else {
-            filter[key as keyof T] = value as any
+            filter[key as string] = value
         }
     }
 
