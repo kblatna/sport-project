@@ -3,6 +3,111 @@ import { SchemaTypes, type HydratedDocument } from 'mongoose'
 import mongoosePaginate from 'mongoose-paginate-v2'
 
 @Schema({
+    _id: false
+})
+export class ResultColumnHeaders {
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    rank: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    startNumber: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    name: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    dateOfBirth: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    totalTime: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    category: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    year: string
+}
+
+export const ResultColumnHeadersSchema = SchemaFactory.createForClass(ResultColumnHeaders)
+
+@Schema({
+    _id: false
+})
+export class ResultFilterPlaceholders {
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    startNumber: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    name: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    dateOfBirth: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    category: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    year: string
+}
+
+export const ResultFilterPlaceholdersSchema = SchemaFactory.createForClass(ResultFilterPlaceholders)
+
+@Schema({
+    _id: false
+})
+export class ResultEmptyState {
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    title: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    subtitle: string
+}
+
+export const ResultEmptyStateSchema = SchemaFactory.createForClass(ResultEmptyState)
+
+@Schema({
     minimize: false
 })
 export class ResultPageContent {
@@ -31,39 +136,22 @@ export class ResultPageContent {
     resetButtonLabel: string
 
     @Prop({
-        type: SchemaTypes.Mixed,
+        type: ResultColumnHeaders,
         required: true
     })
-    columnHeaders: {
-        rank: string
-        startNumber: string
-        name: string
-        dateOfBirth: string
-        totalTime: string
-        category: string
-        year: string
-    }
+    columnHeaders: ResultColumnHeaders
 
     @Prop({
-        type: SchemaTypes.Mixed,
+        type: ResultFilterPlaceholders,
         required: true
     })
-    filterPlaceholders: {
-        startNumber: string
-        name: string
-        dateOfBirth: string
-        category: string
-        year: string
-    }
+    filterPlaceholders: ResultFilterPlaceholders
 
     @Prop({
-        type: SchemaTypes.Mixed,
+        type: ResultEmptyState,
         required: true
     })
-    emptyState: {
-        title: string
-        subtitle: string
-    }
+    emptyState: ResultEmptyState
 
     @Prop({
         type: SchemaTypes.String,

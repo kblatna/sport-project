@@ -1,5 +1,5 @@
 import { type PaginateOptions } from 'mongoose'
-import { IsOptional, IsPositive, IsInt, Max, IsString, IsObject, IsEnum } from 'class-validator'
+import { IsOptional, IsPositive, IsInt, Max, IsString, IsEnum } from 'class-validator'
 import { Exclude, Expose, Transform, Type } from 'class-transformer'
 
 export function escapeRegExp(str: string): string {
@@ -34,11 +34,6 @@ export class PagingQueryOptionsDto {
     @Transform(({ value }) => value ? String(value).toLocaleLowerCase() : null, { toClassOnly: true })
     @Expose()
     sortOrder?: 'asc' | 'desc' | null
-
-    @IsOptional()
-    @IsObject()
-    @Expose()
-    filter: Record<string, any> = {}
 
     toPaginateOptions(): PaginateOptions {
         const options: PaginateOptions = {
