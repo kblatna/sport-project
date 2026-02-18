@@ -17,6 +17,7 @@ export class LinkItem {
     })
     url: string
 }
+export const LinkItemSchema = SchemaFactory.createForClass(LinkItem)
 
 @Schema({
     _id: false
@@ -94,7 +95,7 @@ export class OrganizingTeamSection {
     imageCaption?: string
 
     @Prop([{
-        type: LinkItem,
+        type: LinkItemSchema,
         required: false
     }])
     links?: LinkItem[]
@@ -117,6 +118,10 @@ export class ThanksSection {
     description: string[]
 }
 
+export const AssociationSectionSchema = SchemaFactory.createForClass(AssociationSection)
+export const OrganizingTeamSectionSchema = SchemaFactory.createForClass(OrganizingTeamSection)
+export const ThanksSectionSchema = SchemaFactory.createForClass(ThanksSection)
+
 @Schema({
     minimize: false
 })
@@ -128,19 +133,19 @@ export class OrganizerPageContent {
     pageTitle: string
 
     @Prop({
-        type: AssociationSection,
+        type: AssociationSectionSchema,
         required: true
     })
     association: AssociationSection
 
     @Prop({
-        type: OrganizingTeamSection,
+        type: OrganizingTeamSectionSchema,
         required: true
     })
     organizingTeam: OrganizingTeamSection
 
     @Prop({
-        type: ThanksSection,
+        type: ThanksSectionSchema,
         required: true
     })
     thanks: ThanksSection
@@ -158,10 +163,6 @@ export class OrganizerPageContent {
     updatedAt: Date
 }
 
-export const LinkItemSchema = SchemaFactory.createForClass(LinkItem)
-export const AssociationSectionSchema = SchemaFactory.createForClass(AssociationSection)
-export const OrganizingTeamSectionSchema = SchemaFactory.createForClass(OrganizingTeamSection)
-export const ThanksSectionSchema = SchemaFactory.createForClass(ThanksSection)
 export const OrganizerPageContentSchema = SchemaFactory.createForClass(OrganizerPageContent)
 
 export type OrganizerPageContentDocument = HydratedDocument<OrganizerPageContent>

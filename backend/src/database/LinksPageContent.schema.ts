@@ -17,6 +17,8 @@ export class MediaItem {
     link?: string
 }
 
+export const MediaItemSchema = SchemaFactory.createForClass(MediaItem)
+
 @Schema({
     _id: false
 })
@@ -40,6 +42,8 @@ export class UsefulLink {
     link: string
 }
 
+export const UsefulLinkSchema = SchemaFactory.createForClass(UsefulLink)
+
 @Schema({
     minimize: false
 })
@@ -51,31 +55,31 @@ export class LinksPageContent {
     heroImage: string
 
     @Prop({
-        type: [MediaItem],
+        type: [MediaItemSchema],
         default: []
     })
     tvItems: MediaItem[]
 
     @Prop({
-        type: [MediaItem],
+        type: [MediaItemSchema],
         default: []
     })
     videoItems: MediaItem[]
 
     @Prop({
-        type: [MediaItem],
+        type: [MediaItemSchema],
         default: []
     })
     pressItems: MediaItem[]
 
     @Prop({
-        type: [MediaItem],
+        type: [MediaItemSchema],
         default: []
     })
     webItems: MediaItem[]
 
     @Prop({
-        type: [UsefulLink],
+        type: [UsefulLinkSchema],
         default: []
     })
     links: UsefulLink[]

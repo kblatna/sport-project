@@ -18,6 +18,8 @@ export class LogoImage {
     alt?: string
 }
 
+export const LogoImageSchema = SchemaFactory.createForClass(LogoImage)
+
 @Schema({
     minimize: false
 })
@@ -41,7 +43,7 @@ export class SignupPageContent {
     cardTitle: string
 
     @Prop([
-        LogoImage
+        LogoImageSchema
     ])
     logos: LogoImage[]
 
@@ -58,7 +60,6 @@ export class SignupPageContent {
     updatedAt: Date
 }
 
-export const LogoImageSchema = SchemaFactory.createForClass(LogoImage)
 export const SignupPageContentSchema = SchemaFactory.createForClass(SignupPageContent)
 
 export type SignupPageContentDocument = HydratedDocument<SignupPageContent>

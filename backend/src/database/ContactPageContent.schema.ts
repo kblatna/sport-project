@@ -65,6 +65,9 @@ export class ContactInfo {
     instagram?: string
 }
 
+export const AddressSchema = SchemaFactory.createForClass(Address)
+export const ContactInfoSchema = SchemaFactory.createForClass(ContactInfo)
+
 @Schema({
     minimize: false
 })
@@ -88,7 +91,7 @@ export class ContactPageContent {
     addressSectionTitle: string
 
     @Prop({
-        type: Address,
+        type: AddressSchema,
         required: true
     })
     address: Address
@@ -106,7 +109,7 @@ export class ContactPageContent {
     contactSectionTitle: string
 
     @Prop({
-        type: ContactInfo,
+        type: ContactInfoSchema,
         required: true
     })
     contactInfo: ContactInfo
@@ -130,8 +133,6 @@ export class ContactPageContent {
     updatedAt: Date
 }
 
-export const AddressSchema = SchemaFactory.createForClass(Address)
-export const ContactInfoSchema = SchemaFactory.createForClass(ContactInfo)
 export const ContactPageContentSchema = SchemaFactory.createForClass(ContactPageContent)
 
 export type ContactPageContentDocument = HydratedDocument<ContactPageContent>

@@ -18,17 +18,23 @@ export class NavItem {
     to: string
 
     @Prop({
-        type: [NavItem],
-        required: false
-    })
-    children?: NavItem[]
-
-    @Prop({
         type: SchemaTypes.Boolean,
         default: true
     })
     visible?: boolean
+
+    children?: NavItem[]
 }
+
+export const NavItemSchema = SchemaFactory.createForClass(NavItem)
+
+NavItemSchema.add({
+    children: {
+        type: [NavItemSchema],
+        required: false,
+        default: undefined
+    }
+})
 
 @Schema()
 export class Navigation {
@@ -45,7 +51,7 @@ export class Navigation {
     locale?: string
 
     @Prop({
-        type: [NavItem],
+        type: [NavItemSchema],
         required: true
     })
     items: NavItem[]
@@ -63,7 +69,6 @@ export class Navigation {
     updatedAt: Date
 }
 
-export const NavItemSchema = SchemaFactory.createForClass(NavItem)
 export const NavigationSchema = SchemaFactory.createForClass(Navigation)
 
 export type NavigationDocument = HydratedDocument<Navigation>

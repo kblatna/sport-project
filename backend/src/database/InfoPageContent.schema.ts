@@ -100,6 +100,8 @@ export class FeeCategory {
     note: string
 }
 
+export const FeeCategorySchema = SchemaFactory.createForClass(FeeCategory)
+
 @Schema({
     _id: false
 })
@@ -117,7 +119,7 @@ export class RegistrationPaymentSection {
     description: string
 
     @Prop({
-        type: [FeeCategory],
+        type: [FeeCategorySchema],
         required: true
     })
     fees: FeeCategory[]
@@ -216,6 +218,13 @@ export class AwardsSection {
     content: string[]
 }
 
+export const CategoryTableRowSchema = SchemaFactory.createForClass(CategoryTableRow)
+export const MapTabSchema = SchemaFactory.createForClass(MapTab)
+export const RegistrationPaymentSectionSchema = SchemaFactory.createForClass(RegistrationPaymentSection)
+export const AttendanceSectionSchema = SchemaFactory.createForClass(AttendanceSection)
+export const PrizesSectionSchema = SchemaFactory.createForClass(PrizesSection)
+export const AwardsSectionSchema = SchemaFactory.createForClass(AwardsSection)
+
 @Schema({
     _id: false
 })
@@ -239,7 +248,7 @@ export class InfoPageVariant {
     categoryDescription: string
 
     @Prop({
-        type: [CategoryTableRow],
+        type: [CategoryTableRowSchema],
         required: true
     })
     categoryTable: CategoryTableRow[]
@@ -251,31 +260,31 @@ export class InfoPageVariant {
     mapSectionTitle: string
 
     @Prop({
-        type: [MapTab],
+        type: [MapTabSchema],
         required: true
     })
     mapTabs: MapTab[]
 
     @Prop({
-        type: RegistrationPaymentSection,
+        type: RegistrationPaymentSectionSchema,
         required: true
     })
     registrationPayment: RegistrationPaymentSection
 
     @Prop({
-        type: AttendanceSection,
+        type: AttendanceSectionSchema,
         required: true
     })
     attendance: AttendanceSection
 
     @Prop({
-        type: PrizesSection,
+        type: PrizesSectionSchema,
         required: true
     })
     prizes: PrizesSection
 
     @Prop({
-        type: AwardsSection,
+        type: AwardsSectionSchema,
         required: true
     })
     awards: AwardsSection
@@ -285,22 +294,40 @@ export class InfoPageVariant {
     _id: false
 })
 export class WashingSection {
-    @Prop({ type: SchemaTypes.String, required: true })
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
     title: string
 
-    @Prop({ type: SchemaTypes.String, required: true })
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
     imageSrc: string
 
-    @Prop({ type: SchemaTypes.String, required: true })
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
     imageWidth: string
 
-    @Prop({ type: SchemaTypes.String, required: true })
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
     imageHeight: string
 
-    @Prop({ type: SchemaTypes.String, required: true })
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
     imagePosition: string
 
-    @Prop({ type: [SchemaTypes.String], required: true })
+    @Prop({
+        type: [SchemaTypes.String],
+        required: true
+    })
     content: string[]
 }
 
@@ -308,10 +335,16 @@ export class WashingSection {
     _id: false
 })
 export class ParkingSection {
-    @Prop({ type: SchemaTypes.String, required: true })
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
     title: string
 
-    @Prop({ type: SchemaTypes.String, required: true })
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
     content: string
 }
 
@@ -319,48 +352,79 @@ export class ParkingSection {
     _id: false
 })
 export class BikeServiceSection {
-    @Prop({ type: SchemaTypes.String, required: true })
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
     title: string
 
-    @Prop({ type: SchemaTypes.String, required: true })
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
     imageSrc: string
 
-    @Prop({ type: SchemaTypes.String, required: true })
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
     imagePosition: string
 
-    @Prop({ type: SchemaTypes.String, required: true })
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
     content: string
 }
+
+export const WashingSectionSchema = SchemaFactory.createForClass(WashingSection)
+export const ParkingSectionSchema = SchemaFactory.createForClass(ParkingSection)
+export const BikeServiceSectionSchema = SchemaFactory.createForClass(BikeServiceSection)
 
 @Schema({
     _id: false
 })
 export class CommonSections {
-    @Prop({ type: WashingSection, required: true })
+    @Prop({
+        type: WashingSectionSchema,
+        required: true
+    })
     washing: WashingSection
 
-    @Prop({ type: ParkingSection, required: true })
+    @Prop({
+        type: ParkingSectionSchema,
+        required: true
+    })
     parking: ParkingSection
 
-    @Prop({ type: BikeServiceSection, required: true })
+    @Prop({
+        type: BikeServiceSectionSchema,
+        required: true
+    })
     bikeService: BikeServiceSection
 }
+
+export const CommonSectionsSchema = SchemaFactory.createForClass(CommonSections)
+export const InfoPageVariantSchema = SchemaFactory.createForClass(InfoPageVariant)
 
 @Schema({
     minimize: false
 })
 export class InfoPageContent {
-    @Prop({ type: CommonSections, required: true })
+    @Prop({
+        type: CommonSectionsSchema,
+        required: true
+    })
     commonSections: CommonSections
 
     @Prop({
-        type: InfoPageVariant,
+        type: InfoPageVariantSchema,
         required: true
     })
     kids: InfoPageVariant
 
     @Prop({
-        type: InfoPageVariant,
+        type: InfoPageVariantSchema,
         required: true
     })
     adults: InfoPageVariant
@@ -378,18 +442,6 @@ export class InfoPageContent {
     updatedAt: Date
 }
 
-export const CategoryTableRowSchema = SchemaFactory.createForClass(CategoryTableRow)
-export const MapTabSchema = SchemaFactory.createForClass(MapTab)
-export const FeeCategorySchema = SchemaFactory.createForClass(FeeCategory)
-export const RegistrationPaymentSectionSchema = SchemaFactory.createForClass(RegistrationPaymentSection)
-export const AttendanceSectionSchema = SchemaFactory.createForClass(AttendanceSection)
-export const PrizesSectionSchema = SchemaFactory.createForClass(PrizesSection)
-export const AwardsSectionSchema = SchemaFactory.createForClass(AwardsSection)
-export const WashingSectionSchema = SchemaFactory.createForClass(WashingSection)
-export const ParkingSectionSchema = SchemaFactory.createForClass(ParkingSection)
-export const BikeServiceSectionSchema = SchemaFactory.createForClass(BikeServiceSection)
-export const CommonSectionsSchema = SchemaFactory.createForClass(CommonSections)
-export const InfoPageVariantSchema = SchemaFactory.createForClass(InfoPageVariant)
 export const InfoPageContentSchema = SchemaFactory.createForClass(InfoPageContent)
 
 export type InfoPageContentDocument = HydratedDocument<InfoPageContent>

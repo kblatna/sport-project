@@ -31,6 +31,8 @@ export class ButtonItem {
     severity: 'primary' | 'secondary'
 }
 
+export const ButtonItemSchema = SchemaFactory.createForClass(ButtonItem)
+
 @Schema({
     _id: false
 })
@@ -54,7 +56,7 @@ export class HeroSection {
     backgroundImage: string
 
     @Prop([{
-        type: ButtonItem,
+        type: ButtonItemSchema,
         required: false
     }])
     buttons: ButtonItem[]
@@ -89,7 +91,7 @@ export class RaceCard {
     image: string
 
     @Prop([{
-        type: ButtonItem,
+        type: ButtonItemSchema,
         required: false
     }])
     buttons: ButtonItem[]
@@ -211,6 +213,9 @@ export class LegendItem {
     definition: string
 }
 
+export const ScheduleTableRowSchema = SchemaFactory.createForClass(ScheduleTableRow)
+export const LegendItemSchema = SchemaFactory.createForClass(LegendItem)
+
 @Schema({
     _id: false
 })
@@ -234,13 +239,13 @@ export class ScheduleSection {
     tableTitle?: string
 
     @Prop([{
-        type: ScheduleTableRow,
+        type: ScheduleTableRowSchema,
         required: false
     }])
     scheduleTable: ScheduleTableRow[]
 
     @Prop([{
-        type: LegendItem,
+        type: LegendItemSchema,
         required: false
     }])
     legend: LegendItem[]
@@ -267,6 +272,13 @@ export class VideoSection {
     })
     videoUrl: string
 }
+
+export const HeroSectionSchema = SchemaFactory.createForClass(HeroSection)
+export const RaceCardSchema = SchemaFactory.createForClass(RaceCard)
+export const InfoSectionSchema = SchemaFactory.createForClass(InfoSection)
+export const GalleryImageSchema = SchemaFactory.createForClass(GalleryImage)
+export const ScheduleSectionSchema = SchemaFactory.createForClass(ScheduleSection)
+export const VideoSectionSchema = SchemaFactory.createForClass(VideoSection)
 
 @Schema({
     minimize: false
@@ -297,31 +309,31 @@ export class MainPageContent {
     raceSectionTitle: string
 
     @Prop({
-        type: HeroSection,
+        type: HeroSectionSchema,
         required: false
     })
     hero?: HeroSection
 
-    @Prop([RaceCard])
+    @Prop([RaceCardSchema])
     raceCards: RaceCard[]
 
     @Prop({
-        type: InfoSection,
+        type: InfoSectionSchema,
         required: false
     })
     info?: InfoSection
 
-    @Prop([GalleryImage])
+    @Prop([GalleryImageSchema])
     gallery: GalleryImage[]
 
     @Prop({
-        type: ScheduleSection,
+        type: ScheduleSectionSchema,
         required: false
     })
     schedule?: ScheduleSection
 
     @Prop({
-        type: VideoSection,
+        type: VideoSectionSchema,
         required: false
     })
     video?: VideoSection
@@ -339,15 +351,6 @@ export class MainPageContent {
     updatedAt: Date
 }
 
-export const ButtonItemSchema = SchemaFactory.createForClass(ButtonItem)
-export const HeroSectionSchema = SchemaFactory.createForClass(HeroSection)
-export const RaceCardSchema = SchemaFactory.createForClass(RaceCard)
-export const InfoSectionSchema = SchemaFactory.createForClass(InfoSection)
-export const GalleryImageSchema = SchemaFactory.createForClass(GalleryImage)
-export const ScheduleTableRowSchema = SchemaFactory.createForClass(ScheduleTableRow)
-export const LegendItemSchema = SchemaFactory.createForClass(LegendItem)
-export const ScheduleSectionSchema = SchemaFactory.createForClass(ScheduleSection)
-export const VideoSectionSchema = SchemaFactory.createForClass(VideoSection)
 export const MainPageContentSchema = SchemaFactory.createForClass(MainPageContent)
 
 export type MainPageContentDocument = HydratedDocument<MainPageContent>

@@ -58,6 +58,8 @@ export class FooterLink {
     to: string
 }
 
+export const FooterLinkSchema = SchemaFactory.createForClass(FooterLink)
+
 @Schema({
     _id: false
 })
@@ -69,28 +71,32 @@ export class FooterSection {
     title: string
 
     @Prop({
-        type: [FooterLink],
+        type: [FooterLinkSchema],
         required: true
     })
     links: FooterLink[]
 }
 
+export const LogoSchema = SchemaFactory.createForClass(Logo)
+export const SocialLinkSchema = SchemaFactory.createForClass(SocialLink)
+export const FooterSectionSchema = SchemaFactory.createForClass(FooterSection)
+
 @Schema()
 export class FooterContent {
     @Prop({
-        type: Logo,
+        type: LogoSchema,
         required: true
     })
     logo: Logo
 
     @Prop({
-        type: [SocialLink],
+        type: [SocialLinkSchema],
         required: true
     })
     socialLinks: SocialLink[]
 
     @Prop({
-        type: [FooterSection],
+        type: [FooterSectionSchema],
         required: true
     })
     sections: FooterSection[]
@@ -114,10 +120,6 @@ export class FooterContent {
     updatedAt: Date
 }
 
-export const LogoSchema = SchemaFactory.createForClass(Logo)
-export const SocialLinkSchema = SchemaFactory.createForClass(SocialLink)
-export const FooterLinkSchema = SchemaFactory.createForClass(FooterLink)
-export const FooterSectionSchema = SchemaFactory.createForClass(FooterSection)
 export const FooterContentSchema = SchemaFactory.createForClass(FooterContent)
 
 export type FooterContentDocument = HydratedDocument<FooterContent>
