@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { type PaginateModel, type PaginateResult } from 'mongoose'
-import { Result, ResultDocument, ResultLeanDocument } from '../../database/Result.schema'
+import { Result, ResultDocument } from '../../database/Result.schema'
 import { ListResultsQueryDto } from './dto/ListResultsQuery.dto'
 
 @Injectable()
@@ -12,12 +12,6 @@ export class ResultService {
         @InjectModel(Result.name)
         private readonly ResultModel: PaginateModel<ResultDocument>
     ) {}
-
-    async getAllResults(): Promise<ResultLeanDocument[]> {
-        return await this.ResultModel
-            .find()
-            .lean<ResultLeanDocument[]>()
-    }
 
     private buildStringFilter(field: string, value: string): Record<string, any> {
         return { [field]: { $regex: value, $options: 'i' } }
@@ -48,7 +42,7 @@ export class ResultService {
         }
     }
 
-    async paginateResults(
+    async getResults(
         pagingQuery: ListResultsQueryDto
     ): Promise<PaginateResult<ResultDocument>> {
         const filterQuery: Record<string, any> = {}

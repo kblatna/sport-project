@@ -86,8 +86,7 @@ npm run format         # Code formatting
 - `DELETE /:id` - Delete user
 
 ### 📊 Results (`/api/results`)
-- `GET /paginate` - Get paginated results with filters
-- `GET /all` - Get all results
+- `GET /` - Get paginated results with optional filters
 
 **Query Parameters:**
 - `page` - Page number (default: 1)

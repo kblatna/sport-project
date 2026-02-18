@@ -64,7 +64,7 @@ export function createService<T = unknown>(resource: string) {
         },
 
         async paginate(params?: Record<string, unknown>): Promise<PaginateResult<T>> {
-            const response = await axios.get<PaginateResult<T>>(`${BASE_URL}/${resource}/paginate`, { params })
+            const response = await axios.get<PaginateResult<T>>(`${BASE_URL}/${resource}`, { params })
             return response.data
         }
     }
