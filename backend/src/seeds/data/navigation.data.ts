@@ -10,14 +10,17 @@ export const navigationData = {
         {
             label: 'Informace',
             to: '/info',
+            visible: true,
             children: [
                 {
                     label: 'Mulda pro dospělé',
-                    to: '/info#adults'
+                    to: '/info#adults',
+                    visible: true
                 },
                 {
                     label: 'Muldička pro děti',
-                    to: '/info#kids'
+                    to: '/info#kids',
+                    visible: true
                 }
             ]
         },
@@ -29,18 +32,22 @@ export const navigationData = {
         {
             label: 'O nás',
             to: '/about',
+            visible: true,
             children: [
                 {
                     label: 'Pořadatel',
-                    to: '/organizer'
+                    to: '/organizer',
+                    visible: true
                 },
                 {
                     label: 'Odkazy a ohlasy',
-                    to: '/links'
+                    to: '/links',
+                    visible: true
                 },
                 {
                     label: 'Kontakt',
-                    to: '/contact'
+                    to: '/contact',
+                    visible: true
                 }
             ]
         }
