@@ -6,6 +6,11 @@ export interface IConfig {
     database: {
         uri: string
     }
+    jwt: {
+        secret: string
+        expiresIn: string
+        refreshExpiresIn: string
+    }
     turnstile: {
         secret: string
     }
@@ -32,6 +37,11 @@ export default (): IConfig => {
         port: parseInt(process.env.PORT ?? '3001', 10),
         database: {
             uri: process.env.MONGODB_URI ?? ''
+        },
+        jwt: {
+            secret: process.env.JWT_SECRET ?? 'your-secret-key-change-in-production',
+            expiresIn: process.env.JWT_EXPIRES_IN ?? '15m',
+            refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN ?? '7d'
         },
         turnstile: {
             secret: process.env.TURNSTILE_SECRET ?? ''

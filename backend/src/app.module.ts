@@ -6,6 +6,7 @@ import { APP_GUARD } from '@nestjs/core'
 import configuration from './config/configuration'
 import { validationSchema, validationOptions } from './config/validation.schema'
 import { UserModule } from './modules/user/User.module'
+import { AuthModule } from './modules/auth/Auth.module'
 import { ContactModule } from './modules/contact/Contact.module'
 import { RaceApplicationModule } from './modules/raceApplication/RaceApplication.module'
 import { ResultModule } from './modules/result/Result.module'
@@ -39,6 +40,7 @@ import { HealthModule } from './health/health.module'
             inject: [ConfigService]
         }),
         UserModule,
+        AuthModule,
         ContactModule,
         RaceApplicationModule,
         ResultModule,

@@ -1,6 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { SchemaTypes, type HydratedDocument } from 'mongoose'
 
+export type UserRole = 'editor' | 'admin'
+
 @Schema({
     minimize: false
 })
@@ -42,7 +44,7 @@ export class User {
         enum: ['editor', 'admin'],
         default: 'editor'
     })
-    role: string
+    role: UserRole
 
     @Prop({
         type: SchemaTypes.Date,
@@ -64,5 +66,9 @@ export class User {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
+
+UserSchema.index({ email: 1 })
+UserSchema.index({ username: 1 })
+
 export type UserDocument = HydratedDocument<User>
 export type UserLeanDocument = LeanDocument<UserDocument>

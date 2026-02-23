@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpException, Logger, NotFoundException, Param, Patch, Post } from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpCode, Logger, NotFoundException, Param, Patch, Post, UseGuards } from '@nestjs/common'
 import { UserService } from './User.service'
 import { UserDocument, UserLeanDocument } from '../../database/User.schema'
 import { CreateUserDto } from './dto/CreateUser.dto'
-import { ErrorException } from '../../global/Error.exception'
 import { UpdateUserDto } from './dto/UpdateUser.dto'
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
+import { RolesGuard } from '../auth/guards/roles.guard'
+import { Roles } from '../auth/guards/roles.decorator'
 
 @Controller('users')
 export class UserController {
@@ -14,11 +16,15 @@ export class UserController {
     ) { }
 
     @Get()
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles('admin')
     async getAllUsers(): Promise<UserLeanDocument[]> {
         return await this.userService.getAllUsers()
     }
 
-    @Get('/:id')
+    @Get(':id')
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles('admin')
     async getUserById(
         @Param('id') id: string
     ): Promise<UserDocument> {
@@ -30,20 +36,17 @@ export class UserController {
     }
 
     @Post()
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles('admin')
     async createUser(
         @Body() body: CreateUserDto
     ): Promise<UserDocument> {
-        try {
-            return await this.userService.createUser(body)
-        } catch (error) {
-            if (error instanceof ErrorException) {
-                throw new HttpException(error.message, error.code)
-            }
-            throw error
-        }
+        return await this.userService.createUser(body)
     }
 
     @Patch(':id')
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles('admin')
     async updateUser(
         @Param('id') id: string,
         @Body() body: UpdateUserDto
@@ -52,32 +55,20 @@ export class UserController {
         if (!user) {
             throw new NotFoundException(`User with id ${id} not found`)
         }
-        try {
-            return await this.userService.updateUser(id, body)
-        } catch (error) {
-            if (error instanceof ErrorException) {
-                throw new HttpException(error.message, error.code)
-            }
-            throw error
-        }
+        return await this.userService.updateUser(id, body)
     }
 
     @HttpCode(204)
     @Delete(':id')
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles('admin')
     async deleteUser(
         @Param('id') id: string
     ): Promise<void> {
-        try {
-            const user = await this.userService.getUserById(id)
-            if (!user) {
-                throw new NotFoundException(`User with id ${id} not found`)
-            }
-            await this.userService.deleteUser(id)
-        } catch (error) {
-            if (error instanceof ErrorException) {
-                throw new HttpException(error.message, error.code)
-            }
-            throw error
+        const user = await this.userService.getUserById(id)
+        if (!user) {
+            throw new NotFoundException(`User with id ${id} not found`)
         }
+        await this.userService.deleteUser(id)
     }
 }

@@ -1,8 +1,8 @@
+import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator'
 import { Exclude, Expose } from 'class-transformer'
-import { IsNotEmpty, IsString, IsEmail, MinLength } from 'class-validator'
 
 @Exclude()
-export class CreateUserDto {
+export class BootstrapDto {
     @IsNotEmpty()
     @IsString()
     @Expose()

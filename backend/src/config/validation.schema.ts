@@ -20,6 +20,18 @@ export const validationSchema = Joi.object({
         .required()
         .description('MongoDB connection string'),
 
+    JWT_SECRET: Joi.string()
+        .default('your-secret-key-change-in-production')
+        .description('JWT secret key for token signing'),
+
+    JWT_EXPIRES_IN: Joi.string()
+        .default('15m')
+        .description('JWT access token expiration time'),
+
+    JWT_REFRESH_EXPIRES_IN: Joi.string()
+        .default('7d')
+        .description('JWT refresh token expiration time'),
+
     TURNSTILE_SECRET: Joi.string()
         .allow('')
         .default('')

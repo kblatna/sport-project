@@ -1,16 +1,12 @@
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable, Logger, BadRequestException } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
+import * as bcrypt from 'bcrypt'
 import { User, UserDocument, UserLeanDocument } from '../../database/User.schema'
 import { CreateUser } from './interface/CreateUser.interface'
 import { ErrorException } from '../../global/Error.exception'
 import { UpdateUser } from './interface/UpdateUser.interface'
-
-// TODO: create interface for User
-export interface LocalUser {
-    name: string
-    email: string
-}
+import { BootstrapAdminData } from './interface/BootstrapAdmin.interface'
 
 @Injectable()
 export class UserService {
@@ -34,6 +30,10 @@ export class UserService {
         return await this.UserModel.findOne({ username })
     }
 
+    async getUserByEmail(email: string): Promise<UserDocument | null> {
+        return await this.UserModel.findOne({ email })
+    }
+
     async createUser(data: CreateUser): Promise<UserDocument> {
         const existingUser = await this.UserModel.findOne({
             $or: [
@@ -46,16 +46,24 @@ export class UserService {
             throw new ErrorException('User already exists', 422)
         }
 
+        if (!data.password) {
+            throw new BadRequestException('Password is required')
+        }
+
         const {
             username,
             name,
-            email
+            email,
+            password
         } = data
+
+        const hashedPassword = await bcrypt.hash(password, 10)
 
         return await this.UserModel.create({
             username,
             name,
-            email
+            email,
+            password: hashedPassword
         })
     }
 
@@ -84,5 +92,45 @@ export class UserService {
         if (!existingUser) {
             throw new ErrorException('User not found', 404)
         }
+    }
+
+    async updateLastLogin(id: string): Promise<void> {
+        await this.UserModel.findByIdAndUpdate(id, {
+            lastLogin: new Date(),
+            updatedAt: new Date()
+        })
+    }
+
+    async comparePassword(password: string, hash: string): Promise<boolean> {
+        return await bcrypt.compare(password, hash)
+    }
+
+    async getAdminCount(): Promise<number> {
+        return await this.UserModel.countDocuments({ role: 'admin' })
+    }
+
+    async createBootstrapAdmin(data: BootstrapAdminData): Promise<UserDocument> {
+        const existingUser = await this.UserModel.findOne({
+            $or: [
+                { email: data.email },
+                { username: data.username }
+            ]
+        })
+
+        if (existingUser) {
+            throw new ErrorException('User with this email or username already exists', 422)
+        }
+
+        const newAdmin = await this.UserModel.create({
+            username: data.username,
+            name: data.name,
+            email: data.email,
+            password: data.password,
+            role: 'admin',
+            isActive: true
+        })
+
+        this.logger.log(`Bootstrap admin created: ${data.email}`)
+        return newAdmin
     }
 }
