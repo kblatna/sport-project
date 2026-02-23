@@ -12,6 +12,16 @@ import { BootstrapAdminData } from '../user/interface/BootstrapAdmin.interface'
 type LoginResponse = {
     accessToken: string
     refreshToken: string
+    user: {
+        _id: string
+        name: string
+        username: string
+        email: string
+        role: UserRole
+        isActive: boolean
+        createdAt: Date
+        lastLogin?: Date
+    }
 }
 
 type BootstrapResponse = {
@@ -56,7 +66,17 @@ export class AuthService {
 
         return {
             accessToken,
-            refreshToken
+            refreshToken,
+            user: {
+                _id: user._id.toString(),
+                name: user.name,
+                username: user.username,
+                email: user.email,
+                role: user.role,
+                isActive: user.isActive,
+                createdAt: user.createdAt,
+                lastLogin: user.lastLogin ?? undefined
+            }
         }
     }
 

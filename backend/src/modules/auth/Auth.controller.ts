@@ -11,6 +11,16 @@ import { RequestWithUser } from './interface/RequestWithUser.interface'
 type LoginResponse = {
     accessToken: string
     refreshToken: string
+    user: {
+        _id: string
+        name: string
+        username: string
+        email: string
+        role: string
+        isActive: boolean
+        createdAt: Date
+        lastLogin?: Date
+    }
 }
 
 type BootstrapResponse = {
