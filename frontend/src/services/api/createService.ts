@@ -63,7 +63,7 @@ axios.interceptors.response.use(
                 localStorage.removeItem('accessToken')
                 localStorage.removeItem('refreshToken')
                 localStorage.removeItem('user')
-                router.push('/login')
+                router.push({ name: 'Login' })
                 return Promise.reject(error)
             }
 
@@ -89,7 +89,7 @@ axios.interceptors.response.use(
                 localStorage.removeItem('accessToken')
                 localStorage.removeItem('refreshToken')
                 localStorage.removeItem('user')
-                router.push('/login')
+                router.push({ name: 'Login' })
                 return Promise.reject(refreshError)
             } finally {
                 isRefreshing = false
@@ -104,14 +104,14 @@ axios.interceptors.response.use(
 
         // Handle 500+ server errors - redirect to error page
         if (error.response?.status >= 500) {
-            router.push('/500')
+            router.push({ name: 'ServerError' })
             return Promise.reject(error)
         }
 
         // Handle network errors (no response from server)
         if (!error.response) {
             console.error('Network error:', error.message)
-            router.push('/500')
+            router.push({ name: 'ServerError' })
             return Promise.reject(error)
         }
 

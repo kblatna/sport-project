@@ -66,7 +66,7 @@ export function useAuth() {
         refreshToken.value = null
         error.value = null
 
-        await router.push('/login')
+        await router.push({ name: 'Login' })
     }
 
     const refreshAccessToken = async () => {

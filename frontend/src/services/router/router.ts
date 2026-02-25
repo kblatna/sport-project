@@ -74,20 +74,20 @@ router.beforeEach((to, from, next) => {
     if (to.meta.requiresAuth) {
         if (!accessToken || !user) {
             next({
-                path: '/login',
+                name: 'Login',
                 query: { redirect: to.fullPath }
             })
             return
         }
 
         if (to.meta.requiresAdmin && user.role !== 'admin') {
-            next('/')
+            next({ name: 'Home' })
             return
         }
     }
 
-    if (to.path === '/login' && accessToken && user) {
-        next('/admin')
+    if (to.name === 'login' && accessToken && user) {
+        next({ name: 'AdminUsers' })
         return
     }
 
