@@ -68,19 +68,19 @@ interface NavItem {
 
 const navItems: NavItem[] = [
     {
-        name: 'admin-users',
+        name: 'AdminUsers',
         label: 'Uživatelé'
     },
     {
-        name: 'admin-pages',
+        name: 'AdminPages',
         label: 'Obsah stránek'
     },
     {
-        name: 'admin-results',
+        name: 'AdminResults',
         label: 'Výsledky'
     },
     {
-        name: 'admin-navigation',
+        name: 'AdminNavigation',
         label: 'Navigace'
     }
 ]
