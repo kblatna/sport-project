@@ -6,11 +6,6 @@ export class BootstrapDto {
     @IsNotEmpty()
     @IsString()
     @Expose()
-    username: string
-
-    @IsNotEmpty()
-    @IsString()
-    @Expose()
     name: string
 
     @IsNotEmpty()

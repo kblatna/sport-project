@@ -15,7 +15,6 @@ type LoginResponse = {
     user: {
         _id: string
         name: string
-        username: string
         email: string
         role: UserRole
         isActive: boolean
@@ -70,7 +69,6 @@ export class AuthService {
             user: {
                 _id: user._id.toString(),
                 name: user.name,
-                username: user.username,
                 email: user.email,
                 role: user.role,
                 isActive: user.isActive,
@@ -145,7 +143,6 @@ export class AuthService {
         const hashedPassword = await bcrypt.hash(bootstrapDto.password, 10)
 
         const adminData: BootstrapAdminData = {
-            username: bootstrapDto.username,
             name: bootstrapDto.name,
             email: bootstrapDto.email,
             password: hashedPassword

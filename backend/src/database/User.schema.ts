@@ -18,13 +18,6 @@ export class User {
         required: true,
         unique: true
     })
-    username: string
-
-    @Prop({
-        type: SchemaTypes.String,
-        required: true,
-        unique: true
-    })
     email: string
 
     @Prop({
@@ -68,7 +61,6 @@ export class User {
 export const UserSchema = SchemaFactory.createForClass(User)
 
 UserSchema.index({ email: 1 })
-UserSchema.index({ username: 1 })
 
 export type UserDocument = HydratedDocument<User>
 export type UserLeanDocument = LeanDocument<UserDocument>

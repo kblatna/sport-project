@@ -3,11 +3,11 @@ export type UserRole = 'admin' | 'editor'
 export interface User {
     _id: string
     name: string
-    username: string
     email: string
     role: UserRole
     isActive: boolean
     createdAt: string
+    updatedAt?: string
     lastLogin?: string
 }
 

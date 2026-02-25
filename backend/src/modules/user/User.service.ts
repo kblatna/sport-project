@@ -35,32 +35,21 @@ export class UserService {
     }
 
     async createUser(data: CreateUser): Promise<UserDocument> {
-        const existingUser = await this.UserModel.findOne({
-            $or: [
-                { email: data.email },
-                { username: data.username }
-            ]
-        })
+        const existingUser = await this.UserModel.findOne({ email: data.email })
 
         if (existingUser) {
-            throw new ErrorException('User already exists', 422)
+            throw new ErrorException('User with this email already exists', 422)
         }
 
         if (!data.password) {
             throw new BadRequestException('Password is required')
         }
 
-        const {
-            username,
-            name,
-            email,
-            password
-        } = data
+        const { name, email, password } = data
 
         const hashedPassword = await bcrypt.hash(password, 10)
 
         return await this.UserModel.create({
-            username,
             name,
             email,
             password: hashedPassword
@@ -72,12 +61,29 @@ export class UserService {
         if (!existingUser) {
             throw new ErrorException('User not found', 404)
         }
+
         if (data.name !== undefined) {
             existingUser.name = data.name
         }
 
         if (data.email !== undefined) {
+            const userWithSameEmail = await this.UserModel.findOne({ email: data.email, _id: { $ne: id } })
+            if (userWithSameEmail) {
+                throw new ErrorException('Email already exists', 422)
+            }
             existingUser.email = data.email
+        }
+
+        if (data.password !== undefined && data.password !== '') {
+            existingUser.password = await bcrypt.hash(data.password, 10)
+        }
+
+        if (data.role !== undefined) {
+            existingUser.role = data.role
+        }
+
+        if (data.isActive !== undefined) {
+            existingUser.isActive = data.isActive
         }
 
         if (existingUser.isModified()) {
@@ -110,19 +116,13 @@ export class UserService {
     }
 
     async createBootstrapAdmin(data: BootstrapAdminData): Promise<UserDocument> {
-        const existingUser = await this.UserModel.findOne({
-            $or: [
-                { email: data.email },
-                { username: data.username }
-            ]
-        })
+        const existingUser = await this.UserModel.findOne({ email: data.email })
 
         if (existingUser) {
-            throw new ErrorException('User with this email or username already exists', 422)
+            throw new ErrorException('User with this email already exists', 422)
         }
 
         const newAdmin = await this.UserModel.create({
-            username: data.username,
             name: data.name,
             email: data.email,
             password: data.password,
