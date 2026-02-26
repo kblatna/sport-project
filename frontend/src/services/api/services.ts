@@ -10,8 +10,9 @@ import type { ContactPageContent } from '@/interface/ContactPageContent.interfac
 import type { Result } from '@/interface/Result.interface'
 import type { PaginateResult } from '@/interface/PaginateResult.interface'
 import type { Navigation } from '@/interface/Navigation.interface'
+import { User } from '@/interface/Auth.interface'
 
-export const users = createService('users')
+export const users = createService<User>('users')
 export const results = createService<Result>('results')
 export const mainPageContent = createService<MainPageContent>('main-page-content')
 export const resultPageContent = createService<ResultPageContent>('result-page-content')
