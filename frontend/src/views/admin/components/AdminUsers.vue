@@ -5,22 +5,19 @@
         v-else-if="!error"
         class="px-4 pt-6 sm:px-0"
     >
-        <div class="mb-8 flex justify-between items-center">
-            <div>
-                <h2 class="text-2xl font-bold text-gray-900">
-                    Správa uživatelů
-                </h2>
-                <p class="mt-1 text-sm text-gray-600">
-                    Seznam všech uživatelů v systému
-                </p>
-            </div>
-            <Button
-                label="Přidat uživatele"
-                icon="pi pi-plus"
-                severity="primary"
-                @click="$router.push({ name: 'AdminUserEdit', params: { id: 'new' } })"
-            />
-        </div>
+        <AdminPageHeader
+            title="Správa uživatelů"
+            description="Seznam všech uživatelů v systému"
+        >
+            <template #action>
+                <Button
+                    label="Přidat uživatele"
+                    icon="pi pi-plus"
+                    severity="primary"
+                    @click="$router.push({ name: 'AdminUserEdit', params: { id: 'new' } })"
+                />
+            </template>
+        </AdminPageHeader>
 
         <Card class="shadow-lg">
             <template #content>
@@ -144,6 +141,7 @@ import Column from 'primevue/column'
 import Tag from 'primevue/tag'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import ErrorMessage from '@/components/ErrorMessage.vue'
+import AdminPageHeader from './AdminPageHeader.vue'
 import type { User } from '@/interface/Auth.interface'
 
 const { user: currentUser } = useAuth()
