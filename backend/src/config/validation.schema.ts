@@ -47,9 +47,8 @@ export const validationSchema = Joi.object({
 
     MAILGUN_FROM: Joi.string()
         .allow('')
-        .email({ tlds: { allow: false } })
         .default('')
-        .description('Default sender email address')
+        .description('Default sender email address (can be "Name <email@domain.com>" or "email@domain.com")')
 })
 
 export const validationOptions: Joi.ValidationOptions = {

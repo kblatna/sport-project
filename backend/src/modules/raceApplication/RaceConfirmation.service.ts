@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import * as mjml2html from 'mjml'
+import mjml2html from 'mjml'
 import { CreateRaceSignup } from '../../integrations/mail/interface/CreateRaceSignup.interface'
 import { MailService } from '../../integrations/mail/Mail.service'
 
@@ -34,14 +34,16 @@ export class RaceConfirmationService {
             <mj-column>
               <mj-text font-size="20px" font-weight="bold">Potvrzení přihlášky na závod</mj-text>
               <mj-divider border-color="#cccccc" />
-              <mj-text font-size="16px">Dobrý den, ${data.firstName},</mj-text>
+              <mj-text font-size="16px">Dobrý den, ${data.firstName} ${data.lastName},</mj-text>
               <mj-text font-size="16px">
-                děkujeme za přihlášku.<br /><br />
-                <strong>Kategorie:</strong> ${data.lastName}<br />
-                <strong>Email:</strong> ${data.email}
+                děkujeme za přihlášku na Soběšickou Muldu.<br /><br />
+                <strong>Jméno:</strong> ${data.firstName} ${data.lastName}<br />
+                <strong>Email:</strong> ${data.email}<br />
+                <strong>Kategorie:</strong> ${data.category}<br />
+                <strong>Závod:</strong> ${data.race}
               </mj-text>
               <mj-text font-size="16px">
-                Závod se koná <strong>22. června v 10:00</strong> v <strong>Městském parku</strong>.
+                Těšíme se na Vás na závodě!
               </mj-text>
               <mj-divider border-color="#cccccc" />
               <mj-text font-size="14px" color="#999999">

@@ -6,6 +6,7 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { RaceApplication, RaceApplicationDocument } from '../../database/RaceApplication.schema'
 import { CreateRaceApplication } from './interface/CreateRaceApplication.interface'
+import { RaceConfirmationService } from './RaceConfirmation.service'
 import { TurnstileService } from '../../integrations/turnstile/Turnstile.service'
 import { ErrorException } from '../../global/Error.exception'
 
@@ -16,7 +17,8 @@ export class RaceApplicationService {
     constructor(
         @InjectModel(RaceApplication.name)
         private readonly raceApplicationModel: Model<RaceApplicationDocument>,
-        private readonly turnstileService: TurnstileService
+        private readonly turnstileService: TurnstileService,
+        private readonly raceConfirmationService: RaceConfirmationService
     ) { }
 
     async createRaceApplication(data: CreateRaceApplication): Promise<RaceApplicationDocument> {
@@ -42,6 +44,22 @@ export class RaceApplicationService {
             token: data.token
         })
 
-        return await raceApplication.save()
+        const savedApplication = await raceApplication.save()
+
+        try {
+            await this.raceConfirmationService.sendRaceConfirmationEmail({
+                firstName: data.firstName,
+                lastName: data.lastName,
+                email: data.email,
+                dateOfBirth: new Date(data.dateOfBirth),
+                category: data.category,
+                race: data.race
+            })
+            this.logger.log(`Confirmation email sent to ${data.email}`)
+        } catch (error) {
+            this.logger.error(`Failed to send confirmation email to ${data.email}`, error)
+        }
+
+        return savedApplication
     }
 }

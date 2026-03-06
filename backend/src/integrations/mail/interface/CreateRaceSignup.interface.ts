@@ -5,6 +5,4 @@ export interface CreateRaceSignup {
     dateOfBirth: Date
     category: string
     race: string
-    token: string
-    honeypot?: string | null
 }

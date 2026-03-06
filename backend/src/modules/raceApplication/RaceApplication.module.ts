@@ -3,7 +3,9 @@ import { MongooseModule } from '@nestjs/mongoose'
 import { RaceApplication, RaceApplicationSchema } from '../../database/RaceApplication.schema'
 import { RaceApplicationController } from './RaceApplication.controller'
 import { RaceApplicationService } from './RaceApplication.service'
+import { RaceConfirmationService } from './RaceConfirmation.service'
 import { TurnstileModule } from '../../integrations/turnstile/Turnstile.module'
+import { MailModule } from '../../integrations/mail/Mail.module'
 
 @Module({
     imports: [
@@ -13,10 +15,12 @@ import { TurnstileModule } from '../../integrations/turnstile/Turnstile.module'
                 schema: RaceApplicationSchema
             }
         ]),
-        TurnstileModule
+        TurnstileModule,
+        MailModule
     ],
     providers: [
-        RaceApplicationService
+        RaceApplicationService,
+        RaceConfirmationService
     ],
     controllers: [
         RaceApplicationController
