@@ -3,6 +3,7 @@ import VueSecureHTML from 'vue-html-secure'
 
 // PrimeVue imports
 import PrimeVue from 'primevue/config'
+import ToastService from 'primevue/toastservice'
 import Aura from '@primeuix/themes/aura'
 import { definePreset } from '@primeuix/themes'
 import 'primeicons/primeicons.css'
@@ -91,5 +92,7 @@ app.use(PrimeVue, {
         }
     }
 })
+
+app.use(ToastService)
 
 app.mount('#app')

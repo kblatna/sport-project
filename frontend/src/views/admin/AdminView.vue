@@ -1,5 +1,6 @@
 <template>
     <div class="min-h-screen">
+        <Toast />
         <nav class="shadow-md border-b border-gray-200">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
@@ -59,6 +60,7 @@
 import { useAuth } from '@/composables/useAuth'
 import Avatar from 'primevue/avatar'
 import Button from 'primevue/button'
+import Toast from 'primevue/toast'
 import AdminNavLink from './components/AdminNavLink.vue'
 
 interface NavItem {
