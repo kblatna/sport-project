@@ -146,16 +146,41 @@ For optimal performance, the following indexes are automatically created:
 **Contacts:**
 - `createdAt` (descending)
 
+### Database Seeding
+
+The project includes seed data for development and testing purposes.
+
+**Run seeds:**
+```bash
+npm run seed
+```
+
+**Default admin accounts:**
+- **Admin:** `admin@example.com` / `Admin123!`
+- **Editor:** `editor@example.com` / `Editor123!`
+
+**Security Notice:** Change these credentials in production or disable seeding entirely.
+
+The seed script will populate:
+- Admin and editor users
+- Navigation menu
+- Footer content
+- Page content (main, contact, info, signup, links, organizers, results)
+- Sample race results
+
 ### Schemas
 
 **User Schema:**
 ```typescript
 {
   name: string,
-  username: string (unique),
   email: string (unique),
+  password: string (bcrypt hashed),
+  role: 'editor' | 'admin' (default: 'editor'),
+  isActive: boolean (default: true),
   createdAt: Date,
-  updatedAt: Date | null
+  lastLogin: Date | null,
+  updatedAt: Date
 }
 ```
 

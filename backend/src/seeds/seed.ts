@@ -12,6 +12,7 @@ import { LinksPageContent } from '../database/LinksPageContent.schema'
 import { OrganizerPageContent } from '../database/OrganizersPageContent.schema'
 import { ResultPageContent } from '../database/ResultPageContent.schema'
 import { Result } from '../database/Result.schema'
+import { User } from '../database/User.schema'
 import { mainPageData } from './data/main-page.data'
 import { navigationData } from './data/navigation.data'
 import { footerData } from './data/footer.data'
@@ -22,6 +23,7 @@ import { linksPageData } from './data/links-page.data'
 import { organizerPageData } from './data/organizer-page.data'
 import { resultPageData } from './data/result-page.data'
 import { resultsData } from './data/results.data'
+import { adminUsers } from './data/admin.data'
 
 async function bootstrap(): Promise<void> {
     const app = await NestFactory.createApplicationContext(AppModule)
@@ -36,6 +38,7 @@ async function bootstrap(): Promise<void> {
     const organizerPageContentModel = app.get<Model<OrganizerPageContent>>(getModelToken(OrganizerPageContent.name))
     const resultPageContentModel = app.get<Model<ResultPageContent>>(getModelToken(ResultPageContent.name))
     const resultModel = app.get<Model<Result>>(getModelToken(Result.name))
+    const userModel = app.get<Model<User>>(getModelToken(User.name))
 
     await Promise.all([
         mainPageContentModel.deleteMany({}),
@@ -47,9 +50,11 @@ async function bootstrap(): Promise<void> {
         linksPageContentModel.deleteMany({}),
         organizerPageContentModel.deleteMany({}),
         resultPageContentModel.deleteMany({}),
-        resultModel.deleteMany({})
+        resultModel.deleteMany({}),
+        userModel.deleteMany({})
     ])
 
+    await userModel.insertMany(adminUsers)
     await navigationModel.create(navigationData)
     await footerContentModel.create(footerData)
     await mainPageContentModel.create(mainPageData)
