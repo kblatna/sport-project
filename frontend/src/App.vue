@@ -1,25 +1,24 @@
 <template>
     <div class="min-h-screen flex flex-col">
-        <!-- Header -->
-        <HeaderNav />
+        <HeaderNav v-if="!isAdminRoute" />
 
-        <!-- Breadcrumb Navigation -->
-        <BreadcrumbNav />
+        <BreadcrumbNav v-if="!isAdminRoute" />
 
-        <!-- Main Content -->
         <main class="flex-1">
             <RouterView />
         </main>
 
-        <!-- Footer -->
-        <FooterInfo />
+        <FooterInfo v-if="!isAdminRoute" />
     </div>
 </template>
 
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { computed } from 'vue'
+import { RouterView, useRoute } from 'vue-router'
 import BreadcrumbNav from './components/BreadcrumbNav.vue'
 import FooterInfo from './components/FooterInfo.vue'
 import HeaderNav from './components/HeaderNav.vue'
 
+const route = useRoute()
+const isAdminRoute = computed(() => route.meta.requiresAdmin === true)
 </script>
