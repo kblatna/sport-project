@@ -1,6 +1,6 @@
 <template>
-    <div class="mb-8 flex justify-between items-center">
-        <div>
+    <div class="mb-8 lg:flex justify-between items-center">
+        <div class="mb-5 lg:mb-0">
             <h2 class="text-2xl font-bold text-gray-900">
                 {{ title }}
             </h2>

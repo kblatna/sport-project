@@ -45,6 +45,47 @@
                             size="small"
                             @click="handleLogout"
                         />
+                        <button
+                            class="sm:hidden p-2"
+                            @click="toggleMobileMenu"
+                            aria-label="Toggle menu"
+                        >
+                            <i
+                                :class="isMobileMenuOpen ? 'pi pi-times' : 'pi pi-bars'"
+                                class="text-xl"
+                            ></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div
+                    v-if="isMobileMenuOpen"
+                    class="sm:hidden py-4 border-t border-gray-200"
+                >
+                    <div class="flex flex-col gap-2">
+                        <AdminNavLink
+                            v-for="item in navItems"
+                            :key="item.name"
+                            :name="item.name"
+                            @click="isMobileMenuOpen = false"
+                        >
+                            {{ item.label }}
+                        </AdminNavLink>
+                    </div>
+                    <div class="flex items-center gap-3 px-4 py-3 mt-4 border-t border-gray-200">
+                        <Avatar
+                            icon="pi pi-user"
+                            size="normal"
+                            shape="circle"
+                        />
+                        <div class="flex flex-col">
+                            <span class="text-sm font-semibold text-gray-900">
+                                {{ user?.name }}
+                            </span>
+                            <span class="text-xs text-gray-500">
+                                {{ user?.email }}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -57,6 +98,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useAuth } from '@/composables/useAuth'
 import Avatar from 'primevue/avatar'
 import Button from 'primevue/button'
@@ -88,6 +130,11 @@ const navItems: NavItem[] = [
 ]
 
 const { user, logout } = useAuth()
+const isMobileMenuOpen = ref(false)
+
+const toggleMobileMenu = () => {
+    isMobileMenuOpen.value = !isMobileMenuOpen.value
+}
 
 // TODO: Apply better confirmation
 const handleLogout = async () => {
