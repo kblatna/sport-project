@@ -1,39 +1,41 @@
 <template>
-    <div class="grid lg:grid-cols-2 gap-10 items-center">
-        <div :class="['prose prose-lg max-w-none', isImageLeft ? 'lg:order-2' : 'lg:order-1']">
+    <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div :class="['prose prose-lg max-w-none', isImageLeft ? 'md:order-2' : 'md:order-1']">
             <slot></slot>
         </div>
 
-        <div
+        <iframe
+            v-if="imageSrc.includes('mapy.com')"
+            :src="imageSrc"
+            :width="imageWidth || '100%'"
+            :height="imageHeight || '100%'"
+            frameborder="0"
             :class="[
-                'relative overflow-hidden rounded-2xl shadow-2xl group cursor-pointer',
-                imageTall ? 'aspect-[3/4] lg:aspect-[2/3]' :
-                imageSmall ? 'aspect-square max-w-sm mx-auto lg:mx-0' : 'aspect-video',
-                isImageLeft ? 'lg:order-1' : 'lg:order-2',
+                'w-full rounded-2xl shadow-2xl max-h-64 md:max-h-none',
+                imageTall ? 'aspect-[21/9] md:aspect-[2/3]' :
+                imageSmall ? 'aspect-[21/9] md:aspect-square max-w-sm mx-auto md:mx-0' : 'aspect-[21/9] md:aspect-video',
+                isImageLeft ? 'md:order-1' : 'md:order-2',
+                imageClass
             ]"
-        >
-            <iframe
-                v-if="imageSrc.includes('mapy.com')"
-                :src="imageSrc"
-                :width="imageWidth || '100%'"
-                :height="imageHeight || '100%'"
-                frameborder="0"
-                :class="['w-full h-full', imageClass]"
-                style="border:none"
-            ></iframe>
-            <Image
-                v-else
-                :src="imageSrc"
-                :alt="alt || 'Obrázek'"
-                :class="['w-full h-full cursor-default']"
-                :image-class="imageClass"
-            />
-        </div>
+            style="border:none"
+        ></iframe>
+        <img
+            v-else
+            :src="imageSrc"
+            :alt="alt || 'Obrázek'"
+            :class="[
+                'w-full rounded-2xl shadow-2xl object-cover max-h-64 md:max-h-none',
+                imageTall ? 'aspect-[21/9] md:aspect-[2/3]' :
+                imageSmall ? 'aspect-[21/9] md:aspect-square max-w-sm mx-auto md:mx-0' : 'aspect-[21/9] md:aspect-video',
+                isImageLeft ? 'md:order-1' : 'md:order-2',
+                imageClass
+            ]"
+            :style="imageObjectPosition ? { objectPosition: imageObjectPosition } : undefined"
+        />
     </div>
 </template>
 
 <script setup lang="ts">
-import { Image } from 'primevue'
 import { computed } from 'vue'
 
 const props = defineProps<{
@@ -46,6 +48,7 @@ const props = defineProps<{
     imageWidth?: string | number
     imageHeight?: string | number
     imageClass?: string | string[]
+    imageObjectPosition?: string
 }>()
 
 const isImageLeft = computed(() => {

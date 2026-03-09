@@ -20,7 +20,6 @@
         </div>
     </SectionWrapper>
 
-    <!-- Map without tabs + category description -->
     <SectionWrapper
         padding-y="md"
         background="gray"
@@ -54,7 +53,6 @@
         </div>
     </SectionWrapper>
 
-    <!-- Registration & Payment -->
     <SectionWrapper
         padding-y="md"
         class="container"
@@ -72,7 +70,6 @@
         />
     </SectionWrapper>
 
-    <!-- Attendance -->
     <SectionWrapper
         padding-y="md"
         background="gray"
@@ -99,7 +96,6 @@
         </div>
     </SectionWrapper>
 
-    <!-- Awards -->
     <SectionWrapper
         padding-y="md"
         class="container"
@@ -112,6 +108,7 @@
             <ContentImageCard
                 :image-src="content.awards.imageSrc"
                 :image-position="content.awards.imagePosition"
+                image-object-position="top"
             >
                 <template #default>
                     <div class="space-y-4">

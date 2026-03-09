@@ -59,6 +59,7 @@
                 <ContentImageCard
                     :image-src="content.commonSections.bikeService.imageSrc"
                     :image-position="content.commonSections.bikeService.imagePosition"
+                    image-object-position="bottom"
                 >
                     <template #default>
                         <p>{{ content.commonSections.bikeService.content }}</p>

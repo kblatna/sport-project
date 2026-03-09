@@ -20,7 +20,6 @@
         </div>
     </SectionWrapper>
 
-    <!-- Map with tabs -->
     <SectionWrapper
         padding-y="md"
         background="gray"
@@ -61,7 +60,6 @@
         </div>
     </SectionWrapper>
 
-    <!-- Registration & Payment -->
     <SectionWrapper
         padding-y="md"
         class="container"
@@ -79,7 +77,6 @@
         />
     </SectionWrapper>
 
-    <!-- Attendance -->
     <SectionWrapper
         padding-y="md"
         background="gray"
@@ -92,6 +89,7 @@
             <ContentImageCard
                 :image-src="content.attendance.imageSrc"
                 :image-position="content.attendance.imagePosition"
+                image-object-position="bottom"
             >
                 <template #default>
                     <div class="space-y-4">
@@ -106,7 +104,6 @@
         </div>
     </SectionWrapper>
 
-    <!-- Prizes -->
     <SectionWrapper
         v-if="content.prizes"
         padding-y="md"
@@ -116,14 +113,16 @@
             :title="content.prizes.title"
             :show-divider="false"
         />
-        <ContentImageCard :image-src="content.prizes.imageSrc">
+        <ContentImageCard
+            :image-src="content.prizes.imageSrc"
+            image-object-position="top"
+        >
             <template #default>
                 <p v-html="content.prizes.content"></p>
             </template>
         </ContentImageCard>
     </SectionWrapper>
 
-    <!-- Awards -->
     <SectionWrapper
         padding-y="md"
         background="gray"
@@ -136,6 +135,7 @@
             <ContentImageCard
                 :image-src="content.awards.imageSrc"
                 :image-position="content.awards.imagePosition"
+                image-object-position="top"
             >
                 <template #default>
                     <div class="space-y-4">
