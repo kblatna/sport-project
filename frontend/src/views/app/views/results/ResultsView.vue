@@ -1,6 +1,6 @@
 <template>
     <SectionWrapper class="container">
-        <LoadingSpinner v-if="isLoading" />
+        <LoadingSpinner v-if="isLoadingPage" />
 
         <template v-else-if="pageContent">
             <SectionHeader
@@ -15,7 +15,7 @@
                 <ResultsDataTable
                     :results="result.docs"
                     :total-records="result.totalDocs"
-                    :is-loading="isLoading"
+                    :is-loading="isLoadingDatatable"
                     :page-content="pageContent"
                     @on-lazy-load="loadData"
                 />
@@ -59,27 +59,28 @@ const result = ref<PaginateResult<Result>>({
 })
 
 const pageContent = ref<ResultPageContent | null>(null)
-const isLoading = ref(false)
+const isLoadingPage = ref(true)
+const isLoadingDatatable = ref(false)
 const error = ref<string | null>(null)
 
 onMounted(async () => {
     await loadPageContent()
     const currentYear = new Date().getFullYear()
     await loadDataWithFallback(currentYear)
+    isLoadingPage.value = false
 })
 
 async function loadPageContent(): Promise<void> {
-    isLoading.value = true
+    isLoadingPage.value = true
     error.value = null
     try {
         const response = await resultPageContent.getAll()
         pageContent.value = response
     } catch (err) {
         console.error('Error fetching page content:', err)
-        error.value = 'Nepodařilo se načíst obsah stránky'
         notifier.error('Nepodařilo se načíst obsah stránky')
     } finally {
-        isLoading.value = false
+        isLoadingPage.value = false
     }
 }
 
@@ -93,7 +94,7 @@ async function loadDataWithFallback(year: number): Promise<void> {
 }
 
 async function loadData(filters?: Record<string, unknown>): Promise<void> {
-    isLoading.value = true
+    isLoadingDatatable.value = true
     try {
         const response = await listResults(filters)
         result.value = response
@@ -101,7 +102,7 @@ async function loadData(filters?: Record<string, unknown>): Promise<void> {
         console.error('Error fetching results:', err)
         notifier.error('Nepodařilo se načíst výsledky')
     } finally {
-        isLoading.value = false
+        isLoadingDatatable.value = false
     }
 }
 </script>
