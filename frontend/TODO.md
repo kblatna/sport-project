@@ -1,178 +1,184 @@
 # Frontend TODO List
 
-**Projekt**: Sport Project - Frontend  
-**Poslední aktualizace**: 2026-01-12  
-**Status**: Aktivní vývoj
+**Project**: Sport Project - Frontend Application  
+**Last Updated**: March 2026  
+**Status**: Active Development  
+**Code Quality**: ⭐⭐⭐⭐⭐ (9.5/10)
 
 ---
 
-## 🔴 Vysoká priorita
+## 🔴 High Priority
 
-Všechny kritické úkoly jsou dokončeny! ✅
+All critical tasks are completed! ✅
 
 ---
 
-## 🟡 Střední priorita
+## 🟡 Medium Priority
 
 ### Testing
-- [ ] Nastavit Vitest testing framework
-  - [ ] Instalace: `npm i -D vitest @vue/test-utils @testing-library/vue happy-dom`
-  - [ ] Vytvořit `vitest.config.ts`
-  - [ ] Nastavit test scripts v `package.json`
-- [ ] Unit testy pro composables
+- [ ] Set up Vitest testing framework
+  - [ ] Install: `npm i -D vitest @vue/test-utils @testing-library/vue happy-dom`
+  - [ ] Create `vitest.config.ts`
+  - [ ] Add test scripts to `package.json`
+- [ ] Unit tests for composables
   - [ ] `useNavigation.ts`
   - [ ] `useFooterData.ts`
   - [ ] `useSafeHtml.ts`
   - [ ] `useInfoPageContent.ts`
   - [ ] `useScrollHeader.ts`
-- [ ] Unit testy pro utilities
+- [ ] Unit tests for utilities
   - [ ] `validators.ts`
   - [ ] `logger.ts`
-- [ ] Integration testy pro formuláře
+- [ ] Integration tests for forms
   - [ ] `SignupForm.vue`
   - [ ] `ContactForm.vue`
-- [ ] E2E testy pro kritické user flows
-  - [ ] Instalace Playwright nebo Cypress
-  - [ ] Test: Registrace závodníka
-  - [ ] Test: Odeslání kontaktního formuláře
-  - [ ] Test: Zobrazení výsledků
+- [ ] E2E tests for critical user flows
+  - [ ] Install Playwright or Cypress
+  - [ ] Test: Race registration flow
+  - [ ] Test: Contact form submission
+  - [ ] Test: Results display and filtering
 
 ### Performance & Bundle Optimization
-- [ ] Nainstalovat bundle analyzer
+- [ ] Install bundle analyzer
   - [ ] `npm i -D rollup-plugin-visualizer`
-  - [ ] Přidat do `vite.config.ts`
-- [ ] Analyzovat velikost bundle
-- [ ] Tree-shaking nepoužívaných PrimeVue komponent
-- [ ] Zvážit code splitting pro velké dependencies
-- [ ] Lazy loading pro routes (✅ již implementováno)
+  - [ ] Add to `vite.config.ts`
+- [ ] Analyze bundle size
+- [ ] Tree-shake unused PrimeVue components
+- [ ] Consider code splitting for large dependencies
+- [ ] Lazy loading for routes (✅ already implemented)
+- [ ] Dynamic imports for heavy components
 
 ### Axios Configuration
-- [ ] Vytvořit centralizovanou axios instanci
-- [ ] Implementovat interceptors:
-  - [ ] Request interceptor pro automatické tokeny
-  - [ ] Response interceptor pro error handling
-  - [ ] Response interceptor pro token refresh
-  - [ ] Request/response logging (pouze dev mode)
-- [ ] Globální error handling pro API calls
+- [ ] Create centralized axios instance
+- [ ] Implement interceptors:
+  - [ ] Request interceptor for automatic tokens
+  - [ ] Response interceptor for error handling
+  - [ ] Response interceptor for token refresh
+  - [ ] Request/response logging (dev mode only)
+- [ ] Global error handling for API calls
+- [ ] Request cancellation on route change
 
 ---
 
-## 🟢 Nízká priorita
+## 🟢 Low Priority
 
 ### Image Optimization
-- [ ] Implementovat lazy loading pro všechny obrázky
-  - [ ] Přidat `loading="lazy"` attribute
-- [ ] WebP formát s fallback na JPG/PNG
-  - [ ] Vytvořit `<picture>` komponenty
-  - [ ] Implementovat `srcset` pro responsive images
-- [ ] Zvážit použití CDN pro obrázky
+- [ ] Implement lazy loading for all images
+  - [ ] Add `loading="lazy"` attribute
+- [ ] WebP format with fallback to JPG/PNG
+  - [ ] Create `<picture>` components
+  - [ ] Implement `srcset` for responsive images
+- [ ] Consider using CDN for images
   - [ ] Cloudinary
   - [ ] ImageKit
-  - [ ] Nebo vlastní optimalizace na build time
+  - [ ] Or build-time optimization
 
 ### Error Tracking & Monitoring
-- [ ] Sentry integrace
+- [ ] Sentry integration
   - [ ] `npm i @sentry/vue`
-  - [ ] Vytvoření Sentry projektu
-  - [ ] Konfigurace v `main.ts`
-  - [ ] Napojení na `logger.ts`
-  - [ ] Source maps pro production
+  - [ ] Create Sentry project
+  - [ ] Configure in `main.ts`
+  - [ ] Connect to `logger.ts`
+  - [ ] Source maps for production
 - [ ] Performance monitoring
   - [ ] Web Vitals tracking (CLS, FID, FCP, LCP, TTFB)
   - [ ] Custom performance marks
 - [ ] Analytics
-  - [ ] Google Analytics 4 nebo Matomo
-  - [ ] Event tracking pro formuláře
+  - [ ] Google Analytics 4 or Matomo
+  - [ ] Event tracking for forms
   - [ ] Conversion tracking
 
 ### Caching Strategy
-- [ ] In-memory cache pro API responses v composables
-- [ ] LocalStorage cache s TTL
-- [ ] Service Worker pro offline support
-- [ ] Implementovat SWR (stale-while-revalidate) pattern
-- [ ] Cache invalidation strategie
+- [ ] In-memory cache for API responses in composables
+- [ ] LocalStorage cache with TTL
+- [ ] Service Worker for offline support
+- [ ] Implement SWR (stale-while-revalidate) pattern
+- [ ] Cache invalidation strategy
 
 ### Documentation
 - [ ] Storybook setup
   - [ ] `npx storybook@latest init`
-  - [ ] Stories pro všechny komponenty
+  - [ ] Stories for all components
   - [ ] Props documentation
   - [ ] Events documentation
-  - [ ] Deploy na CDN nebo Netlify
-- [ ] JSDoc komentáře pro všechny props
-  - [ ] Komponenty v `components/`
-  - [ ] View komponenty
-  - [ ] Form komponenty
-- [ ] API dokumentace (TypeDoc)
+  - [ ] Deploy to CDN or Netlify
+- [ ] JSDoc comments for all props
+  - [ ] Components in `components/`
+  - [ ] View components
+  - [ ] Form components
+- [ ] API documentation (TypeDoc)
 - [ ] Contributing guidelines (`CONTRIBUTING.md`)
-- [ ] Changelog (`CHANGELOG.md`) podle Keep a Changelog formátu
+- [ ] Changelog (`CHANGELOG.md`) following Keep a Changelog format
 
 ### Code Quality Tools
 - [ ] Prettier setup
   - [ ] `npm i -D prettier eslint-config-prettier`
-  - [ ] Vytvoření `.prettierrc`
-  - [ ] Integrace s ESLint
+  - [ ] Create `.prettierrc`
+  - [ ] Integrate with ESLint
 - [ ] Pre-commit hooks (Husky)
   - [ ] Lint staged files
   - [ ] Run tests
   - [ ] Format code
-- [ ] Commitlint pro konzistentní commit messages
+- [ ] Commitlint for consistent commit messages
   - [ ] Conventional commits format
 
 ### Accessibility (A11y)
-- [ ] Audit všech formulářů
+- [ ] Audit all forms
   - [ ] ARIA labels
   - [ ] Keyboard navigation
   - [ ] Focus management
 - [ ] Color contrast check
 - [ ] Screen reader testing
 - [ ] Lighthouse accessibility audit
+- [ ] Focus indicators for keyboard navigation
 
 ### Security Enhancements
-- [ ] Content Security Policy (vyžaduje backend změny)
-- [ ] Client-side rate limiting pro formuláře
+- [ ] Content Security Policy (requires backend changes)
+- [ ] Client-side rate limiting for forms
 - [ ] Input sanitization review
-- [ ] XSS protection audit (✅ DOMPurify již implementován)
-- [ ] CSRF token handling (pokud potřeba)
+- [ ] XSS protection audit (✅ DOMPurify already implemented)
+- [ ] CSRF token handling (if needed)
 
 ### UX Improvements
-- [ ] Loading skeletons místo "Načítání..." textu
-  - [ ] PrimeVue Skeleton komponenta
-  - [ ] Custom skeleton pro tabulky
-  - [ ] Skeleton pro karty
-- [ ] Toast notifications pro user feedback
+- [ ] Loading skeletons instead of "Loading..." text
+  - [ ] PrimeVue Skeleton component
+  - [ ] Custom skeleton for tables
+  - [ ] Skeleton for cards
+- [ ] Toast notifications for user feedback
 - [ ] Optimistic UI updates
 - [ ] Better error messages (user-friendly)
 - [ ] Form field auto-focus
 - [ ] Form auto-save (draft mode)
+- [ ] Smooth scroll animations
 
 ### Migration & Refactoring
-- [ ] Migrace z HTML na Tiptap JSON (dlouhodobý cíl)
-  - [ ] Instalace Tiptap editoru
-  - [ ] Backend podpora pro JSON content
-  - [ ] Renderer komponenta pro JSON
-  - [ ] Migrace starých HTML dat
-  - [ ] Dual storage během přechodu
-- [ ] Race categories z API místo config file
+- [ ] Migration from HTML to Tiptap JSON (long-term goal)
+  - [ ] Install Tiptap editor
+  - [ ] Backend support for JSON content
+  - [ ] Renderer component for JSON
+  - [ ] Migrate old HTML data
+  - [ ] Dual storage during transition
+- [ ] Race categories from API instead of config file
   - [ ] Backend API endpoint
   - [ ] Frontend fetching logic
-  - [ ] Cache pro categories
+  - [ ] Cache for categories
 
 ---
 
 ## 📋 Backlog (Future Ideas)
 
 ### Features
-- [ ] Dark mode podpora
+- [ ] Dark mode support
   - [ ] Theme switching
-  - [ ] User preference v localStorage
+  - [ ] User preference in localStorage
   - [ ] System preference detection
 - [ ] Internationalization (i18n)
-  - [ ] Multi-language support
+  - [ ] Multi-language support (Czech/English)
   - [ ] Vue i18n setup
-- [ ] Print stylesheet pro výsledky
-- [ ] Export výsledků (CSV, PDF)
-- [ ] Social media sharing
+  - [ ] Language switcher component
+- [ ] Print stylesheet for results
+- [ ] Export results (CSV, PDF)
+- [ ] Social media sharing buttons
 - [ ] Progressive Web App (PWA)
   - [ ] Service Worker
   - [ ] Manifest.json
@@ -181,30 +187,31 @@ Všechny kritické úkoly jsou dokončeny! ✅
 
 ### Developer Experience
 - [ ] Component playground
-- [ ] Design system dokumentace
+- [ ] Design system documentation
 - [ ] Visual regression testing
 - [ ] Automated dependency updates (Renovate/Dependabot)
+- [ ] Component library extraction
 
 ---
 
-## ✅ Dokončeno
+## ✅ Completed
 
-### Kritické problémy (High Priority)
-- [x] Opravit TypeScript `any` typy v `createService.ts`
-- [x] Vytvořit logger service místo `console.error`
-- [x] Opravit `key={index}` v v-for loops
-- [x] Odstranit všechny ESLint errors
+### Critical Issues (High Priority)
+- [x] Fix TypeScript `any` types in `createService.ts`
+- [x] Create logger service instead of `console.error`
+- [x] Fix `key={index}` in v-for loops
+- [x] Remove all ESLint errors
 
-### Střední priorita
-- [x] Implementovat global error handler
+### Medium Priority
+- [x] Implement global error handler
 - [x] Environment variables typing
-- [x] Race categories konfigurace
+- [x] Race categories configuration
 - [x] HeaderNav.vue styles refactoring
-- [x] Všechny TypeScript errors opraveny
+- [x] All TypeScript errors fixed
 - [x] Cloudflare Turnstile types
 
 ### Infrastructure
-- [x] ESLint konfigurace
+- [x] ESLint configuration
 - [x] TypeScript strict mode
 - [x] Vite setup
 - [x] Tailwind CSS setup
@@ -214,11 +221,17 @@ Všechny kritické úkoly jsou dokončeny! ✅
 
 ---
 
-## 📝 Poznámky
+## 📝 Notes
 
-- Před implementací velkých změn konzultovat s týmem
-- Odhady času jsou orientační
-- Priority lze měnit podle business potřeb
-- Udržovat tento soubor aktuální po dokončení úkolů
+- Consult with team before implementing major changes
+- Time estimates are approximate
+- Priorities can change based on business needs
+- Keep this file updated after completing tasks
+- See [README.md](./README.md) for current project status
 
-**Aktuální kvalita kódu**: 9.5/10 ⭐⭐⭐⭐⭐
+**Current Code Quality**: 9.5/10 ⭐⭐⭐⭐⭐
+
+---
+
+**Created**: January 2026  
+**Last Updated**: March 2026
