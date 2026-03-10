@@ -17,7 +17,7 @@
                 isImageLeft ? 'md:order-1' : 'md:order-2',
                 imageClass
             ]"
-            style="border:none"
+            class="border-0"
         ></iframe>
         <img
             v-else

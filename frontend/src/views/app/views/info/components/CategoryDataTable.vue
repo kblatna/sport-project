@@ -9,38 +9,38 @@
         <Column
             field="group"
             header="Skupina"
-            style="width: 1rem;"
+            class="w-4"
         />
         <Column
             field="category"
             header="Kategorie"
-            style="width: 9rem;"
+            class="w-36"
         />
         <Column
             field="birth"
             header="Ročník narození"
-            style="width: 5rem;"
+            class="w-20"
         />
         <Column
             field="length"
             header="Délka závodu"
-            style="width: 9rem;"
+            class="w-36"
         />
         <Column
             field="presentation"
             header="Prezentace"
-            style="width: 7rem;"
+            class="w-28"
         />
         <Column
             field="start"
             header="Start"
-            style="width: 5rem;"
+            class="w-20"
         />
         <Column
             v-if="hasAnnouncement"
             field="announcement"
             header="Vyhlášení"
-            style="width: 5rem;"
+            class="w-20"
         />
     </DataTable>
 </template>
