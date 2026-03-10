@@ -1,36 +1,55 @@
 # Sport Project - Backend API
 
-NestJS REST API for sports application with user management, race results and registrations.
+NestJS REST API server for sports race management with user authentication, race results, participant registrations, and dynamic content management.
 
-## Technologies
+## 🚀 Technologies
 
-- **NestJS** - Progressive Node.js framework
-- **TypeScript** - Type-safe JavaScript
-- **MongoDB** - NoSQL database
-- **Mongoose** - MongoDB ODM with pagination
-- **Docker** - Containerization
-- **Joi** - Environment validation
-- **Throttler** - Rate limiting
+### Core Framework
+- **NestJS** - Progressive Node.js framework with modular architecture
+- **TypeScript** - Type-safe JavaScript development
+- **Node.js** - JavaScript runtime environment
 
-## Quick Start
+### Database
+- **MongoDB 7** - NoSQL database for flexible data storage
+- **Mongoose** - Elegant MongoDB ODM with schema validation and pagination
 
-### With Docker Compose (recommended)
+### Security & Validation
+- **Class Validator** - DTO validation and transformation
+- **Joi** - Environment variable validation schema
+- **Bcrypt** - Secure password hashing
+- **Throttler** - Rate limiting and DDoS protection
+
+### DevOps
+- **Docker** - Containerization for consistent environments
+- **ESLint** - Code linting and quality assurance
+
+### External Services
+- **Mailgun** - Email delivery service integration
+- **Cloudflare Turnstile** - Bot protection for form submissions
+
+## ⚡ Quick Start
+
+### With Docker Compose (Recommended)
+
 ```bash
-# Start entire project including frontend and database
-docker compose up --build
+# Start entire project (backend, frontend, database)
+docker compose up -d
 
 # API will be available at: http://localhost:3001
+# Health check: http://localhost:3001/health
 ```
 
 ### Local Development
+
 ```bash
 # Install dependencies
 npm install
 
-# Set up environment variables (see Configuration section)
+# Create environment file
 cp .env.example .env
+# Edit .env with your configuration (see Configuration section)
 
-# Start in watch mode
+# Start in development mode with hot reload
 npm run start:dev
 
 # API will be available at: http://localhost:3001
@@ -315,11 +334,43 @@ Error: listen EADDRINUSE: address already in use :::3001
 
 ## 📚 Additional Documentation
 
-- [TODO.md](./TODO.md) - Planned improvements and deferred tasks
-- [CODE_REVIEW_CHANGES.md](./CODE_REVIEW_CHANGES.md) - Recent code review fixes
+- **Main Project**: [../README.md](../README.md) - Complete project overview and setup
+- **Frontend**: [../frontend/README.md](../frontend/README.md) - Frontend application documentation
+- **Database Seeds**: [./src/seeds/README.md](./src/seeds/README.md) - Database seeding guide
+- **TODO**: [./TODO.md](./TODO.md) - Planned improvements and deferred tasks
+- **Auth Setup**: [./AUTH_SETUP.md](./AUTH_SETUP.md) - Authentication configuration guide
 
-## 🔗 Related Projects
+## 🔗 Related Resources
 
-- Frontend: `../frontend`
-- Docker Compose: `../docker-compose.yml`
+- **NestJS Documentation**: https://docs.nestjs.com
+- **Mongoose Documentation**: https://mongoosejs.com/docs
+- **MongoDB Manual**: https://docs.mongodb.com/manual
+- **Cloudflare Turnstile**: https://developers.cloudflare.com/turnstile
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
+
+### Code Standards
+
+- **TypeScript**: Strict mode with proper typing
+- **ESLint**: Must pass linting checks
+- **Testing**: Add tests for new features
+- **Documentation**: Update README for significant changes
+
+## 📄 License
+
+[Your License Here]
+
+---
+
+**Project Status**: Active Development  
+**Last Updated**: March 2026  
+**API Version**: 1.0.0
+
+For complete project documentation, see the [main README](../README.md).
 
