@@ -43,7 +43,7 @@
                 <Column
                     field="rank"
                     header="Umístění"
-                    style="width: 100px"
+                    class="w-24"
                 />
 
                 <Column
@@ -64,12 +64,12 @@
                 <Column
                     field="year"
                     header="Rok"
-                    style="width: 100px"
+                    class="w-24"
                 />
 
                 <Column
                     header="Akce"
-                    style="width: 120px"
+                    class="w-30"
                 >
                     <template #body>
                         <div class="flex gap-2">

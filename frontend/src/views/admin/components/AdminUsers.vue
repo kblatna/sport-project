@@ -97,7 +97,7 @@
 
                     <Column
                         header="Akce"
-                        style="width: 180px"
+                        class="w-44"
                     >
                         <template #body="{ data }">
                             <div class="flex gap-2">
