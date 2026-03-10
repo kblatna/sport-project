@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<{
     innerClass?: string
 }>(), {
     background: 'white',
-    paddingY: 'lg',
+    paddingY: 'sm',
     customClass: '',
     constrain: true,
     innerClass: 'max-w-content mx-auto px-4'
