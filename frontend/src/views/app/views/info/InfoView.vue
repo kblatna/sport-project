@@ -71,7 +71,7 @@
 
     <ErrorMessage
         v-if="error"
-        :message="error.message"
+        :message="error"
     />
 </template>
 
@@ -81,13 +81,46 @@ import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import SafeHtml from '@/components/SafeHtml.vue'
 import SectionHeader from '@/components/SectionHeader.vue'
 import SectionWrapper from '@/components/SectionWrapper.vue'
-import { useInfoPageContent } from '@/composables/useInfoPageContent'
-import { onMounted } from 'vue'
+import type { InfoPageContent } from '@/interface/InfoPageContent'
+import { infoPageContent } from '@/services/api/services'
+import { computed, onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import AdultsInfo from './components/AdultsInfo.vue'
 import ContentImageCard from './components/ContentImageCard.vue'
 import KidsInfo from './components/KidsInfo.vue'
 
-const { content, currentContent, variant, loading, error, fetchContent } = useInfoPageContent()
+const route = useRoute()
+const content = ref<InfoPageContent | null>(null)
+const loading = ref(false)
+const error = ref<string | null>(null)
+
+// Determines which variant to display based on hash fragment (#kids or #adults)
+const variant = computed<'kids' | 'adults'>(() => {
+    const hash = route.hash.replace('#', '')
+    return hash === 'kids' ? 'kids' : 'adults'
+})
+
+// Returns data for current variant
+const currentContent = computed(() => {
+    if (!content.value) {
+        return null
+    }
+    return content.value[variant.value]
+})
+
+async function fetchContent() {
+    loading.value = true
+    error.value = null
+    try {
+        const response = await infoPageContent.getAll()
+        content.value = response
+    } catch (err) {
+        console.error('Error loading info page content:', err)
+        error.value = 'Nepodařilo se načíst obsah stránky'
+    } finally {
+        loading.value = false
+    }
+}
 
 onMounted(async () => {
     await fetchContent()
