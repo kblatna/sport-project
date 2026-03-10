@@ -1,6 +1,6 @@
 <template>
     <SectionWrapper class="container">
-        <LoadingSpinner v-if="loading" />
+        <LoadingSpinner v-if="isLoading" />
 
         <template v-else-if="pageContent && pageContent.association && pageContent.organizingTeam && pageContent.thanks">
             <SectionHeader :title="pageContent.pageTitle" />
@@ -94,19 +94,22 @@
     </SectionWrapper>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import ErrorMessage from '@/components/ErrorMessage.vue'
 import ImageFigure from '@/components/ImageFigure.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import SafeHtml from '@/components/SafeHtml.vue'
 import SectionHeader from '@/components/SectionHeader.vue'
 import SectionWrapper from '@/components/SectionWrapper.vue'
+import { useNotifier } from '@/composables/useNotifier'
 import type { OrganizersPageContent } from '@/interface/OrganizersPageContent.interface'
 import { organizersPageContent } from '@/services/api/services'
 import { onMounted, ref } from 'vue'
 
+const notifier = useNotifier()
+
 const pageContent = ref<OrganizersPageContent | null>(null)
-const loading = ref(true)
+const isLoading = ref(false)
 const error = ref<string | null>(null)
 
 onMounted(async () => {
@@ -114,7 +117,7 @@ onMounted(async () => {
 })
 
 async function loadContentData(): Promise<void> {
-    loading.value = true
+    isLoading.value = true
     error.value = null
 
     try {
@@ -122,9 +125,10 @@ async function loadContentData(): Promise<void> {
         pageContent.value = response || null
     } catch (err) {
         console.error('Failed to load organizer page content:', err)
-        error.value = 'Nepodařilo se načíst obsah stránky. Zkuste to prosím později.'
+        error.value = 'Nepodařilo se načíst obsah stránky'
+        notifier.error('Nepodařilo se načíst obsah stránky')
     } finally {
-        loading.value = false
+        isLoading.value = false
     }
 }
 </script>

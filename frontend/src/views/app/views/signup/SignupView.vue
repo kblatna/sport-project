@@ -1,6 +1,6 @@
 <template>
     <SectionWrapper>
-        <LoadingSpinner v-if="loading" />
+        <LoadingSpinner v-if="isLoading" />
 
         <template v-else-if="pageContent">
             <SectionHeader :title="pageContent.pageTitle" />
@@ -53,25 +53,35 @@ import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import SafeHtml from '@/components/SafeHtml.vue'
 import SectionHeader from '@/components/SectionHeader.vue'
 import SectionWrapper from '@/components/SectionWrapper.vue'
+import { useNotifier } from '@/composables/useNotifier'
 import type { SignupPageContent } from '@/interface/SignupPageContent.interface'
 import { signupPageContent } from '@/services/api/services'
 import Card from 'primevue/card'
 import { onMounted, ref } from 'vue'
 import SignupForm from './components/SignupForm.vue'
 
+const notifier = useNotifier()
+
 const pageContent = ref<SignupPageContent | null>(null)
-const loading = ref(true)
+const isLoading = ref(true)
 const error = ref<string | null>(null)
 
 onMounted(async () => {
+    await loadPageContent()
+})
+
+async function loadPageContent(): Promise<void> {
+    isLoading.value = true
+    error.value = null
     try {
         const response = await signupPageContent.getAll()
         pageContent.value = response
     } catch (err) {
         console.error('Error loading signup page content:', err)
         error.value = 'Nepodařilo se načíst obsah stránky'
+        notifier.error('Nepodařilo se načíst obsah stránky')
     } finally {
-        loading.value = false
+        isLoading.value = false
     }
-})
+}
 </script>

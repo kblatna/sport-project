@@ -1,6 +1,6 @@
 <template>
     <SectionWrapper class="container">
-        <LoadingSpinner v-if="loading" />
+        <LoadingSpinner v-if="isLoading" />
 
         <template v-else-if="linksContent && linksContent.heroImage">
             <SectionHeader :title="linksContent?.titles?.main ?? 'Ohlasy a odkazy'" />
@@ -92,12 +92,15 @@ import MediaListCard from '@/components/MediaListCard.vue'
 import SectionHeader from '@/components/SectionHeader.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
 import SectionWrapper from '@/components/SectionWrapper.vue'
+import { useNotifier } from '@/composables/useNotifier'
 import type { LinksPageContent } from '@/interface/LinksPageContent.interface'
 import { linksPageContent } from '@/services/api/services'
 import { onMounted, ref } from 'vue'
 
+const notifier = useNotifier()
+
 const linksContent = ref<LinksPageContent | null>(null)
-const loading = ref(true)
+const isLoading = ref(false)
 const error = ref<string | null>(null)
 
 onMounted(async () => {
@@ -105,16 +108,17 @@ onMounted(async () => {
 })
 
 async function loadlinksContentData(): Promise<void> {
-    loading.value = true
+    isLoading.value = true
     error.value = null
     try {
         const response = await linksPageContent.getAll()
         linksContent.value = response || null
     } catch (err) {
         console.error('Failed to load organizer page links content:', err)
-        error.value = 'Nepodařilo se načíst obsah stránky. Zkuste to prosím později.'
+        error.value = 'Nepodařilo se načíst obsah stránky'
+        notifier.error('Nepodařilo se načíst obsah stránky')
     } finally {
-        loading.value = false
+        isLoading.value = false
     }
 }
 

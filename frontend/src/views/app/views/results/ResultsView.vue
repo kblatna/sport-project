@@ -1,6 +1,6 @@
 <template>
     <SectionWrapper class="container">
-        <LoadingSpinner v-if="loading" />
+        <LoadingSpinner v-if="isLoading" />
 
         <template v-else-if="pageContent">
             <SectionHeader
@@ -34,12 +34,15 @@ import { PaginateResult } from '@/interface/PaginateResult.interface'
 import { Result } from '@/interface/Result.interface'
 import { ResultPageContent } from '@/interface/ResultPageContent.interface'
 import { listResults, resultPageContent } from '@/services/api/services'
+import { useNotifier } from '@/composables/useNotifier'
 import { onMounted, ref } from 'vue'
 import ResultsDataTable from './components/ResultsDataTable.vue'
 import SectionWrapper from '@/components/SectionWrapper.vue'
 import SectionHeader from '@/components/SectionHeader.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import ErrorMessage from '@/components/ErrorMessage.vue'
+
+const notifier = useNotifier()
 
 const result = ref<PaginateResult<Result>>({
     docs: [],
@@ -57,29 +60,26 @@ const result = ref<PaginateResult<Result>>({
 
 const pageContent = ref<ResultPageContent | null>(null)
 const isLoading = ref(false)
-const loading = ref(true)
 const error = ref<string | null>(null)
 
 onMounted(async () => {
-    try {
-        await loadPageContent()
-        const currentYear = new Date().getFullYear()
-        await loadDataWithFallback(currentYear)
-    } catch (err) {
-        console.error('Error loading page:', err)
-        error.value = 'Nepodařilo se načíst obsah stránky'
-    } finally {
-        loading.value = false
-    }
+    await loadPageContent()
+    const currentYear = new Date().getFullYear()
+    await loadDataWithFallback(currentYear)
 })
 
 async function loadPageContent(): Promise<void> {
+    isLoading.value = true
+    error.value = null
     try {
         const response = await resultPageContent.getAll()
         pageContent.value = response
-    } catch (error) {
-        console.error('Error fetching page content:', error)
-        // TODO: add notifier for error
+    } catch (err) {
+        console.error('Error fetching page content:', err)
+        error.value = 'Nepodařilo se načíst obsah stránky'
+        notifier.error('Nepodařilo se načíst obsah stránky')
+    } finally {
+        isLoading.value = false
     }
 }
 
@@ -97,9 +97,9 @@ async function loadData(filters?: Record<string, unknown>): Promise<void> {
     try {
         const response = await listResults(filters)
         result.value = response
-    } catch (error) {
-        console.error('Error fetching results:', error)
-    // TODO: add notifier for error
+    } catch (err) {
+        console.error('Error fetching results:', err)
+        notifier.error('Nepodařilo se načíst výsledky')
     } finally {
         isLoading.value = false
     }

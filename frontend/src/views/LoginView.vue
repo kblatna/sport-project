@@ -103,6 +103,7 @@
 
 <script setup lang="ts">
 import { useAuth } from '@/composables/useAuth'
+import { useNotifier } from '@/composables/useNotifier'
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 import InputText from 'primevue/inputtext'
@@ -112,6 +113,7 @@ import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const notifier = useNotifier()
 const { login, isLoading, error, clearError } = useAuth()
 
 const form = ref({
@@ -170,6 +172,7 @@ const handleSubmit = async () => {
         console.log('Redirect complete')
     } catch (e) {
         console.error('Login failed:', e)
+        notifier.error('Přihlášení se nezdařilo')
     }
 }
 </script>

@@ -268,17 +268,20 @@ import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import SafeHtml from '@/components/SafeHtml.vue'
 import SectionHeader from '@/components/SectionHeader.vue'
 import SectionWrapper from '@/components/SectionWrapper.vue'
+import { useNotifier } from '@/composables/useNotifier'
 import type { MainPageContent } from '@/interface/MainPageContent.interface'
 import { mainPageContent } from '@/services/api/services'
 import { Button, Card, Galleria, Image } from 'primevue'
 import { onMounted, ref } from 'vue'
 import ScheduleDataTable from './components/ScheduleDataTable.vue'
 
+const notifier = useNotifier()
+
 const pageContent = ref<MainPageContent | null>(null)
-const activeIndex = ref<number>(0)
-const displayCustom = ref<boolean>(false)
-const isLoading = ref<boolean>(false)
-const error = ref<string>('')
+const activeIndex = ref(0)
+const displayCustom = ref(false)
+const isLoading = ref(false)
+const error = ref<string | null>(null)
 
 onMounted(async () => {
     await loadContentData()
@@ -291,13 +294,14 @@ const imageClick = (index: number) => {
 
 async function loadContentData(): Promise<void> {
     isLoading.value = true
+    error.value = null
     try {
         const response = await mainPageContent.getAll()
         pageContent.value = response || null
     } catch (err) {
         console.error('Error fetching page content:', err)
-        // TODO: doplnit komponentu na error notifier
-        error.value = 'Došlo k chybě při načítání obsahu stránky. Zkuste to prosím později.'
+        error.value = 'Nepodařilo se načíst obsah stránky'
+        notifier.error('Nepodařilo se načíst obsah stránky')
     } finally {
         isLoading.value = false
     }

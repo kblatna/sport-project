@@ -3,7 +3,7 @@
         class="container"
         padding-y="md"
     >
-        <LoadingSpinner v-if="loading" />
+        <LoadingSpinner v-if="isLoading" />
 
         <template v-else-if="pageContent">
             <SectionHeader :title="pageContent.pageTitle" />
@@ -120,23 +120,34 @@ import SafeHtml from '@/components/SafeHtml.vue'
 import SectionWrapper from '@/components/SectionWrapper.vue'
 import ContactForm from './components/ContactForm.vue'
 import SectionHeader from '@/components/SectionHeader.vue'
+import { useNotifier } from '@/composables/useNotifier'
 import { Card } from 'primevue'
 import { contactPageContent } from '@/services/api/services'
 import type { ContactPageContent } from '@/interface/ContactPageContent.interface'
 
+const notifier = useNotifier()
+
 const pageContent = ref<ContactPageContent | null>(null)
-const loading = ref(true)
+const isLoading = ref(false)
 const error = ref<string | null>(null)
 
 onMounted(async () => {
+    await loadContentData()
+})
+
+async function loadContentData(): Promise<void> {
+    isLoading.value = true
+    error.value = null
+
     try {
         const response = await contactPageContent.getAll()
-        pageContent.value = response
+        pageContent.value = response || null
     } catch (err) {
-        console.error('Error loading contact page content:', err)
+        console.error('Failed to load contact page content:', err)
         error.value = 'Nepodařilo se načíst obsah stránky'
+        notifier.error('Nepodařilo se načíst obsah stránky')
     } finally {
-        loading.value = false
+        isLoading.value = false
     }
-})
+}
 </script>

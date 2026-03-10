@@ -110,7 +110,7 @@ const currentContent = computed(() => {
     return content.value[variant.value]
 })
 
-async function fetchContent() {
+async function loadContentData() {
     isLoading.value = true
     error.value = null
     try {
@@ -118,6 +118,7 @@ async function fetchContent() {
         content.value = response
     } catch (err) {
         console.error('Error loading info page content:', err)
+        error.value = 'Nepodařilo se načíst obsah stránky'
         notifier.error('Nepodařilo se načíst obsah stránky')
     } finally {
         isLoading.value = false
@@ -125,6 +126,6 @@ async function fetchContent() {
 }
 
 onMounted(async () => {
-    await fetchContent()
+    await loadContentData()
 })
 </script>
