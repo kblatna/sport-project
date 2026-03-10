@@ -45,6 +45,88 @@ export class UsefulLink {
 export const UsefulLinkSchema = SchemaFactory.createForClass(UsefulLink)
 
 @Schema({
+    _id: false
+})
+export class ContactBox {
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    message: string
+
+    @Prop({
+        type: SchemaTypes.String
+    })
+    icon?: string
+
+    @Prop({
+        type: SchemaTypes.String
+    })
+    ctaText?: string
+
+    @Prop({
+        type: SchemaTypes.String
+    })
+    ctaRouteName?: string
+
+    @Prop({
+        type: SchemaTypes.String
+    })
+    ctaHref?: string
+}
+
+export const ContactBoxSchema = SchemaFactory.createForClass(ContactBox)
+
+@Schema({
+    _id: false
+})
+export class Titles {
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    main: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    sectionOhlasy: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    tv: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    videos: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    press: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    web: string
+
+    @Prop({
+        type: SchemaTypes.String,
+        required: true
+    })
+    links: string
+}
+
+export const TitlesSchema = SchemaFactory.createForClass(Titles)
+
+@Schema({
     minimize: false
 })
 export class LinksPageContent {
@@ -83,6 +165,17 @@ export class LinksPageContent {
         default: []
     })
     links: UsefulLink[]
+
+    @Prop({
+        type: ContactBoxSchema
+    })
+    contactBox?: ContactBox
+
+    @Prop({
+        type: TitlesSchema,
+        required: true
+    })
+    titles: Titles
 }
 
 export const LinksPageContentSchema = SchemaFactory.createForClass(LinksPageContent)

@@ -9,18 +9,9 @@ export interface UsefulLink {
     link: string
 }
 
-export interface LinksPageContent {
-    heroImage: string
-    tvItems: MediaItem[]
-    videoItems: MediaItem[]
-    pressItems: MediaItem[]
-    webItems: MediaItem[]
-    links: UsefulLink[]
-}
-
 export interface ContactBox {
+    message: string
     icon?: string
-    message?: string
     ctaText?: string
     ctaRouteName?: string
     ctaHref?: string
@@ -33,14 +24,14 @@ export interface LinksPageContent {
     pressItems: MediaItem[]
     webItems: MediaItem[]
     links: UsefulLink[]
-    contactBox?: ContactBox
-    titles?: {
-        main?: string
-        sectionOhlasy?: string
-        tv?: string
-        videos?: string
-        press?: string
-        web?: string
-        links?: string
+    contactBox: ContactBox
+    titles: {
+        main: string
+        sectionOhlasy: string
+        tv: string
+        videos: string
+        press: string
+        web: string
+        links: string
     }
 }

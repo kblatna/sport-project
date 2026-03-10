@@ -3,7 +3,7 @@
         <LoadingSpinner v-if="isLoading" />
 
         <template v-else-if="linksContent && linksContent.heroImage">
-            <SectionHeader :title="linksContent?.titles?.main ?? 'Ohlasy a odkazy'" />
+            <SectionHeader :title="linksContent.titles.main" />
 
             <div
                 class="links-hero-image mb-12 rounded-xl overflow-hidden h-64 md:h-96 shadow-lg bg-cover bg-center"
@@ -16,34 +16,34 @@
             >
                 <SectionTitle
                     :icon="'mdi:television-classic'"
-                    :title="linksContent?.titles?.sectionOhlasy ?? 'Ohlasy'"
+                    :title="linksContent.titles.sectionOhlasy"
                 />
 
                 <div class="grid md:grid-cols-2 gap-6">
                     <MediaListCard
                         icon="mdi:television"
-                        :title="linksContent?.titles?.tv ?? 'Mulda v televizi'"
+                        :title="linksContent.titles.tv"
                         :items="linksContent.tvItems"
                         item-icon="mdi:play-circle"
                     />
 
                     <MediaListCard
                         icon="mdi:youtube"
-                        :title="linksContent?.titles?.videos ?? 'Videa na internetu'"
+                        :title="linksContent.titles.videos"
                         :items="linksContent.videoItems"
                         item-icon="mdi:video"
                     />
 
                     <MediaListCard
                         icon="mdi:newspaper-variant"
-                        :title="linksContent?.titles?.press ?? 'Články v tisku'"
+                        :title="linksContent.titles.press"
                         :items="linksContent.pressItems"
                         item-icon="mdi:file-document"
                     />
 
                     <MediaListCard
                         icon="mdi:web"
-                        :title="linksContent?.titles?.web ?? 'Sesbíráno po internetu'"
+                        :title="linksContent.titles.web"
                         :items="linksContent.webItems"
                         item-icon="mdi:link"
                     />
@@ -53,7 +53,7 @@
             <div v-if="linksContent && linksContent.links">
                 <SectionTitle
                     :icon="'mdi:link-variant'"
-                    :title="linksContent?.titles?.links ?? 'Užitečné odkazy'"
+                    :title="linksContent.titles.links"
                 />
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <LinkCard
@@ -63,11 +63,11 @@
                     />
                 </div>
                 <InfoBox
-                    v-if="linksContent"
-                    :icon="linksContent.contactBox?.icon ?? 'mdi:information'"
-                    :message="linksContent.contactBox?.message ?? 'Máte-li nápad, co dalšího sem přidat, dejte nám vědět prostřednictvím kontaktního'"
-                    :cta-text="linksContent.contactBox?.ctaText ?? 'formuláře'"
-                    :cta-route-name="linksContent.contactBox?.ctaRouteName ?? 'Contact'"
+                    v-if="linksContent.contactBox"
+                    :message="linksContent.contactBox.message"
+                    :icon="linksContent.contactBox.icon"
+                    :cta-text="linksContent.contactBox.ctaText"
+                    :cta-route-name="linksContent.contactBox.ctaRouteName"
                     bg-class="bg-primary-50"
                     border-class="border-primary"
                     icon-class="text-primary text-2xl"
