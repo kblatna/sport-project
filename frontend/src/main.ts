@@ -1,4 +1,5 @@
 import './assets/css/tailwind.css'
+import './assets/css/primevue-custom.css'
 import VueSecureHTML from 'vue-html-secure'
 
 // PrimeVue imports
@@ -81,7 +82,6 @@ window.addEventListener('unhandledrejection', (event) => {
 app.use(router)
 app.use(VueSecureHTML)
 
-// PrimeVue configuration
 app.use(PrimeVue, {
     theme: {
         preset: MyPreset,

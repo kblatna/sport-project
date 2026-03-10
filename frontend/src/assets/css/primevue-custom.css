@@ -1,0 +1,15 @@
+.p-button-outlined.p-button-secondary {
+    --p-button-outlined-secondary-color: var(--white);
+    --p-button-outlined-secondary-border-color: var(--white);
+    --p-button-outlined-secondary-hover-background: var(--white);
+    --p-button-outlined-secondary-active-background: var(--white);
+    transition: all 0.3s ease;
+}
+
+.p-button-outlined.p-button-secondary:not(:disabled):hover {
+    --p-button-outlined-secondary-color: var(--p-primary-700);
+}
+
+.p-card {
+    --p-card-shadow: 0 5.6px 11.2px 0 rgba(0, 0, 0, 0.15);
+}

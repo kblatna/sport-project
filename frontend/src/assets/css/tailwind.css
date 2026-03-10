@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -132,23 +131,6 @@ a:focus-visible {
 
     .slide-down-enter-to,
     .slide-down-leave-from {
-        max-height: 500px;
+        max-height: 100vh;
     }
-}
-
-.p-button-outlined.p-button-secondary {
-    --p-button-outlined-secondary-color: var(--white);
-    --p-button-outlined-secondary-border-color: var(--white);
-    --p-button-outlined-secondary-hover-background: var(--white);
-    --p-button-outlined-secondary-active-background: var(--white);
-    @apply transition-all duration-300;
-}
-
-.p-button-outlined.p-button-secondary:not(:disabled):hover {
-    --p-button-outlined-secondary-color: var(--p-primary-700);
-}
-
-/* PrimeVue card component - custom border shadow */
-.p-card {
-    --p-card-shadow: 0 5.6px 11.2px 0 rgba(0, 0, 0, 0.15);
 }
