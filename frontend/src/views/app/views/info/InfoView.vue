@@ -1,7 +1,7 @@
 <template>
-    <LoadingSpinner v-if="loading" />
+    <LoadingSpinner v-if="isLoading" />
 
-    <template v-if="currentContent && content.commonSections">
+    <template v-else-if="currentContent && content.commonSections">
         <component
             :is="variant === 'kids' ? KidsInfo : AdultsInfo"
             :content="currentContent"
@@ -70,7 +70,7 @@
     </template>
 
     <ErrorMessage
-        v-if="error"
+        v-else-if="error"
         :message="error"
     />
 </template>
@@ -81,6 +81,7 @@ import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import SafeHtml from '@/components/SafeHtml.vue'
 import SectionHeader from '@/components/SectionHeader.vue'
 import SectionWrapper from '@/components/SectionWrapper.vue'
+import { useNotifier } from '@/composables/useNotifier'
 import type { InfoPageContent } from '@/interface/InfoPageContent'
 import { infoPageContent } from '@/services/api/services'
 import { computed, onMounted, ref } from 'vue'
@@ -90,8 +91,9 @@ import ContentImageCard from './components/ContentImageCard.vue'
 import KidsInfo from './components/KidsInfo.vue'
 
 const route = useRoute()
+const notifier = useNotifier()
 const content = ref<InfoPageContent | null>(null)
-const loading = ref(false)
+const isLoading = ref(false)
 const error = ref<string | null>(null)
 
 // Determines which variant to display based on hash fragment (#kids or #adults)
@@ -109,16 +111,16 @@ const currentContent = computed(() => {
 })
 
 async function fetchContent() {
-    loading.value = true
+    isLoading.value = true
     error.value = null
     try {
         const response = await infoPageContent.getAll()
         content.value = response
     } catch (err) {
         console.error('Error loading info page content:', err)
-        error.value = 'Nepodařilo se načíst obsah stránky'
+        notifier.error('Nepodařilo se načíst obsah stránky')
     } finally {
-        loading.value = false
+        isLoading.value = false
     }
 }
 

@@ -1,5 +1,7 @@
 <template>
     <div class="min-h-screen flex flex-col">
+        <Toast position="top-right" />
+
         <HeaderNav v-if="!isAdminRoute" />
 
         <BreadcrumbNav v-if="!isAdminRoute" />
@@ -15,6 +17,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
+import Toast from 'primevue/toast'
 import BreadcrumbNav from './components/BreadcrumbNav.vue'
 import FooterInfo from './components/FooterInfo.vue'
 import HeaderNav from './components/HeaderNav.vue'
