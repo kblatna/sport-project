@@ -1,6 +1,8 @@
 # Sport Project - Mulda Race Management System
 
 Full-stack web application for managing sport race results, participant registrations, and content management for the Mulda race event.
+
+
 **INFO NOTICE: The app is still in development, but you can check it out at [https://mulda.netlify.app](https://mulda.netlify.app). Please be patient. The app is deployed in free mode on render.com, so there's currently a so-called cold start and the app takes longer to load.**
 
 ## 📋 Overview
