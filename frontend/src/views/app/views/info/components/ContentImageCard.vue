@@ -11,7 +11,7 @@
             :height="imageHeight || '100%'"
             frameborder="0"
             :class="[
-                'w-full rounded-2xl shadow-2xl max-h-64 md:max-h-none',
+                'w-full rounded-2xl border border-surface-line max-h-64 md:max-h-none',
                 imageTall ? 'aspect-[21/9] md:aspect-[2/3]' :
                 imageSmall ? 'aspect-[21/9] md:aspect-square max-w-sm mx-auto md:mx-0' : 'aspect-[21/9] md:aspect-video',
                 isImageLeft ? 'md:order-1' : 'md:order-2',
@@ -24,7 +24,7 @@
             :src="imageSrc"
             :alt="alt || 'Obrázek'"
             :class="[
-                'w-full rounded-2xl shadow-2xl object-cover max-h-64 md:max-h-none',
+                'w-full rounded-2xl border border-surface-line object-cover max-h-64 md:max-h-none',
                 imageTall ? 'aspect-[21/9] md:aspect-[2/3]' :
                 imageSmall ? 'aspect-[21/9] md:aspect-square max-w-sm mx-auto md:mx-0' : 'aspect-[21/9] md:aspect-video',
                 isImageLeft ? 'md:order-1' : 'md:order-2',

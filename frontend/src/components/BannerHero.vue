@@ -1,19 +1,19 @@
 <template>
     <section
         v-if="visible"
-        :class="['relative z-10 flex items-center', heightClass]"
+        :class="['relative z-10 flex items-end', heightClass]"
         :style="bgStyle"
     >
         <div
             v-if="overlay"
-            class="absolute inset-0 bg-black/30"
+            class="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/45 to-ink/20"
         ></div>
 
-        <div class="relative container">
-            <div :class="['max-w-4xl text-white', centered ? 'mx-auto text-center' : '']">
+        <div class="relative container w-full pb-10 md:pb-14 lg:pb-16">
+            <div :class="['max-w-2xl text-white', centered ? 'mx-auto text-center' : '']">
                 <h1
                     v-if="title || $slots.title"
-                    class="text-4xl lg:text-5xl xl:text-6xl font-extrabold mb-6 md:mb-10"
+                    class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 md:mb-5"
                 >
                     <slot name="title">
                         {{ title }}
@@ -22,7 +22,7 @@
 
                 <p
                     v-if="subtitle || $slots.subtitle"
-                    class="text-base md:text-lg lg:text-xl xl:text-2xl mb-4 md:mb-6 max-w-2xl leading-relaxed text-white/95"
+                    class="text-base md:text-lg lg:text-xl mb-6 md:mb-8 max-w-xl leading-relaxed text-white/90"
                 >
                     <slot name="subtitle">
                         {{ subtitle }}
@@ -30,7 +30,7 @@
                 </p>
 
                 <div
-                    class="flex flex-wrap gap-4"
+                    class="flex flex-wrap gap-3"
                     :class="centered ? 'justify-center' : ''"
                 >
                     <slot name="actions"></slot>
@@ -60,21 +60,22 @@ const props = withDefaults(defineProps<{
     title: '',
     subtitle: '',
     image: '',
-    gradient: 'linear-gradient(90deg,#000,#00000040 50%,#00000040,#000)',
+    gradient: '',
     overlay: true,
     centered: false,
-    heightClass: 'h-72 md:h-96 lg:h-[520px]',
+    heightClass: 'min-h-[22rem] md:min-h-[28rem] lg:min-h-[34rem]',
     buttons: () => []
 })
 
 const bgStyle = computed(() => {
     if (!props.image) {
-        return undefined
+        return {
+            background: 'linear-gradient(135deg, #1f4d3a 0%, #164263 50%, #0b1f2a 100%)'
+        }
     }
 
-    const gradientPart = props.gradient ? `${props.gradient}, ` : ''
     return {
-        backgroundImage: `${gradientPart}url(${props.image})`,
+        backgroundImage: `url(${props.image})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center'
     }

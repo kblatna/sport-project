@@ -35,7 +35,7 @@
                     :key="item.label"
                     :to="item.to"
                     role="menuitem"
-                    class="block px-4 py-3 text-gray-700 hover:bg-primary-50 transition-colors"
+                    class="block px-4 py-3 text-ink/80 hover:bg-surface-muted hover:text-ink transition-colors"
                     @click="onSelect(item)"
                 >
                     {{ item.label }}
@@ -79,7 +79,7 @@ const onSelect = (item: NavItem) => {
 }
 
 const menuId = props.id ?? `nav-dropdown-${Math.random().toString(36).slice(2, 9)}`
-const buttonClass = props.buttonClass ?? 'text-white border-transparent border-b-2 hover:border-white px-3 py-2 text-lg font-medium flex items-center gap-1'
-const menuClassComputed = props.menuClass ?? 'absolute top-full mt-2 w-56 bg-white rounded-lg shadow-lg overflow-hidden z-50'
+const buttonClass = props.buttonClass ?? 'header-nav-link rounded-lg px-3 py-2 text-[15px] flex items-center gap-1'
+const menuClassComputed = props.menuClass ?? 'dropdown-menu absolute top-full mt-2 w-56 bg-white border border-surface-line rounded-xl overflow-hidden z-50 shadow-soft'
 
 </script>

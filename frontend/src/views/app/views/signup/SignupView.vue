@@ -1,5 +1,5 @@
 <template>
-    <SectionWrapper>
+    <SectionWrapper background="muted">
         <LoadingSpinner v-if="isLoading" />
 
         <template v-else-if="pageContent">
@@ -7,7 +7,7 @@
 
             <div
                 v-if="pageContent.logos && pageContent.logos.length > 0"
-                class="max-w-xl mx-auto mb-8 grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-[8rem] place-items-center"
+                class="max-w-xl mx-auto mb-8 grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-[7rem] place-items-center"
             >
                 <img
                     v-for="(logo, index) in pageContent.logos"
@@ -21,23 +21,20 @@
             <SafeHtml
                 v-if="pageContent.introText"
                 :content="pageContent.introText"
-                class="text-center text-lg text-gray-700 mb-8 max-w-2xl mx-auto"
+                class="text-center text-[15px] md:text-base text-ink/70 mb-8 max-w-2xl mx-auto leading-relaxed"
             />
 
-            <Card class="w-full max-w-4xl mx-auto">
-                <template #title>
-                    <div class="flex justify-center items-center text-center mb-5 gap-2">
-                        <span>{{ pageContent.cardTitle }}</span>
-                        <iconify-icon
-                            :inline="true"
-                            icon="mdi:bicycle"
-                        />
-                    </div>
-                </template>
-                <template #content>
-                    <SignupForm />
-                </template>
-            </Card>
+            <div class="panel w-full max-w-3xl mx-auto p-5 md:p-8">
+                <div class="flex justify-center items-center text-center mb-6 gap-2 text-lg font-semibold text-ink">
+                    <span>{{ pageContent.cardTitle }}</span>
+                    <iconify-icon
+                        :inline="true"
+                        icon="mdi:bicycle"
+                        class="text-primary-500"
+                    />
+                </div>
+                <SignupForm />
+            </div>
         </template>
 
         <ErrorMessage
@@ -56,7 +53,6 @@ import SectionWrapper from '@/components/SectionWrapper.vue'
 import { useNotifier } from '@/composables/useNotifier'
 import type { SignupPageContent } from '@/interface/SignupPageContent.interface'
 import { signupPageContent } from '@/services/api/services'
-import Card from 'primevue/card'
 import { onMounted, ref } from 'vue'
 import SignupForm from './components/SignupForm.vue'
 

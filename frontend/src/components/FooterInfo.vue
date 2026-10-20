@@ -1,7 +1,7 @@
 <template>
-    <footer class="footer text-white">
-        <div class="container py-12">
-            <div class="grid grid-cols-2 items-center mb-10">
+    <footer class="footer">
+        <div class="container py-12 md:py-14">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-10 pb-8 border-b border-white/10">
                 <div class="flex items-center">
                     <Image
                         src="/logo/mulda_logo.png"
@@ -12,7 +12,7 @@
                 <SocialLinks :links="socialLinks" />
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 <FooterSection
                     v-for="section in footerSections"
                     :key="section.title"
@@ -22,8 +22,8 @@
             </div>
         </div>
 
-        <div class="copyright border-t border-gray-700">
-            <div class="container-app py-4 text-center text-gray-400 text-sm">
+        <div class="copyright">
+            <div class="container py-4 text-center text-white/50 text-sm">
                 {{ copyright }}
             </div>
         </div>

@@ -25,10 +25,11 @@
                     class="inline-block"
                 >
                     <Button
-                        :severity="button.severity"
+                        :severity="button.severity === 'secondary' ? 'secondary' : 'primary'"
                         :outlined="button.severity === 'secondary'"
                         :label="button.label"
-                        class="px-8 py-4 text-lg"
+                        :class="button.severity === 'secondary' ? '' : 'bg-accent-500 border-accent-500 hover:bg-accent-600'"
+                        class="px-6 py-3 text-base"
                     />
                 </router-link>
             </template>
@@ -36,212 +37,187 @@
 
         <SectionWrapper
             v-if="pageContent.raceCards && pageContent.raceCards.length > 0"
-            class="container"
+            background="white"
         >
             <SectionHeader
                 :title="pageContent.raceSectionTitle"
                 :show-divider="false"
             />
 
-            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 justify-items-center">
-                <Card
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 max-w-5xl mx-auto">
+                <article
                     v-for="card in pageContent.raceCards"
                     :key="card.title"
-                    class="equal-card w-full max-w-sm flex flex-col h-full"
+                    class="panel overflow-hidden flex flex-col h-full"
                 >
-                    <template #header>
-                        <div class="relative">
-                            <Image
-                                :src="card.image"
-                                :alt="card.title"
-                                image-class="rounded-t-xl"
-                            />
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-6">
-                                <h3 class="text-2xl font-bold text-white">
-                                    {{ card.title }}
-                                </h3>
-                            </div>
-                        </div>
-                    </template>
+                    <div class="relative aspect-[16/10] overflow-hidden bg-surface-muted">
+                        <Image
+                            :src="card.image"
+                            :alt="card.title"
+                            image-class="w-full h-full object-cover"
+                        />
+                    </div>
 
-                    <template #subtitle>
-                        <span class="text-lg font-bold text-black">
+                    <div class="p-5 md:p-6 flex flex-col flex-1">
+                        <h3 class="text-xl md:text-2xl font-bold text-ink mb-1">
+                            {{ card.title }}
+                        </h3>
+                        <p class="text-sm font-medium text-primary-500 mb-3">
                             {{ card.subtitle }}
-                        </span>
-                    </template>
-
-                    <template #content>
+                        </p>
                         <SafeHtml
                             :content="card.description"
                             tag="p"
-                            class="m-0"
+                            class="m-0 text-ink/70 text-[15px] leading-relaxed flex-1"
                         />
-                    </template>
-
-                    <template #footer>
-                        <div class="flex gap-4 mt-auto pt-4">
+                        <div class="flex flex-wrap gap-3 mt-5 pt-1">
                             <router-link
                                 v-for="button in card.buttons || []"
                                 :key="button.label"
                                 :to="{ name: button.link, hash: button.hash ? `#${button.hash}` : undefined }"
-                                class="w-full"
+                                class="flex-1 min-w-[8rem]"
                             >
                                 <Button
                                     :severity="button.severity"
                                     :label="button.label"
                                     class="w-full"
+                                    :class="button.severity === 'primary' ? 'bg-accent-500 border-accent-500 hover:bg-accent-600' : ''"
                                 />
                             </router-link>
                         </div>
-                    </template>
-                </Card>
+                    </div>
+                </article>
             </div>
         </SectionWrapper>
 
         <SectionWrapper
             v-if="pageContent.info"
-            background="gray"
+            background="muted"
         >
-            <div class="container">
-                <SectionHeader
-                    :title="pageContent.info.title"
-                    :overtitle="pageContent.info.overtitle"
-                />
+            <SectionHeader
+                :title="pageContent.info.title"
+                :overtitle="pageContent.info.overtitle"
+            />
 
-                <div class="max-w-4xl mx-auto">
-                    <ul class="grid md:grid-cols-2 gap-y-4 gap-x-10 text-left text-lg">
-                        <li
-                            v-for="feature in pageContent.info.features || []"
-                            :key="feature"
-                            class="flex items-start gap-3"
-                        >
-                            <svg
-                                class="w-6 h-6 text-primary-500 flex-shrink-0 mt-1"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M9 5l7 7-7 7"
-                                />
-                            </svg>
-                            <SafeHtml
-                                :content="feature"
-                                tag="span"
-                            />
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <ul class="max-w-4xl mx-auto grid md:grid-cols-2 gap-y-3 gap-x-8 text-left">
+                <li
+                    v-for="feature in pageContent.info.features || []"
+                    :key="feature"
+                    class="flex items-start gap-3 text-[15px] md:text-base text-ink/80"
+                >
+                    <span
+                        class="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent-500 shrink-0"
+                        aria-hidden="true"
+                    ></span>
+                    <SafeHtml
+                        :content="feature"
+                        tag="span"
+                    />
+                </li>
+            </ul>
         </SectionWrapper>
 
         <SectionWrapper
             v-if="pageContent.gallery && pageContent.gallery.length > 0"
-            class="container"
+            background="white"
         >
-            <div>
-                <Galleria
-                    v-model:active-index="activeIndex"
-                    v-model:visible="displayCustom"
-                    :value="pageContent.gallery"
-                    :num-visible="7"
-                    :circular="true"
-                    :full-screen="true"
-                    :show-item-navigators="true"
-                    :show-thumbnails="false"
-                    class="max-w-50"
-                >
-                    <template #item="slotProps">
-                        <Image
-                            :src="slotProps.item.src"
-                            :alt="slotProps.item.alt"
-                            image-class="block w-full rounded-md"
-                        />
-                    </template>
-                    <template #thumbnail="slotProps">
-                        <Image
-                            :src="slotProps.item.src"
-                            :alt="slotProps.item.alt"
-                            image-class="block w-full rounded-md"
-                        />
-                    </template>
-                </Galleria>
+            <Galleria
+                v-model:active-index="activeIndex"
+                v-model:visible="displayCustom"
+                :value="pageContent.gallery"
+                :num-visible="7"
+                :circular="true"
+                :full-screen="true"
+                :show-item-navigators="true"
+                :show-thumbnails="false"
+            >
+                <template #item="slotProps">
+                    <Image
+                        :src="slotProps.item.src"
+                        :alt="slotProps.item.alt"
+                        image-class="block w-full rounded-xl"
+                    />
+                </template>
+                <template #thumbnail="slotProps">
+                    <Image
+                        :src="slotProps.item.src"
+                        :alt="slotProps.item.alt"
+                        image-class="block w-full rounded-md"
+                    />
+                </template>
+            </Galleria>
 
-                <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
-                    <div
-                        v-for="(image, index) of pageContent.gallery"
-                        :key="index"
-                    >
-                        <Image
-                            :src="image.src"
-                            :alt="image.alt"
-                            image-class="w-full rounded-md cursor-pointer"
-                            @click="imageClick(index)"
-                        />
-                    </div>
-                </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+                <button
+                    v-for="(image, index) of pageContent.gallery"
+                    :key="index"
+                    type="button"
+                    class="block w-full overflow-hidden rounded-xl border border-surface-line focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300"
+                    @click="imageClick(index)"
+                >
+                    <Image
+                        :src="image.src"
+                        :alt="image.alt"
+                        image-class="w-full aspect-[4/3] object-cover"
+                    />
+                </button>
             </div>
         </SectionWrapper>
 
         <SectionWrapper
             v-if="pageContent.schedule"
-            background="gray"
+            background="muted"
         >
-            <div class="container">
-                <SectionHeader :title="pageContent.schedule.title">
-                    <div class="space-y-4 text-lg text-gray-700">
-                        <SafeHtml
-                            v-for="(paragraph, index) in pageContent.schedule.description"
-                            :key="index"
-                            :content="paragraph"
-                            tag="p"
-                        />
-                    </div>
-                </SectionHeader>
+            <SectionHeader :title="pageContent.schedule.title">
+                <div class="space-y-3 text-[15px] md:text-base text-ink/70">
+                    <SafeHtml
+                        v-for="(paragraph, index) in pageContent.schedule.description"
+                        :key="index"
+                        :content="paragraph"
+                        tag="p"
+                    />
+                </div>
+            </SectionHeader>
 
-                <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-10 border border-gray-100">
-                    <h3 class="text-2xl md:text-3xl font-semibold mb-8 text-center text-primary-700">
-                        {{ pageContent.schedule.tableTitle }}
-                    </h3>
-                    <div class="overflow-x-auto -mx-6 md:-mx-10 px-6 md:px-10">
-                        <ScheduleDataTable :schedule-data="pageContent.schedule.scheduleTable" />
-                    </div>
+            <div class="panel p-5 md:p-8 max-w-5xl mx-auto">
+                <h3 class="text-lg md:text-xl font-semibold mb-6 text-ink">
+                    {{ pageContent.schedule.tableTitle }}
+                </h3>
+                <div class="overflow-x-auto">
+                    <ScheduleDataTable :schedule-data="pageContent.schedule.scheduleTable" />
+                </div>
 
-                    <div class="pt-8">
-                        <h4 class="text-lg font-semibold mb-4 text-gray-800">
-                            {{ pageContent.schedule.legendTitle }}
-                        </h4>
-                        <dl class="space-y-3 text-sm md:text-base text-gray-700">
-                            <div
-                                v-for="item in pageContent.schedule.legend"
-                                :key="item.term"
-                            >
-                                <dt class="inline font-bold">
-                                    {{ item.term }}
-                                </dt>
-                                <SafeHtml
-                                    :content="item.definition"
-                                    tag="dd"
-                                    class="inline"
-                                />
-                            </div>
-                        </dl>
-                    </div>
+                <div class="pt-8 mt-2 border-t border-surface-line">
+                    <h4 class="text-base font-semibold mb-3 text-ink">
+                        {{ pageContent.schedule.legendTitle }}
+                    </h4>
+                    <dl class="space-y-2 text-sm md:text-[15px] text-ink/70">
+                        <div
+                            v-for="item in pageContent.schedule.legend"
+                            :key="item.term"
+                        >
+                            <dt class="inline font-semibold text-ink">
+                                {{ item.term }}
+                            </dt>
+                            <SafeHtml
+                                :content="item.definition"
+                                tag="dd"
+                                class="inline"
+                            />
+                        </div>
+                    </dl>
                 </div>
             </div>
         </SectionWrapper>
 
         <SectionWrapper
             v-if="pageContent.video"
-            class="container"
+            background="white"
         >
             <SectionHeader :title="pageContent.video.title" />
 
             <div class="max-w-4xl mx-auto">
-                <div class="relative w-full aspect-video rounded-xl overflow-hidden shadow-lg">
+                <div class="relative w-full aspect-video rounded-2xl overflow-hidden border border-surface-line">
                     <iframe
                         class="absolute inset-0 w-full h-full"
                         :src="pageContent.video.videoUrl"
@@ -271,7 +247,7 @@ import SectionWrapper from '@/components/SectionWrapper.vue'
 import { useNotifier } from '@/composables/useNotifier'
 import type { MainPageContent } from '@/interface/MainPageContent.interface'
 import { mainPageContent } from '@/services/api/services'
-import { Button, Card, Galleria, Image } from 'primevue'
+import { Button, Galleria, Image } from 'primevue'
 import { onMounted, ref } from 'vue'
 import ScheduleDataTable from './components/ScheduleDataTable.vue'
 
@@ -307,31 +283,3 @@ async function loadContentData(): Promise<void> {
     }
 }
 </script>
-
-<style>
-.mask {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-}
-
-.equal-card .p-card-body {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.equal-card .p-card-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.equal-card .p-card-footer {
-    margin-top: auto;
-}
-
-</style>

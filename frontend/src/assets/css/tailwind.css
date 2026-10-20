@@ -14,11 +14,15 @@
         --p-primary-700: #003049;
         --p-primary-800: #002837;
         --p-primary-900: #002029;
+        --accent: #e85d04;
+        --ink: #0b1f2a;
+        --surface-muted: #f6f8fa;
+        --surface-line: #e2e8ef;
         --white: #ffffff;
     }
 
     body {
-        font-family: 'Montserrat', sans-serif;
+        @apply font-sans text-ink bg-surface-muted antialiased;
     }
 
     #app {
@@ -26,9 +30,8 @@
     }
 }
 
-/* Global anchor styles - no underline */
 a {
-    @apply text-primary-500 no-underline transition-colors;
+    @apply text-primary-600 no-underline transition-colors;
 }
 
 a:hover {
@@ -36,54 +39,64 @@ a:hover {
 }
 
 a:focus-visible {
-    @apply outline-none ring-2 ring-primary-300;
+    @apply outline-none ring-2 ring-primary-300 ring-offset-2;
 }
 
 @layer components {
     .header {
-        @apply bg-gradient-to-r from-primary-700 via-primary-600 to-primary-500;
+        @apply bg-white/95 backdrop-blur border-b border-surface-line;
     }
 
     .header-nav-link {
-        @apply text-white font-normal transition-colors duration-300;
+        @apply text-ink/70 font-medium transition-colors duration-200;
     }
 
     .header-nav-link:hover {
-        @apply text-white;
+        @apply text-ink;
+    }
+
+    .header-cta {
+        @apply inline-flex items-center justify-center rounded-full bg-accent-500 text-white font-semibold text-sm px-4 py-2.5 transition-colors hover:bg-accent-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-300 focus-visible:ring-offset-2;
     }
 
     .footer {
-        @apply w-full bg-primary-700 mt-auto;
+        @apply w-full bg-ink mt-auto text-white;
     }
 
     .footer a {
-        @apply text-white font-normal transition-colors;
+        @apply text-white/75 font-normal transition-colors;
     }
 
     .footer a:hover {
-        @apply text-gray-300;
+        @apply text-white;
     }
 
-    /* Dropdown menu in header */
     .header .dropdown-menu a {
-        @apply text-gray-700 transition-colors;
+        @apply text-ink/80 transition-colors;
     }
 
     .header .dropdown-menu a:hover {
-        @apply bg-primary-50;
+        @apply bg-surface-muted text-ink;
     }
-    
-    /* Mobile menu */
+
     .mobile-menu a {
-        @apply text-white font-normal;
+        @apply text-ink font-medium;
     }
 
     .mobile-menu a:hover {
-        @apply bg-white/10 text-white;
+        @apply bg-surface-muted text-ink;
     }
-    
+
     .copyright {
-        @apply bg-primary-800;
+        @apply bg-black/20;
+    }
+
+    .container-app {
+        @apply container;
+    }
+
+    .panel {
+        @apply bg-white border border-surface-line rounded-2xl;
     }
 
     .fade-enter-active,

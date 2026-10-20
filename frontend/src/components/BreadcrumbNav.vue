@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="items.length > 0"
-        class="container py-4"
+        class="container py-3 border-b border-surface-line bg-white"
     >
         <Breadcrumb
             :home="home"

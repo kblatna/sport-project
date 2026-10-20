@@ -100,15 +100,13 @@
 
     <SectionWrapper
         padding-y="md"
-        background="gray"
+        background="muted"
     >
         <SectionHeader :title="pageContent?.formSectionTitle || 'Napište nám'" />
 
-        <Card class="w-full max-w-4xl mx-auto">
-            <template #content>
-                <ContactForm />
-            </template>
-        </Card>
+        <div class="panel w-full max-w-3xl mx-auto p-5 md:p-8">
+            <ContactForm />
+        </div>
     </SectionWrapper>
 </template>
 
@@ -121,7 +119,6 @@ import SectionWrapper from '@/components/SectionWrapper.vue'
 import ContactForm from './components/ContactForm.vue'
 import SectionHeader from '@/components/SectionHeader.vue'
 import { useNotifier } from '@/composables/useNotifier'
-import { Card } from 'primevue'
 import { contactPageContent } from '@/services/api/services'
 import type { ContactPageContent } from '@/interface/ContactPageContent.interface'
 

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :class="wrapperClass">
         <NavLink
             v-for="item in items"
             :key="item.label"
@@ -17,11 +17,14 @@
 import NavLink from '@/components/NavLink.vue'
 import type { NavItem } from '@/interface/Navigation.interface'
 
-defineProps<{
+withDefaults(defineProps<{
     items: NavItem[]
     linkClass?: string
     activeClass?: string
-}>()
+    wrapperClass?: string
+}>(), {
+    wrapperClass: ''
+})
 
 defineEmits(['select'])
 

@@ -12,7 +12,7 @@
             <p>{{ content.categoryDescription }}</p>
         </div>
 
-        <div class="rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-10 border border-gray-200/60">
+        <div class="panel p-5 md:p-8">
             <CategoryDataTable
                 id="categoryTable"
                 :data="content.categoryTable"
@@ -22,7 +22,7 @@
 
     <SectionWrapper
         padding-y="md"
-        background="gray"
+        background="muted"
     >
         <div class="container">
             <SectionHeader
@@ -72,7 +72,7 @@
 
     <SectionWrapper
         padding-y="md"
-        background="gray"
+        background="muted"
     >
         <div class="container">
             <SectionHeader

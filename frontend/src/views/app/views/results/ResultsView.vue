@@ -6,12 +6,12 @@
             <SectionHeader
                 :title="pageContent?.title || 'Výsledky závodu'"
             >
-                <p class="text-gray-600 my-10">
+                <p class="text-ink/70 my-6 md:my-8">
                     {{ pageContent?.description || 'V tabulce níže si můžete filtrovat podle zvolených kritérií napříč jednotlivými ročníky závodu.' }}
                 </p>
             </SectionHeader>
 
-            <div class="rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 md:p-10 border border-gray-200/60">
+            <div class="panel p-5 md:p-8">
                 <ResultsDataTable
                     :results="result.docs"
                     :total-records="result.totalDocs"

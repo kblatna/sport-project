@@ -6,7 +6,7 @@
             <SectionHeader :title="linksContent.titles.main" />
 
             <div
-                class="links-hero-image mb-12 rounded-xl overflow-hidden h-64 md:h-96 shadow-lg bg-cover bg-center"
+                class="links-hero-image mb-12 rounded-2xl overflow-hidden h-64 md:h-96 border border-surface-line bg-cover bg-center"
                 :style="`background-image: url('${linksContent.heroImage}'); background-position: center 70%; background-size: cover;`"
             ></div>
 

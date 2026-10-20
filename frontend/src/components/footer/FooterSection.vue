@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h6 class="text-lg font-semibold text-white mb-4 uppercase">
+        <h6 class="text-sm font-semibold text-white mb-4 tracking-wide">
             {{ title }}
         </h6>
         <div class="space-y-2">
@@ -8,7 +8,7 @@
                 v-for="link in links"
                 :key="link.to + link.label"
                 :to="link.to"
-                class="block text-gray-300 hover:text-white transition-colors"
+                class="block text-sm text-white/70 hover:text-white transition-colors"
             >
                 {{ link.label }}
             </router-link>

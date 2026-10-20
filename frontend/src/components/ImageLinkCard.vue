@@ -33,7 +33,7 @@ withDefaults(defineProps<{
     alt: '',
     width: 1200,
     height: 800,
-    containerClass: 'rounded-2xl shadow-2xl overflow-hidden border border-white/50',
+    containerClass: 'rounded-2xl overflow-hidden border border-surface-line',
     imgClass: 'w-full h-auto',
     target: '_blank',
     rel: 'noopener noreferrer'

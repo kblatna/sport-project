@@ -1,18 +1,18 @@
 <template>
-    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <Card class="w-full max-w-md shadow-xl">
+    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-surface-muted">
+        <Card class="w-full max-w-md">
             <template #header>
                 <div class="text-center pt-6 pb-2">
-                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 mb-4">
+                    <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary-50 mb-4">
                         <iconify-icon
                             icon="solar:lock-linear"
-                            class="text-3xl text-blue-600"
+                            class="text-2xl text-primary-600"
                         />
                     </div>
-                    <h2 class="text-3xl font-bold text-gray-900">
+                    <h2 class="text-2xl font-bold text-ink">
                         Přihlášení do administrace
                     </h2>
-                    <p class="mt-2 text-sm text-gray-600">
+                    <p class="mt-2 text-sm text-ink/60">
                         Zadejte své přihlašovací údaje
                     </p>
                 </div>

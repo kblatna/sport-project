@@ -6,7 +6,7 @@
 
         <BreadcrumbNav v-if="!isAdminRoute" />
 
-        <main class="flex-1">
+        <main class="flex-1 bg-surface-muted">
             <RouterView />
         </main>
 

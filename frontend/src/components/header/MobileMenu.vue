@@ -6,13 +6,13 @@
             role="dialog"
             aria-modal="true"
             aria-label="Mobilní navigační menu"
-            class="fixed top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-primary-700 via-primary-600 to-primary-500 z-50 md:hidden overflow-y-auto mobile-menu"
+            class="fixed inset-0 bg-white z-50 md:hidden overflow-y-auto mobile-menu"
         >
-            <div class="flex justify-between items-center h-20 px-4 bg-primary-800/50 backdrop-blur-sm">
-                <span class="text-white text-xl font-semibold">Menu</span>
+            <div class="flex justify-between items-center h-16 px-4 border-b border-surface-line">
+                <span class="text-ink text-lg font-semibold">Menu</span>
                 <button
                     @click="close"
-                    class="menu-button text-white p-3"
+                    class="menu-button text-ink p-3 rounded-lg hover:bg-surface-muted"
                     aria-label="Zavřít menu"
                 >
                     <svg
@@ -31,7 +31,7 @@
             </div>
 
             <nav
-                class="flex flex-col space-y-2 p-6 min-h-screen"
+                class="flex flex-col space-y-1 p-4"
                 aria-label="Mobilní navigace"
             >
                 <slot name="links"></slot>

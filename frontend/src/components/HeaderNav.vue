@@ -6,46 +6,63 @@
         ]"
     >
         <nav
-            class="w-full px-4"
+            class="container"
             aria-label="Hlavní navigace"
         >
-            <div class="flex justify-between items-center h-20">
-                <div class="flex items-center">
+            <div class="flex justify-between items-center h-16 md:h-20 gap-4">
+                <div class="flex items-center shrink-0">
                     <LogoLink />
                 </div>
 
-                <div class="hidden md:flex items-center space-x-8">
+                <div class="hidden md:flex items-center gap-1 lg:gap-2 flex-1 justify-end">
                     <NavLinkList
                         :items="mainNavLeft"
-                        link-class="header-nav-link text-white border-transparent border-b-2 hover:border-white px-3 py-2 text-lg font-medium"
-                        active-class="text-white border-b-2 border-white"
+                        wrapper-class="flex items-center gap-1"
+                        link-class="header-nav-link rounded-lg px-3 py-2 text-[15px]"
+                        active-class="text-ink bg-surface-muted"
                     />
 
                     <NavDropdown
                         label="Informace"
                         :items="infoItems"
+                        button-class="header-nav-link rounded-lg px-3 py-2 text-[15px] flex items-center gap-1"
+                        menu-class="dropdown-menu absolute top-full mt-2 w-56 right-0 origin-top-right bg-white border border-surface-line rounded-xl overflow-hidden z-50 shadow-soft"
                     />
 
                     <NavLinkList
                         :items="mainNavRight"
-                        link-class="header-nav-link text-white border-transparent border-b-2 hover:border-white px-3 py-2 text-lg font-medium"
-                        active-class="text-white border-b-2 border-white"
+                        wrapper-class="flex items-center gap-1"
+                        link-class="header-nav-link rounded-lg px-3 py-2 text-[15px]"
+                        active-class="text-ink bg-surface-muted"
                     />
 
                     <NavDropdown
                         label="O nás"
                         :items="aboutMenuItems"
-                        menu-class="absolute top-full mt-2 w-48 right-0 left-auto origin-top-right bg-white rounded-lg shadow-lg overflow-hidden z-50"
+                        button-class="header-nav-link rounded-lg px-3 py-2 text-[15px] flex items-center gap-1"
+                        menu-class="dropdown-menu absolute top-full mt-2 w-48 right-0 origin-top-right bg-white border border-surface-line rounded-xl overflow-hidden z-50 shadow-soft"
                     />
+
+                    <router-link
+                        :to="{ name: 'Signup' }"
+                        class="header-cta ml-2"
+                    >
+                        Přihlásit se
+                    </router-link>
                 </div>
 
-                <!-- Mobile menu button -->
-                <div class="md:hidden">
+                <div class="md:hidden flex items-center gap-2">
+                    <router-link
+                        :to="{ name: 'Signup' }"
+                        class="header-cta"
+                    >
+                        Přihlásit se
+                    </router-link>
                     <Button
                         @click="toggleMobileMenu"
                         text
                         rounded
-                        class="menu-button text-white p-2 transition-all duration-300"
+                        class="menu-button text-ink p-2"
                         :aria-label="isMobileMenuOpen ? 'Zavřít menu' : 'Otevřít menu'"
                         :aria-expanded="isMobileMenuOpen"
                         aria-controls="mobile-menu"
@@ -88,7 +105,8 @@
         <template #links>
             <NavLinkList
                 :items="mainNavLeft"
-                link-class="header-nav-link block px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
+                link-class="header-nav-link block px-4 py-3 text-lg rounded-xl transition-colors min-h-[44px] hover:bg-surface-muted"
+                active-class="bg-surface-muted text-ink"
                 @select="closeMobileMenu"
             />
 
@@ -96,8 +114,8 @@
                 <button
                     @click="toggleMobileInfoDropdown"
                     @keydown.escape="closeMobileInfoDropdown"
-                    class="w-full flex justify-between items-center px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
-                    :class="{ 'bg-white/20': isMobileInfoDropdownOpen || isInfoActive }"
+                    class="w-full flex justify-between items-center px-4 py-3 text-lg font-medium text-ink rounded-xl transition-colors min-h-[44px] hover:bg-surface-muted"
+                    :class="{ 'bg-surface-muted': isMobileInfoDropdownOpen || isInfoActive }"
                     :aria-expanded="isMobileInfoDropdownOpen"
                     aria-controls="mobile-info-submenu"
                 >
@@ -114,13 +132,13 @@
                     <div
                         v-if="isMobileInfoDropdownOpen"
                         id="mobile-info-submenu"
-                        class="ml-4 mt-2 space-y-2"
+                        class="ml-2 mt-1 space-y-1 border-l border-surface-line pl-2"
                     >
                         <router-link
                             v-for="item in infoItems"
                             :key="item.label"
                             :to="item.to"
-                            class="block px-4 py-2 text-base text-white hover:bg-white/10 rounded-lg transition-all"
+                            class="block px-4 py-2.5 text-base text-ink/80 hover:bg-surface-muted rounded-lg transition-colors"
                             @click="handleMobileSubItemClick"
                         >
                             {{ item.label }}
@@ -131,7 +149,8 @@
 
             <NavLinkList
                 :items="mainNavRight"
-                link-class="header-nav-link block px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
+                link-class="header-nav-link block px-4 py-3 text-lg rounded-xl transition-colors min-h-[44px] hover:bg-surface-muted"
+                active-class="bg-surface-muted text-ink"
                 @select="closeMobileMenu"
             />
 
@@ -139,8 +158,8 @@
                 <button
                     @click="toggleMobileAboutDropdown"
                     @keydown.escape="closeMobileAboutDropdown"
-                    class="w-full flex justify-between items-center px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-all min-h-[44px]"
-                    :class="{ 'bg-white/20': isMobileAboutDropdownOpen || isAboutActive }"
+                    class="w-full flex justify-between items-center px-4 py-3 text-lg font-medium text-ink rounded-xl transition-colors min-h-[44px] hover:bg-surface-muted"
+                    :class="{ 'bg-surface-muted': isMobileAboutDropdownOpen || isAboutActive }"
                     :aria-expanded="isMobileAboutDropdownOpen"
                     aria-controls="mobile-about-submenu"
                 >
@@ -157,13 +176,13 @@
                     <div
                         v-if="isMobileAboutDropdownOpen"
                         id="mobile-about-submenu"
-                        class="ml-4 mt-2 space-y-2"
+                        class="ml-2 mt-1 space-y-1 border-l border-surface-line pl-2"
                     >
                         <router-link
                             v-for="item in aboutMenuItems"
                             :key="item.label"
                             :to="item.to"
-                            class="block px-4 py-2 text-base text-white hover:bg-white/10 rounded-lg transition-all"
+                            class="block px-4 py-2.5 text-base text-ink/80 hover:bg-surface-muted rounded-lg transition-colors"
                             @click="handleMobileSubItemClick"
                         >
                             {{ item.label }}
@@ -186,7 +205,6 @@ import NavDropdown from './header/NavDropdown.vue'
 import MobileMenu from './header/MobileMenu.vue'
 import { useNavigation } from '@/composables/useNavigation'
 
-// State
 const isMobileMenuOpen = ref(false)
 const isMobileAboutDropdownOpen = ref(false)
 const isMobileInfoDropdownOpen = ref(false)
@@ -194,12 +212,10 @@ const isMobileInfoDropdownOpen = ref(false)
 const route = useRoute()
 const { isHidden } = useScrollHeader()
 
-// Close all dropdowns on route change
 watch(() => route.fullPath, () => {
     closeAllDropdowns()
 })
 
-// Helper function for closing dropdown menus
 const closeAllDropdowns = () => {
     isMobileAboutDropdownOpen.value = false
     isMobileInfoDropdownOpen.value = false
@@ -244,21 +260,14 @@ const isInfoActive = computed(() => {
     return route.name === 'Info'
 })
 
-// Using NavItem type from the navigation composable
-
-// Use API-driven navigation with a local fallback
 const { items: navItemsRef } = useNavigation()
 
-// Derive the pieces HeaderNav expects:
 function findParent(label: string) {
     if (!navItemsRef.value.length) return null
-    // try exact match first
     let found = navItemsRef.value.find(i => i.label === label)
     if (found && found.children && found.children.length) return found
-    // case-insensitive match
     found = navItemsRef.value.find(i => typeof i.label === 'string' && i.label.toLowerCase() === label.toLowerCase())
     if (found && found.children && found.children.length) return found
-    // fallback to first item that has children
     found = navItemsRef.value.find(i => i.children && i.children.length)
     return found ?? null
 }
@@ -269,27 +278,22 @@ const aboutParent = computed(() => findParent('O nás'))
 const infoItems = computed(() => (infoParent.value && infoParent.value.children) ? infoParent.value.children : [])
 const aboutMenuItems = computed(() => (aboutParent.value && aboutParent.value.children) ? aboutParent.value.children : [])
 
-// Top-level nav items without children (used for left/right main links)
 const topLevel = computed(() => navItemsRef.value.filter(i => !i.children))
 const mainNavLeft = computed(() => topLevel.value.slice(0, 1))
 const mainNavRight = computed(() => topLevel.value.slice(1))
 </script>
 
 <style scoped>
-/* Override PrimeVue Button styles for hamburger and close icons */
 :deep(.menu-button.p-button) {
-    color: white;
+    color: var(--ink);
 }
 
-:deep(.menu-button.p-button:hover svg) {
-    color: black;
-    stroke: currentColor;
-    transition: color 0.3s ease;
+:deep(.menu-button.p-button:hover) {
+    background: var(--surface-muted);
 }
 
 :deep(.menu-button.p-button svg) {
-    color: white;
+    color: var(--ink);
     stroke: currentColor;
-    transition: color 0.3s ease;
 }
 </style>

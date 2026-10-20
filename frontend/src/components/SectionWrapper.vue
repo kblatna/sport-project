@@ -16,35 +16,37 @@
 import { computed } from 'vue'
 
 const props = withDefaults(defineProps<{
-    background?: 'white' | 'gray' | 'gradient' | 'none'
+    background?: 'white' | 'gray' | 'muted' | 'gradient' | 'none'
     paddingY?: 'none' | 'sm' | 'md' | 'lg'
     customClass?: string
     constrain?: boolean
     innerClass?: string
 }>(), {
     background: 'white',
-    paddingY: 'sm',
+    paddingY: 'md',
     customClass: '',
     constrain: true,
-    innerClass: 'max-w-content mx-auto px-4'
+    innerClass: 'container'
 })
 
-const backgroundMap = {
+const backgroundMap: Record<string, string> = {
     white: 'bg-white',
-    gray: 'bg-gray-50',
-    none: ''
+    gray: 'bg-surface-muted',
+    muted: 'bg-surface-muted',
+    none: '',
+    gradient: 'bg-surface-muted'
 }
 
 const paddingMap = {
     none: '',
-    sm: 'py-4 md:py-6 lg:py-10',
-    md: 'py-8 md:py-10 lg:py-16',
-    lg: 'py-12 md:py-20 lg:py-28'
+    sm: 'py-8 md:py-10',
+    md: 'py-12 md:py-16',
+    lg: 'py-16 md:py-24'
 }
 
 const sectionClasses = computed(() => {
     return [
-        backgroundMap[props.background],
+        backgroundMap[props.background] ?? '',
         paddingMap[props.paddingY],
         props.customClass
     ].filter(Boolean).join(' ')

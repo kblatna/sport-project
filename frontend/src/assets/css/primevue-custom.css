@@ -1,15 +1,39 @@
+.p-button {
+    border-radius: 999px;
+    font-weight: 600;
+}
+
 .p-button-outlined.p-button-secondary {
     --p-button-outlined-secondary-color: var(--white);
-    --p-button-outlined-secondary-border-color: var(--white);
-    --p-button-outlined-secondary-hover-background: var(--white);
-    --p-button-outlined-secondary-active-background: var(--white);
-    transition: all 0.3s ease;
+    --p-button-outlined-secondary-border-color: rgba(255, 255, 255, 0.55);
+    --p-button-outlined-secondary-hover-background: rgba(255, 255, 255, 0.12);
+    --p-button-outlined-secondary-active-background: rgba(255, 255, 255, 0.18);
+    transition: all 0.2s ease;
 }
 
 .p-button-outlined.p-button-secondary:not(:disabled):hover {
-    --p-button-outlined-secondary-color: var(--p-primary-700);
+    --p-button-outlined-secondary-color: var(--white);
 }
 
 .p-card {
-    --p-card-shadow: 0 5.6px 11.2px 0 rgba(0, 0, 0, 0.15);
+    --p-card-shadow: none;
+    --p-card-border-radius: 1rem;
+    border: 1px solid var(--surface-line);
+}
+
+.p-breadcrumb {
+    background: transparent;
+    padding: 0;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+    background: var(--surface-muted);
+    color: var(--ink);
+    font-weight: 600;
+}
+
+.p-inputtext,
+.p-select,
+.p-textarea {
+    border-radius: 0.625rem;
 }
